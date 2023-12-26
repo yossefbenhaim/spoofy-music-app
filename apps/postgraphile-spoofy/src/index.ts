@@ -1,22 +1,26 @@
+import { syncSenqulize } from './sequelize/sequelizeSync';
+
 const cors = require('cors');
 const dotenv = require('dotenv');
 const express = require('express');
 const Filter = require('postgraphile-plugin-connection-filter');
 const { default: PgPubSub } = require('@graphile/pg-pubsub');
 const { postgraphile, makePluginHook } = require('postgraphile');
-import { createExpressMiddleware } from '@trpc/server/adapters/express';
 dotenv.config();
 
 const app = express();
-
+syncSenqulize();
 app.use(cors());
 
 const subsPluginHook = makePluginHook([PgPubSub]);
-console.log('envvvvvvvvvv', process.env['CONNECTION_STRING']);
+console.log(
+  '----------------------------------------------------',
+  process.env['NX_POSTGRAPHILE_SCHEMA']
+);
 
 const res = postgraphile(
-  process.env['CONNECTION_STRING'],
-  process.env['SCHEMA'],
+  process.env['NX_POSTGRAPHILE_CONNECTION_STRING'],
+  process.env['NX_POSTGRAPHILE_SCHEMA'],
   {
     pluginHook: subsPluginHook,
     appendPlugins: [Filter],
@@ -32,8 +36,7 @@ const res = postgraphile(
   }
 );
 app.use(res);
-app.use(res);
 
-app.listen(process.env['PORT'], () => {
-  console.log(`Server started on port: ${process.env['PORT']}`);
+app.listen(process.env['NX_POSTGRAPHILE_PORT'], () => {
+  console.log(`Server started on port: ${process.env['NX_POSTGRAPHILE_PORT']}`);
 });

@@ -9,6 +9,8 @@ export default defineConfig(({ mode }) => {
 
   return {
     cacheDir: '../../node_modules/.vite/client-spoofy',
+    envDir: './environment',
+    envPrefix: 'NX',
     server: {
       port: 4200,
       host: 'localhost',
