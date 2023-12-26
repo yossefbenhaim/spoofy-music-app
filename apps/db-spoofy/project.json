@@ -21,7 +21,7 @@
 	"start":{
 		"executor": "nx:run-commands",
 		"options": {
-			"commands":[ "nodemon apps/db-spoofy/src/index.js"]
+			"commands":[ "nodemon apps/db-spoofy/src/index.ts"]
 		},
 		"parallel":false
 	},
