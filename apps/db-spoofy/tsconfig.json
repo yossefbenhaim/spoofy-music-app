@@ -5,6 +5,7 @@
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
+	"esModuleInterop":true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,

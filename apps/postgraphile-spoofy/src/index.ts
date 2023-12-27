@@ -8,15 +8,14 @@ const { default: PgPubSub } = require('@graphile/pg-pubsub');
 const { postgraphile, makePluginHook } = require('postgraphile');
 dotenv.config();
 
+// syncSenqulize();
+// TODO: add tables
+
 const app = express();
-syncSenqulize();
+
 app.use(cors());
 
 const subsPluginHook = makePluginHook([PgPubSub]);
-console.log(
-  '----------------------------------------------------',
-  process.env['NX_POSTGRAPHILE_SCHEMA']
-);
 
 const res = postgraphile(
   process.env['NX_POSTGRAPHILE_CONNECTION_STRING'],
