@@ -21,7 +21,9 @@
 	"paths": {
 		"@utils/*": ["./utils/*"],
 		"@models/*": ["./models/*"],
-		"@trpc/*":["../../trpc/*"]
+		"@spoofy/backend-spoofy":[
+			"../../../apps/db-spoofy/src/index.ts"
+		]
 		},  
 	},
 	"files": [],
@@ -29,9 +31,6 @@
 	"references": [
 		{
 		"path": "./tsconfig.app.json"
-		},
-		{
-		"path": "./tsconfig.spec.json"
 		},
 		{ 
 		"path": "./tsconfig.node.json" 

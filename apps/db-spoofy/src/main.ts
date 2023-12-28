@@ -24,8 +24,8 @@ app.use(
           .match(/apps\\([-\w]+)/g)
           ?.map((match: string) => match.split('\\')[1]) ?? [];
 
-      if (!serviceTrace.includes('typs')) {
-        serviceTrace.unshift('typs');
+      if (!serviceTrace.includes('backend-spoofy')) {
+        serviceTrace.unshift('backend-spoofy');
       }
     },
     createContext,

@@ -11,58 +11,59 @@ import { Song } from 'models/interface/song';
 import GET_SONGS from 'queries/query/songs';
 import GET_PLAYLIST from 'queries/query/playlists';
 import FAVORITES_BY_USER from 'queries/query/favoritesByUser';
+import { trpc } from '../trpc/trpcProvider';
 
 const getUseQuery = () => {
-    const dispatch = useDispatch();
-    const currentUser = useAppSelector((state) => state.currentUser.user);
+  const dispatch = useDispatch();
+  const currentUser = useAppSelector((state) => state.currentUser.user);
+  const a = trpc.spoofyRouter.getUsers.useQuery();
+  console.log(a);
 
-    useQuery(FAVORITES_BY_USER, {
-        fetchPolicy: 'network-only',
-        variables: {
-            userId: currentUser?.id,
-        },
-        onCompleted: (data) => {
-            const favoritesData: Favorite[] = data.allFavorites.nodes;
-            dispatch(setFavorites(favoritesData));
-        },
-    });
+  useQuery(FAVORITES_BY_USER, {
+    fetchPolicy: 'network-only',
+    variables: {
+      userId: currentUser?.id,
+    },
+    onCompleted: (data) => {
+      const favoritesData: Favorite[] = data.allFavorites.nodes;
+      dispatch(setFavorites(favoritesData));
+    },
+  });
 
-    const parse_playlist = (playlistDB: any) => ({
-        id: playlistDB.id,
-        name: playlistDB.name,
-        creatorId: playlistDB.creatorId,
-        songs: playlistDB.playlistsongsByPlaylistId.nodes.map(
-            (song: any) => song.songId
-        ),
-    });
+  const parse_playlist = (playlistDB: any) => ({
+    id: playlistDB.id,
+    name: playlistDB.name,
+    creatorId: playlistDB.creatorId,
+    songs: playlistDB.playlistsongsByPlaylistId.nodes.map(
+      (song: any) => song.songId
+    ),
+  });
 
-    useQuery(GET_PLAYLIST, {
-        fetchPolicy: 'network-only',
-        onCompleted: (data) => {
-            const playlistsSong = (
-                data.allPlaylists.nodes as any[]
-            ).map<Playlist>(parse_playlist);
+  useQuery(GET_PLAYLIST, {
+    fetchPolicy: 'network-only',
+    onCompleted: (data) => {
+      const playlistsSong = (data.allPlaylists.nodes as any[]).map<Playlist>(
+        parse_playlist
+      );
 
-            dispatch(setPlaylists(playlistsSong));
-        },
-    });
+      dispatch(setPlaylists(playlistsSong));
+    },
+  });
 
-    const parse_song = (songDB: any) => ({
-        id: songDB.id,
-        name: songDB.name,
-        duration: songDB.duration,
-        artist: songDB.artistByArtistId.name,
-    });
+  const parse_song = (songDB: any) => ({
+    id: songDB.id,
+    name: songDB.name,
+    duration: songDB.duration,
+    artist: songDB.artistByArtistId.name,
+  });
 
-    useQuery(GET_SONGS, {
-        fetchPolicy: 'network-only',
-        onCompleted: (data) => {
-            const songsData = (data.allSongs.nodes as any[]).map<Song>(
-                parse_song
-            );
-            dispatch(setSongs(songsData));
-        },
-    });
+  useQuery(GET_SONGS, {
+    fetchPolicy: 'network-only',
+    onCompleted: (data) => {
+      const songsData = (data.allSongs.nodes as any[]).map<Song>(parse_song);
+      dispatch(setSongs(songsData));
+    },
+  });
 };
 
 export default getUseQuery;

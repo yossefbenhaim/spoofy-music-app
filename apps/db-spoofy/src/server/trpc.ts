@@ -1,7 +1,3 @@
-let superjson;
-import('superjson').then((module) => {
-  superjson = module.default || module;
-});
 import { initTRPC } from '@trpc/server';
 import { Context } from '../context';
 

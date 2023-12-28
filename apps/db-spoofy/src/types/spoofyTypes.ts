@@ -1,21 +1,34 @@
-export type Maybe<T> = T | null;
+export type Maybe<T> = T;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
+export type MakeEmpty<
+  T extends { [key: string]: unknown },
+  K extends keyof T
+> = { [_ in K]?: never };
+export type Incremental<T> =
+  | T
+  | {
+      [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never;
+    };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string; output: string; }
-  String: { input: string; output: string; }
-  Boolean: { input: boolean; output: boolean; }
-  Int: { input: number; output: number; }
-  Float: { input: number; output: number; }
-  BigFloat: { input: any; output: any; }
-  Cursor: { input: any; output: any; }
-  Datetime: { input: any; output: any; }
-  UUID: { input: any; output: any; }
+  ID: { input: string; output: string };
+  String: { input: string; output: string };
+  Boolean: { input: boolean; output: boolean };
+  Int: { input: number; output: number };
+  Float: { input: number; output: number };
+  BigFloat: { input: any; output: any };
+  Cursor: { input: any; output: any };
+  Datetime: { input: any; output: any };
+  UUID: { input: any; output: any };
 };
 
 export type Artist = Node & {
@@ -27,7 +40,6 @@ export type Artist = Node & {
   /** Reads and enables pagination through a set of `Song`. */
   songsByArtistId: SongsConnection;
 };
-
 
 export type ArtistSongsByArtistIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
@@ -118,7 +130,7 @@ export enum ArtistsOrderBy {
   NameDesc = 'NAME_DESC',
   Natural = 'NATURAL',
   PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
-  PrimaryKeyDesc = 'PRIMARY_KEY_DESC'
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
 }
 
 /** A filter to be used against BigFloat List fields. All fields are combined with a logical ‘and.’ */
@@ -146,13 +158,17 @@ export type BigFloatListFilter = {
   /** Greater than the specified value. */
   greaterThan?: InputMaybe<Array<InputMaybe<Scalars['BigFloat']['input']>>>;
   /** Greater than or equal to the specified value. */
-  greaterThanOrEqualTo?: InputMaybe<Array<InputMaybe<Scalars['BigFloat']['input']>>>;
+  greaterThanOrEqualTo?: InputMaybe<
+    Array<InputMaybe<Scalars['BigFloat']['input']>>
+  >;
   /** Is null (if `true` is specified) or is not null (if `false` is specified). */
   isNull?: InputMaybe<Scalars['Boolean']['input']>;
   /** Less than the specified value. */
   lessThan?: InputMaybe<Array<InputMaybe<Scalars['BigFloat']['input']>>>;
   /** Less than or equal to the specified value. */
-  lessThanOrEqualTo?: InputMaybe<Array<InputMaybe<Scalars['BigFloat']['input']>>>;
+  lessThanOrEqualTo?: InputMaybe<
+    Array<InputMaybe<Scalars['BigFloat']['input']>>
+  >;
   /** Equal to the specified value, treating null like an ordinary value. */
   notDistinctFrom?: InputMaybe<Array<InputMaybe<Scalars['BigFloat']['input']>>>;
   /** Not equal to the specified value. */
@@ -187,7 +203,6 @@ export type CreateArtistPayload = {
   /** Our root query field type. Allows us to run any query from our mutation payload. */
   query?: Maybe<Query>;
 };
-
 
 /** The output of our create `Artist` mutation. */
 export type CreateArtistPayloadArtistEdgeArgs = {
@@ -225,7 +240,6 @@ export type CreateFavoritePayload = {
   userByUserId?: Maybe<User>;
 };
 
-
 /** The output of our create `Favorite` mutation. */
 export type CreateFavoritePayloadFavoriteEdgeArgs = {
   orderBy?: InputMaybe<Array<FavoritesOrderBy>>;
@@ -259,7 +273,6 @@ export type CreatePlaylistPayload = {
   /** Reads a single `User` that is related to this `Playlist`. */
   userByCreatorId?: Maybe<User>;
 };
-
 
 /** The output of our create `Playlist` mutation. */
 export type CreatePlaylistPayloadPlaylistEdgeArgs = {
@@ -297,7 +310,6 @@ export type CreatePlaylistsongPayload = {
   songBySongId?: Maybe<Song>;
 };
 
-
 /** The output of our create `Playlistsong` mutation. */
 export type CreatePlaylistsongPayloadPlaylistsongEdgeArgs = {
   orderBy?: InputMaybe<Array<PlaylistsongsOrderBy>>;
@@ -332,7 +344,6 @@ export type CreateSongPayload = {
   songEdge?: Maybe<SongsEdge>;
 };
 
-
 /** The output of our create `Song` mutation. */
 export type CreateSongPayloadSongEdgeArgs = {
   orderBy?: InputMaybe<Array<SongsOrderBy>>;
@@ -364,7 +375,6 @@ export type CreateUserPayload = {
   /** An edge for our `User`. May be used by Relay 1. */
   userEdge?: Maybe<UsersEdge>;
 };
-
 
 /** The output of our create `User` mutation. */
 export type CreateUserPayloadUserEdgeArgs = {
@@ -435,7 +445,6 @@ export type DeleteArtistPayload = {
   query?: Maybe<Query>;
 };
 
-
 /** The output of our delete `Artist` mutation. */
 export type DeleteArtistPayloadArtistEdgeArgs = {
   orderBy?: InputMaybe<Array<ArtistsOrderBy>>;
@@ -484,7 +493,6 @@ export type DeleteFavoritePayload = {
   userByUserId?: Maybe<User>;
 };
 
-
 /** The output of our delete `Favorite` mutation. */
 export type DeleteFavoritePayloadFavoriteEdgeArgs = {
   orderBy?: InputMaybe<Array<FavoritesOrderBy>>;
@@ -529,7 +537,6 @@ export type DeletePlaylistPayload = {
   /** Reads a single `User` that is related to this `Playlist`. */
   userByCreatorId?: Maybe<User>;
 };
-
 
 /** The output of our delete `Playlist` mutation. */
 export type DeletePlaylistPayloadPlaylistEdgeArgs = {
@@ -579,7 +586,6 @@ export type DeletePlaylistsongPayload = {
   songBySongId?: Maybe<Song>;
 };
 
-
 /** The output of our delete `Playlistsong` mutation. */
 export type DeletePlaylistsongPayloadPlaylistsongEdgeArgs = {
   orderBy?: InputMaybe<Array<PlaylistsongsOrderBy>>;
@@ -625,7 +631,6 @@ export type DeleteSongPayload = {
   songEdge?: Maybe<SongsEdge>;
 };
 
-
 /** The output of our delete `Song` mutation. */
 export type DeleteSongPayloadSongEdgeArgs = {
   orderBy?: InputMaybe<Array<SongsOrderBy>>;
@@ -668,7 +673,6 @@ export type DeleteUserPayload = {
   /** An edge for our `User`. May be used by Relay 1. */
   userEdge?: Maybe<UsersEdge>;
 };
-
 
 /** The output of our delete `User` mutation. */
 export type DeleteUserPayloadUserEdgeArgs = {
@@ -758,7 +762,7 @@ export enum FavoritesOrderBy {
   SongIdAsc = 'SONG_ID_ASC',
   SongIdDesc = 'SONG_ID_DESC',
   UserIdAsc = 'USER_ID_ASC',
-  UserIdDesc = 'USER_ID_DESC'
+  UserIdDesc = 'USER_ID_DESC',
 }
 
 /** A filter to be used against Int fields. All fields are combined with a logical ‘and.’ */
@@ -860,180 +864,150 @@ export type Mutation = {
   updateUserById?: Maybe<UpdateUserPayload>;
 };
 
-
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationCreateArtistArgs = {
   input: CreateArtistInput;
 };
-
 
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationCreateFavoriteArgs = {
   input: CreateFavoriteInput;
 };
 
-
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationCreatePlaylistArgs = {
   input: CreatePlaylistInput;
 };
-
 
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationCreatePlaylistsongArgs = {
   input: CreatePlaylistsongInput;
 };
 
-
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationCreateSongArgs = {
   input: CreateSongInput;
 };
-
 
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationCreateUserArgs = {
   input: CreateUserInput;
 };
 
-
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteArtistArgs = {
   input: DeleteArtistInput;
 };
-
 
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteArtistByIdArgs = {
   input: DeleteArtistByIdInput;
 };
 
-
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteFavoriteArgs = {
   input: DeleteFavoriteInput;
 };
-
 
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteFavoriteByUserIdAndSongIdArgs = {
   input: DeleteFavoriteByUserIdAndSongIdInput;
 };
 
-
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeletePlaylistArgs = {
   input: DeletePlaylistInput;
 };
-
 
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeletePlaylistByIdArgs = {
   input: DeletePlaylistByIdInput;
 };
 
-
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeletePlaylistsongArgs = {
   input: DeletePlaylistsongInput;
 };
-
 
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeletePlaylistsongByPlaylistIdAndSongIdArgs = {
   input: DeletePlaylistsongByPlaylistIdAndSongIdInput;
 };
 
-
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteSongArgs = {
   input: DeleteSongInput;
 };
-
 
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteSongByIdArgs = {
   input: DeleteSongByIdInput;
 };
 
-
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteUserArgs = {
   input: DeleteUserInput;
 };
-
 
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteUserByIdArgs = {
   input: DeleteUserByIdInput;
 };
 
-
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateArtistArgs = {
   input: UpdateArtistInput;
 };
-
 
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateArtistByIdArgs = {
   input: UpdateArtistByIdInput;
 };
 
-
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateFavoriteArgs = {
   input: UpdateFavoriteInput;
 };
-
 
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateFavoriteByUserIdAndSongIdArgs = {
   input: UpdateFavoriteByUserIdAndSongIdInput;
 };
 
-
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdatePlaylistArgs = {
   input: UpdatePlaylistInput;
 };
-
 
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdatePlaylistByIdArgs = {
   input: UpdatePlaylistByIdInput;
 };
 
-
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdatePlaylistsongArgs = {
   input: UpdatePlaylistsongInput;
 };
-
 
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdatePlaylistsongByPlaylistIdAndSongIdArgs = {
   input: UpdatePlaylistsongByPlaylistIdAndSongIdInput;
 };
 
-
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateSongArgs = {
   input: UpdateSongInput;
 };
-
 
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateSongByIdArgs = {
   input: UpdateSongByIdInput;
 };
 
-
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateUserArgs = {
   input: UpdateUserInput;
 };
-
 
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateUserByIdArgs = {
@@ -1072,7 +1046,6 @@ export type Playlist = Node & {
   /** Reads a single `User` that is related to this `Playlist`. */
   userByCreatorId?: Maybe<User>;
 };
-
 
 export type PlaylistPlaylistsongsByPlaylistIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
@@ -1184,7 +1157,7 @@ export enum PlaylistsOrderBy {
   NameDesc = 'NAME_DESC',
   Natural = 'NATURAL',
   PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
-  PrimaryKeyDesc = 'PRIMARY_KEY_DESC'
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
 }
 
 export type Playlistsong = Node & {
@@ -1270,7 +1243,7 @@ export enum PlaylistsongsOrderBy {
   PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
   PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
   SongIdAsc = 'SONG_ID_ASC',
-  SongIdDesc = 'SONG_ID_DESC'
+  SongIdDesc = 'SONG_ID_DESC',
 }
 
 /** The root query type which gives access points into the data universe. */
@@ -1317,7 +1290,6 @@ export type Query = Node & {
   userById?: Maybe<User>;
 };
 
-
 /** The root query type which gives access points into the data universe. */
 export type QueryAllArtistsArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
@@ -1329,7 +1301,6 @@ export type QueryAllArtistsArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<ArtistsOrderBy>>;
 };
-
 
 /** The root query type which gives access points into the data universe. */
 export type QueryAllFavoritesArgs = {
@@ -1343,7 +1314,6 @@ export type QueryAllFavoritesArgs = {
   orderBy?: InputMaybe<Array<FavoritesOrderBy>>;
 };
 
-
 /** The root query type which gives access points into the data universe. */
 export type QueryAllPlaylistsArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
@@ -1355,7 +1325,6 @@ export type QueryAllPlaylistsArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<PlaylistsOrderBy>>;
 };
-
 
 /** The root query type which gives access points into the data universe. */
 export type QueryAllPlaylistsongsArgs = {
@@ -1369,7 +1338,6 @@ export type QueryAllPlaylistsongsArgs = {
   orderBy?: InputMaybe<Array<PlaylistsongsOrderBy>>;
 };
 
-
 /** The root query type which gives access points into the data universe. */
 export type QueryAllSongsArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
@@ -1381,7 +1349,6 @@ export type QueryAllSongsArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<SongsOrderBy>>;
 };
-
 
 /** The root query type which gives access points into the data universe. */
 export type QueryAllUsersArgs = {
@@ -1395,24 +1362,20 @@ export type QueryAllUsersArgs = {
   orderBy?: InputMaybe<Array<UsersOrderBy>>;
 };
 
-
 /** The root query type which gives access points into the data universe. */
 export type QueryArtistArgs = {
   nodeId: Scalars['ID']['input'];
 };
-
 
 /** The root query type which gives access points into the data universe. */
 export type QueryArtistByIdArgs = {
   id: Scalars['UUID']['input'];
 };
 
-
 /** The root query type which gives access points into the data universe. */
 export type QueryFavoriteArgs = {
   nodeId: Scalars['ID']['input'];
 };
-
 
 /** The root query type which gives access points into the data universe. */
 export type QueryFavoriteByUserIdAndSongIdArgs = {
@@ -1420,30 +1383,25 @@ export type QueryFavoriteByUserIdAndSongIdArgs = {
   userId: Scalars['UUID']['input'];
 };
 
-
 /** The root query type which gives access points into the data universe. */
 export type QueryNodeArgs = {
   nodeId: Scalars['ID']['input'];
 };
-
 
 /** The root query type which gives access points into the data universe. */
 export type QueryPlaylistArgs = {
   nodeId: Scalars['ID']['input'];
 };
 
-
 /** The root query type which gives access points into the data universe. */
 export type QueryPlaylistByIdArgs = {
   id: Scalars['UUID']['input'];
 };
 
-
 /** The root query type which gives access points into the data universe. */
 export type QueryPlaylistsongArgs = {
   nodeId: Scalars['ID']['input'];
 };
-
 
 /** The root query type which gives access points into the data universe. */
 export type QueryPlaylistsongByPlaylistIdAndSongIdArgs = {
@@ -1451,24 +1409,20 @@ export type QueryPlaylistsongByPlaylistIdAndSongIdArgs = {
   songId: Scalars['UUID']['input'];
 };
 
-
 /** The root query type which gives access points into the data universe. */
 export type QuerySongArgs = {
   nodeId: Scalars['ID']['input'];
 };
-
 
 /** The root query type which gives access points into the data universe. */
 export type QuerySongByIdArgs = {
   id: Scalars['UUID']['input'];
 };
 
-
 /** The root query type which gives access points into the data universe. */
 export type QueryUserArgs = {
   nodeId: Scalars['ID']['input'];
 };
-
 
 /** The root query type which gives access points into the data universe. */
 export type QueryUserByIdArgs = {
@@ -1492,7 +1446,6 @@ export type Song = Node & {
   playlistsongsBySongId: PlaylistsongsConnection;
 };
 
-
 export type SongFavoritesBySongIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
@@ -1503,7 +1456,6 @@ export type SongFavoritesBySongIdArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<FavoritesOrderBy>>;
 };
-
 
 export type SongPlaylistsongsBySongIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
@@ -1634,7 +1586,7 @@ export enum SongsOrderBy {
   NameDesc = 'NAME_DESC',
   Natural = 'NATURAL',
   PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
-  PrimaryKeyDesc = 'PRIMARY_KEY_DESC'
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
 }
 
 /** A filter to be used against String fields. All fields are combined with a logical ‘and.’ */
@@ -1721,7 +1673,6 @@ export type Subscription = {
   listen: ListenPayload;
 };
 
-
 /** The root subscription type: contains realtime events you can subscribe to with the `subscription` operation. */
 export type SubscriptionListenArgs = {
   topic: Scalars['String']['input'];
@@ -1794,7 +1745,6 @@ export type UpdateArtistPayload = {
   query?: Maybe<Query>;
 };
 
-
 /** The output of our update `Artist` mutation. */
 export type UpdateArtistPayloadArtistEdgeArgs = {
   orderBy?: InputMaybe<Array<ArtistsOrderBy>>;
@@ -1846,7 +1796,6 @@ export type UpdateFavoritePayload = {
   userByUserId?: Maybe<User>;
 };
 
-
 /** The output of our update `Favorite` mutation. */
 export type UpdateFavoritePayloadFavoriteEdgeArgs = {
   orderBy?: InputMaybe<Array<FavoritesOrderBy>>;
@@ -1894,7 +1843,6 @@ export type UpdatePlaylistPayload = {
   /** Reads a single `User` that is related to this `Playlist`. */
   userByCreatorId?: Maybe<User>;
 };
-
 
 /** The output of our update `Playlist` mutation. */
 export type UpdatePlaylistPayloadPlaylistEdgeArgs = {
@@ -1947,7 +1895,6 @@ export type UpdatePlaylistsongPayload = {
   songBySongId?: Maybe<Song>;
 };
 
-
 /** The output of our update `Playlistsong` mutation. */
 export type UpdatePlaylistsongPayloadPlaylistsongEdgeArgs = {
   orderBy?: InputMaybe<Array<PlaylistsongsOrderBy>>;
@@ -1996,7 +1943,6 @@ export type UpdateSongPayload = {
   songEdge?: Maybe<SongsEdge>;
 };
 
-
 /** The output of our update `Song` mutation. */
 export type UpdateSongPayloadSongEdgeArgs = {
   orderBy?: InputMaybe<Array<SongsOrderBy>>;
@@ -2043,7 +1989,6 @@ export type UpdateUserPayload = {
   userEdge?: Maybe<UsersEdge>;
 };
 
-
 /** The output of our update `User` mutation. */
 export type UpdateUserPayloadUserEdgeArgs = {
   orderBy?: InputMaybe<Array<UsersOrderBy>>;
@@ -2064,7 +2009,6 @@ export type User = Node & {
   playlistsByCreatorId: PlaylistsConnection;
 };
 
-
 export type UserFavoritesByUserIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
@@ -2075,7 +2019,6 @@ export type UserFavoritesByUserIdArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<FavoritesOrderBy>>;
 };
-
 
 export type UserPlaylistsByCreatorIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
@@ -2204,5 +2147,5 @@ export enum UsersOrderBy {
   LastNameDesc = 'LAST_NAME_DESC',
   Natural = 'NATURAL',
   PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
-  PrimaryKeyDesc = 'PRIMARY_KEY_DESC'
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
 }
