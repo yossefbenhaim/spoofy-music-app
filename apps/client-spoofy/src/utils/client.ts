@@ -6,7 +6,6 @@ import { Kind } from 'graphql';
 
 const URI_GRAGHQ_HTTP = import.meta.env.NX_URI_GRAGHQ;
 const URI_GRAGHQ_WS = import.meta.env.NX_URI_WS;
-console.log('envvvvvvvvvv', URI_GRAGHQ_HTTP, URI_GRAGHQ_WS);
 
 const httpLink = new HttpLink({
   uri: URI_GRAGHQ_HTTP,

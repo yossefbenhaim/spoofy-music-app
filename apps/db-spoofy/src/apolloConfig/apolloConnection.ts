@@ -5,10 +5,10 @@ import {
   DefaultOptions,
 } from '@apollo/client';
 import { BatchHttpLink } from '@apollo/client/link/batch-http';
+// console.log(process.env['NX_POSTGRAPHILE_ROUTE']);
 
-export const postgraphileHttpLink = new BatchHttpLink({
-  uri: process.env['NX_POSTGRAPHILE_ROUTE'],
-  batchMax: 20 || 1, //TODO:20 in env
+export const postgraphileHttpLink = new HttpLink({
+  uri: 'http://localhost:8080/graphql',
 });
 
 export const cache = new InMemoryCache({

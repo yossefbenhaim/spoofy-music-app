@@ -26,7 +26,7 @@ export default defineConfig(({ mode }) => {
       },
       proxy: {
         '/api/db': {
-          target: process.env.NX_TRPC_DB,
+          target: 'http://localhost:3000',
           changeOrigin: true,
           secure: false,
           ws: false,
