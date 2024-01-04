@@ -12,17 +12,11 @@ import GET_SONGS from 'queries/query/songs';
 import GET_PLAYLIST from 'queries/query/playlists';
 import FAVORITES_BY_USER from 'queries/query/favoritesByUser';
 
-import { trpc } from '../trpc/trpcProvider';
-
 // const b = trpc.spoofyRouter.getUserById.useQuery('jgjgjg').data
 
 const getUseQuery = () => {
   const dispatch = useDispatch();
   const currentUser = useAppSelector((state) => state.currentUser.user);
-  const songs = trpc.spoofyRouter.getSongs.useQuery();
-  console.log(songs.isSuccess);
-
-  //   dispatch(setSongs(songs));
 
   useQuery(FAVORITES_BY_USER, {
     fetchPolicy: 'network-only',
