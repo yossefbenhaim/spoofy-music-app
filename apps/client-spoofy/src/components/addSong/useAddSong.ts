@@ -5,7 +5,7 @@ import { FeedbackMessage } from 'models/enums/feedbackMessage';
 import { SubmitHandler } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { AddSongForm } from './AddSongSchema';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { addSong } from 'redux/slice/songs';
 import { Artist } from 'models/interface/artist';
 
@@ -29,19 +29,18 @@ const useAddSong = () => {
     enqueueSnackbar(FeedbackMessage.createdSong, { variant });
 
   const mutationAddSong = trpc.spoofyMutationRouter.addSong.useMutation();
-  //   const mutationAddSong = trpc.spoofyQueryRouter.addSong.useMutation();
 
-  //   const allArtists = trpc.spoofyQueryRouter.getArtists.useQuery();
-  //   const data = allArtists.data?.nodes;
-  //   useEffect(() => {
-  //     if (allArtists.isSuccess) {
-  //       const artists: Artist[] | undefined = data?.map((playlist) => ({
-  //         id: playlist.id,
-  //         name: playlist.name,
-  //       }))!;
-  //       setArtists(artists);
-  //     }
-  //   }, [data]);
+  const allArtists = trpc.spoofyQueryRouter.getArtists.useQuery();
+  const data = allArtists.data?.nodes;
+  useEffect(() => {
+    if (allArtists.isSuccess) {
+      const artists: Artist[] | undefined = data?.map((playlist) => ({
+        id: playlist.id,
+        name: playlist.name,
+      }))!;
+      setArtists(artists);
+    }
+  }, [data]);
 
   const onSubmit: SubmitHandler<AddSongForm> = (data) => {
     const { name, artist, duration } = data;
