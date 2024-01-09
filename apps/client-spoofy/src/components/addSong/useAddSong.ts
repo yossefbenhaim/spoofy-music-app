@@ -28,7 +28,7 @@ const useAddSong = () => {
   const handleQueryMessage = (variant: VariantType) =>
     enqueueSnackbar(FeedbackMessage.createdSong, { variant });
 
-  //   const mutationAddSong = trpc.spoofyRouter.addSong.useMutation();
+  const mutationAddSong = trpc.spoofyMutationRouter.addSong.useMutation();
   //   const mutationAddSong = trpc.spoofyQueryRouter.addSong.useMutation();
 
   //   const allArtists = trpc.spoofyQueryRouter.getArtists.useQuery();
