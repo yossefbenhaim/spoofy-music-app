@@ -11,8 +11,7 @@ import { Song } from 'models/interface/song';
 import GET_SONGS from 'queries/query/songs';
 import GET_PLAYLIST from 'queries/query/playlists';
 import FAVORITES_BY_USER from 'queries/query/favoritesByUser';
-
-// const b = trpc.spoofyRouter.getUserById.useQuery('jgjgjg').data
+import { trpc } from 'trpc/trpcProvider';
 
 const getUseQuery = () => {
   const dispatch = useDispatch();
@@ -29,6 +28,17 @@ const getUseQuery = () => {
     },
   });
 
+  //   const favoritesData = trpc.spoofyQueryRouter.getFavoritesByUser.useQuery(
+  //     currentUser?.id!
+  //   );
+  //   if (favoritesData.isSuccess) {
+  //     const data = favoritesData.data?.nodes;
+  //     const favorites: Favorite[] = data?.map((favorite) => ({
+  //       songId: favorite.songId,
+  //     }));
+  //     dispatch(setFavorites(favorites!));
+  //   }
+
   const parse_playlist = (playlistDB: any) => ({
     id: playlistDB.id,
     name: playlistDB.name,
@@ -44,10 +54,23 @@ const getUseQuery = () => {
       const playlistsSong = (data.allPlaylists.nodes as any[]).map<Playlist>(
         parse_playlist
       );
-
       dispatch(setPlaylists(playlistsSong));
     },
   });
+
+  //   const playlistsData = trpc.spoofyQueryRouter.getPlaylists.useQuery();
+  //   if (playlistsData.isSuccess) {
+  //     const data = playlistsData.data.nodes;
+  //     const playlists: Playlist[] = data.map((playlist) => ({
+  //       id: playlist.id,
+  //       name: playlist.name,
+  //       creatorId: playlist.creatorId,
+  //       songs: playlist.playlistsongsByPlaylistId.nodes.map(
+  //         (song) => song.songId
+  //       ),
+  //     }));
+  //     dispatch(setPlaylists(playlists));
+  //   }
 
   const parse_song = (songDB: any) => ({
     id: songDB.id,
@@ -63,6 +86,17 @@ const getUseQuery = () => {
       dispatch(setSongs(songsData));
     },
   });
-};
 
+  //   const songsData = trpc.spoofyQueryRouter.getSongs.useQuery();
+  //   if (songsData.isSuccess) {
+  //     const data = songsData.data.nodes;
+  //     const songs: Song[] = data.map((song) => ({
+  //       id: song.id!,
+  //       name: song.name,
+  //       duration: song.duration,
+  //       artist: song.artistByArtistId?.name!,
+  //     }));
+  //     dispatch(setSongs(songs));
+  //   }
+};
 export default getUseQuery;

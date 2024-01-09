@@ -4,8 +4,6 @@ import {
   InMemoryCache,
   DefaultOptions,
 } from '@apollo/client';
-import { BatchHttpLink } from '@apollo/client/link/batch-http';
-// console.log(process.env['NX_POSTGRAPHILE_ROUTE']);
 
 export const postgraphileHttpLink = new HttpLink({
   uri: 'http://localhost:8080/graphql',
@@ -28,5 +26,8 @@ const defaultOptions: DefaultOptions = {
 export const mainClient = new ApolloClient({
   link: postgraphileHttpLink,
   defaultOptions,
-  cache,
+  cache: new InMemoryCache({
+    addTypename: false,
+    typePolicies: {},
+  }),
 });

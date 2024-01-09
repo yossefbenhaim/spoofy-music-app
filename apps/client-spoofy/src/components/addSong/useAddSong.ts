@@ -28,7 +28,20 @@ const useAddSong = () => {
   const handleQueryMessage = (variant: VariantType) =>
     enqueueSnackbar(FeedbackMessage.createdSong, { variant });
 
-  const mutationAddSong = trpc.spoofyRouter.addSong.useMutation();
+  //   const mutationAddSong = trpc.spoofyRouter.addSong.useMutation();
+  //   const mutationAddSong = trpc.spoofyQueryRouter.addSong.useMutation();
+
+  //   const allArtists = trpc.spoofyQueryRouter.getArtists.useQuery();
+  //   const data = allArtists.data?.nodes;
+  //   useEffect(() => {
+  //     if (allArtists.isSuccess) {
+  //       const artists: Artist[] | undefined = data?.map((playlist) => ({
+  //         id: playlist.id,
+  //         name: playlist.name,
+  //       }))!;
+  //       setArtists(artists);
+  //     }
+  //   }, [data]);
 
   const onSubmit: SubmitHandler<AddSongForm> = (data) => {
     const { name, artist, duration } = data;

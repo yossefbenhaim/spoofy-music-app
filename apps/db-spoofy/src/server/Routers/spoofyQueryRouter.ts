@@ -25,7 +25,7 @@ const sddSongSchema = z.object({
   artist_id: z.string(),
   duration: z.number(),
 });
-export const spoofyRouter = router({
+export const spoofyQueryRouter = router({
   getUsers: publicProcedure.query<UsersConnection>(async () => {
     const allUsers = await mainClient.query<Required<Pick<Query, 'allUsers'>>>({
       query: GET_USERS,
@@ -120,4 +120,4 @@ export const spoofyRouter = router({
     }),
 });
 
-export type AppRouter = typeof spoofyRouter;
+export type AppRouter = typeof spoofyQueryRouter;

@@ -25,6 +25,7 @@ import useStyles from './addSongStyles';
 import ConvertToMilliseconds from 'utils/convertToMilliseconds';
 import useStylesCommon from 'common/commonStyles';
 import useAddSong from './useAddSong';
+import { trpc } from 'trpc/trpcProvider';
 
 const AddSong: React.FC = () => {
 	const { classes, cx } = useStyles();
@@ -51,13 +52,6 @@ const AddSong: React.FC = () => {
 		if (!openDialogAddSong)
 			reset({ ...defaultDialogValues })
 	}, [openDialogAddSong])
-
-	useQuery(GET_ARTIST, {
-		onCompleted: (data) => {
-			setArtists(data.allArtists.nodes);
-		},
-	});
-
 	return (
 		<>
 			<Button
