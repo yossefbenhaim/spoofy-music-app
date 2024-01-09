@@ -17,29 +17,32 @@ const getUseQuery = () => {
   const dispatch = useDispatch();
   const currentUser = useAppSelector((state) => state.currentUser.user);
 
-  useQuery(FAVORITES_BY_USER, {
-    fetchPolicy: 'network-only',
-    variables: {
-      userId: currentUser?.id,
-    },
-    onCompleted: (data) => {
-      const favoritesData: Favorite[] = data.allFavorites.nodes;
-      dispatch(setFavorites(favoritesData));
-    },
+  //   useQuery(FAVORITES_BY_USER, {
+  //     fetchPolicy: 'network-only',
+  //     variables: {
+  //       userId: currentUser?.id,
+  //     },
+  //     onCompleted: (data) => {
+  //       const favoritesData: Favorite[] = data.allFavorites.nodes;
+  //       dispatch(setFavorites(favoritesData));
+  //     },
+  //   });
+
+  const favoritesData = trpc.spoofyQueryRouter.getFavoritesByUser.useQuery({
+    data: { userId: currentUser?.id, songId: '' },
   });
+  if (favoritesData.isSuccess) {
+    const data = favoritesData.data?.nodes;
+    const favorites: Favorite[] = data?.map((favorite) => ({
+      songId: favorite.songId,
+    }));
+    console.log('test favorites');
+    dispatch(setFavorites(favorites!));
+  } else {
+    console.log('no passs', favoritesData.data?.nodes, currentUser?.id);
+  }
 
-  //   const favoritesData = trpc.spoofyQueryRouter.getFavoritesByUser.useQuery(
-  //     currentUser?.id!
-  //   );
-  //   if (favoritesData.isSuccess) {
-  //     const data = favoritesData.data?.nodes;
-  //     const favorites: Favorite[] = data?.map((favorite) => ({
-  //       songId: favorite.songId,
-  //     }));
-  //     dispatch(setFavorites(favorites!));
-  //   }
-
-  const parse_playlist = (playlistDB: any) => ({
+  const parse_playlist: any = (playlistDB: any) => ({
     id: playlistDB.id,
     name: playlistDB.name,
     creatorId: playlistDB.creatorId,

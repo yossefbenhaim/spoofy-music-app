@@ -2,6 +2,7 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "module": "commonjs",
+	"baseUrl": "./src",
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -9,7 +10,12 @@
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+	"paths": {
+		"@spoofy/spoofy-types":[
+			"../../../libs/spoofy-types/src/index.ts"
+		],
+		},  
   },
   "files": [],
   "include": [],

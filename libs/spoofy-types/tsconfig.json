@@ -1,0 +1,24 @@
+{
+	"extends": "../../tsconfig.base.json",
+	"compilerOptions": {
+     "strictNullChecks": true,
+	 "baseUrl":"./src",
+	 "module":"esnext",
+	 "strict":true,
+	"paths": {
+		"@/*":[
+			"./*"
+		],
+		"@spoofy/spoofy-types":[
+			"../../../libs/client-spoofy/src/index.ts"
+		]
+		},  
+	},
+	"files": [],
+	"include": [],
+	"references": [
+		{
+		"path": "./tsconfig.lib.json"
+		},
+	],
+}

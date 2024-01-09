@@ -1,0 +1,58 @@
+{
+	"name": "spoofy-types",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "libs/spoofy-types/src",
+	"projectType": "library",
+	"targets": {
+		"typecheck:local":{
+			"executor": "nx:run-commands",
+			"options": {
+				"commands":[ "npx tsc -b --watch ./libs/spoofy-types/tsconfig.json"]
+			},
+			"parallel":false
+		},
+		"typecheck:remote":{
+			"executor": "nx:run-commands",
+			"options": {
+				"commands":[ "npx tsc -b ./libs/spoofy-types/tsconfig.json"]
+			},
+			"parallel":false
+		},
+	  "build": {
+		"executor": "@nx/js:tsc",
+		"outputs": ["{options.outputPath}"],
+		"options": {
+		  "outputPath": "dist/libs/spoofy-types",
+		  "tsConfig": "libs/spoofy-types/tsconfig.libs.json",
+		  "packageJson": "libs/spoofy-types/package.json",
+		  "main": "libs/spoofy-types/src/index.ts",
+		  "assets": [
+			"libs/spoofy-types/*.md"]
+		}
+	  },
+	  "publish": {
+		"commend": "node tools/script/publish.mjs spoofy-types {args.ver} {args.tsg}" ,
+		"dependsOn":[
+			"build"
+		]
+		
+	  },
+	  "test": {
+		"executor": "@nx/vite:test",
+		"outputs": ["{options.reportsDirectory}"],
+		"options": {
+		  "passWithNoTests": true,
+		  "reportsDirectory": "../../coverage/apps/nx-spoofy"
+		}
+	  },
+	  "lint": {
+		"executor": "@nx/eslint:lint",
+		"outputs": ["{options.outputFile}"],
+		"options": {
+		  "lintFilePatterns": ["apps/spoofy-types/**/*.{ts,tsx,js,jsx}"]
+		}
+	   }
+	},
+	"tags": []
+}
+  

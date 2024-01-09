@@ -23,7 +23,10 @@
 		"@models/*": ["./models/*"],
 		"@spoofy/backend-spoofy":[
 			"../../../apps/db-spoofy/src/index.ts"
-		]
+		],
+		"@spoofy/spoofy-types":[
+			"../../../libs/spoofy-types/src/index.ts"
+		],
 		},  
 	},
 	"files": [],

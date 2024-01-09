@@ -26,7 +26,7 @@ import ConvertToMilliseconds from 'utils/convertToMilliseconds';
 import useStylesCommon from 'common/commonStyles';
 import useAddSong from './useAddSong';
 import { trpc } from 'trpc/trpcProvider';
-
+import { Artist } from '@spoofy/spoofy-types'
 const AddSong: React.FC = () => {
 	const { classes, cx } = useStyles();
 	const { classes: classesCommon } = useStylesCommon();

@@ -3,6 +3,7 @@ import {
   ArtistsConnection,
   CreateSongInput,
   CreateSongPayload,
+  FavoriteInput,
   FavoritesConnection,
   Mutation,
   PlaylistsConnection,
@@ -19,12 +20,7 @@ import GET_SONGS from '../querys/query/songs';
 import GET_PLAYLIST from '../querys/query/playlists';
 import FAVORITES_BY_USER from '../querys/query/favoritesByUser';
 import ADD_SONG from '../querys/mutation/addSong';
-
-const sddSongSchema = z.object({
-  name: z.string(),
-  artist_id: z.string(),
-  duration: z.number(),
-});
+import { Artist } from '@spoofy/spoofy-types';
 export const spoofyQueryRouter = router({
   getUsers: publicProcedure.query<UsersConnection>(async () => {
     const allUsers = await mainClient.query<Required<Pick<Query, 'allUsers'>>>({
@@ -71,7 +67,7 @@ export const spoofyQueryRouter = router({
   }),
 
   getFavoritesByUser: publicProcedure
-    .input(z.string())
+    .input(z.object({ data: z.custom<FavoriteInput>() }))
     .query<FavoritesConnection>(async ({ input }) => {
       const favoritesByUserId = await mainClient.query<
         Required<Pick<Query, 'allFavorites'>>
@@ -87,7 +83,6 @@ export const spoofyQueryRouter = router({
       return favorites;
     }),
 
-  //   mutaiton -------------------
   getUserById: publicProcedure
     .input(z.string())
     .query<User>(async ({ input }) => {
