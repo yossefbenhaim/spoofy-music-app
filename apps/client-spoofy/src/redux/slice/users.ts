@@ -1,23 +1,23 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SliceName } from 'models/enums/sliceName';
-import { User } from 'models/interface/user';
+import { User } from '@spoofy/spoofy-types';
 
 interface CurrentSongsSlice {
-    users: User[];
+  users: User[];
 }
 
 const initialState: CurrentSongsSlice = {
-    users: [],
+  users: [],
 };
 
 const Users = createSlice({
-    name: SliceName.users,
-    initialState,
-    reducers: {
-        setUsers: (state, action: PayloadAction<User[]>) => {
-            state.users = action.payload;
-        },
+  name: SliceName.users,
+  initialState,
+  reducers: {
+    setUsers: (state, action: PayloadAction<User[]>) => {
+      state.users = action.payload;
     },
+  },
 });
 
 export const { setUsers } = Users.actions;

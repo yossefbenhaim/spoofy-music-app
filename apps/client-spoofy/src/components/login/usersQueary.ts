@@ -1,30 +1,19 @@
 import { useDispatch } from 'react-redux';
-import { useQuery } from '@apollo/client';
 import { setUsers } from 'redux/slice/users';
-import { User } from 'models/interface/user';
+import { User } from '@spoofy/spoofy-types';
 
-import GET_USERS from 'queries/query/users';
-
+import { trpc } from 'trpc/trpcProvider';
+import { useEffect } from 'react';
 const usersQuery = () => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    const parse_users = (userDB: any) => ({
-        id: userDB.id,
-        firstName: userDB.firstName,
-        lastName: userDB.lastName,
-        coordinates: userDB.coordinates,
-        address: userDB.address,
-    });
-
-    useQuery(GET_USERS, {
-        fetchPolicy: 'network-only',
-        onCompleted: (data) => {
-            const usersData = (data.allUsers.nodes as any[]).map<User>(
-                parse_users
-            );
-            dispatch(setUsers(usersData));
-        },
-    });
+  const usersData = trpc.spoofyQueryRouter.getUsers.useQuery();
+  useEffect(() => {
+    if (usersData.isSuccess) {
+      const users: User[] = usersData.data.nodes as User[];
+      dispatch(setUsers(users));
+    }
+  }, [usersData]);
 };
 
 export default usersQuery;

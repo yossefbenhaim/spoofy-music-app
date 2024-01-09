@@ -13,7 +13,8 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 import { resetUser } from 'redux/slice/currentUser';
-import { User } from 'models/interface/user';
+import { User } from '@spoofy/spoofy-types';
+
 
 import useStyles from './dialogDeleteUserStyles';
 import DELETE_USER from 'queries/mutation/deleteUser';

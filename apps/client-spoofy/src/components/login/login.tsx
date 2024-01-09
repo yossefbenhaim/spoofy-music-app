@@ -17,7 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { PathName } from 'models/enums/pathName';
 import { setUser } from 'redux/slice/currentUser';
-import { User } from 'models/interface/user';
+import { User } from '@spoofy/spoofy-types';
 
 import IconHome from 'components/lottie/iconHome/iconHome';
 import useStyles from './loginStyles';

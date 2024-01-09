@@ -1,26 +1,26 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SliceName } from 'models/enums/sliceName';
-import { User } from 'models/interface/user';
+import { User } from '@spoofy/spoofy-types';
 
 interface CurrentUserSlice {
-    user: User | undefined;
+  user: User | undefined;
 }
 
 const initialState: CurrentUserSlice = {
-    user: undefined,
+  user: undefined,
 };
 
 const CurrentUser = createSlice({
-    name: SliceName.currentUser,
-    initialState,
-    reducers: {
-        setUser(state, action: PayloadAction<User>) {
-            state.user = action.payload;
-        },
-        resetUser() {
-            return initialState;
-        },
+  name: SliceName.currentUser,
+  initialState,
+  reducers: {
+    setUser(state, action: PayloadAction<User>) {
+      state.user = action.payload;
     },
+    resetUser() {
+      return initialState;
+    },
+  },
 });
 
 export const { setUser, resetUser } = CurrentUser.actions;
