@@ -13,7 +13,8 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 import { resetUser } from 'redux/slice/currentUser';
-import { User } from '@spoofy/spoofy-types';
+import { User } from 'models/interface/user';
+
 
 
 import useStyles from './dialogDeleteUserStyles';
@@ -49,7 +50,7 @@ const DialogDeleteUser: React.FC<Props> = (props) => {
 	const handleQueryMessage = (variant: VariantType) =>
 		enqueueSnackbar(FeedbackMessage.deleteUser, { variant });
 	const handleDeleteUser = (userId: User | undefined) => {
-		deleteUserMutation({ variables: { id: userId?.id } })
+		deleteUserMutation({ variables: { id: userId?.id } })//TODO: fix bugs
 			.then(() => { handleQueryMessage('info') })
 			.catch((err) => console.error('Failed to delete user: ', err));
 	};

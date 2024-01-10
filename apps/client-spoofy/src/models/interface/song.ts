@@ -1,6 +1,2 @@
-export interface Song {
-    id: string;
-    name: string;
-    duration: number;
-    artist: string;
-}
+import { Song as SongInfo } from '@spoofy/spoofy-types';
+export type Song = Pick<SongInfo, 'id' | 'name' | 'duration' | 'artistId'>;

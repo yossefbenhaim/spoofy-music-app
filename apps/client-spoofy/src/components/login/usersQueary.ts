@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { setUsers } from 'redux/slice/users';
-import { User } from '@spoofy/spoofy-types';
+import { User } from 'models/interface/user';
 
 import { trpc } from 'trpc/trpcProvider';
 import { useEffect } from 'react';
