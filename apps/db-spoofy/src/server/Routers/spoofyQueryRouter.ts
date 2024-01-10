@@ -2,9 +2,7 @@ import { router, publicProcedure } from '../trpc';
 import {
   ArtistsConnection,
   CreateSongInput,
-  CreateSongPayload,
   FavoriteInput,
-  FavoritesConnection,
   Mutation,
   PlaylistsConnection,
   Query,
@@ -20,7 +18,7 @@ import GET_SONGS from '../querys/query/songs';
 import GET_PLAYLIST from '../querys/query/playlists';
 import FAVORITES_BY_USER from '../querys/query/favoritesByUser';
 import ADD_SONG from '../querys/mutation/addSong';
-import { Artist } from '@spoofy/spoofy-types';
+
 export const spoofyQueryRouter = router({
   getUsers: publicProcedure.query<UsersConnection>(async () => {
     const allUsers = await mainClient.query<Required<Pick<Query, 'allUsers'>>>({
@@ -67,19 +65,19 @@ export const spoofyQueryRouter = router({
   }),
 
   getFavoritesByUser: publicProcedure
-    .input(z.object({ data: z.custom<FavoriteInput>() }))
-    .query<FavoritesConnection>(async ({ input }) => {
+    .input(z.object({ data: z.custom<Pick<FavoriteInput, 'userId'>>() }))
+    .query(async ({ input }) => {
       const favoritesByUserId = await mainClient.query<
         Required<Pick<Query, 'allFavorites'>>
       >({
         query: FAVORITES_BY_USER,
         variables: {
-          id: input,
+          userId: input.data.userId,
         },
         fetchPolicy: 'no-cache',
       });
 
-      const favorites = favoritesByUserId.data.allFavorites;
+      const favorites = favoritesByUserId.data.allFavorites.nodes;
       return favorites;
     }),
 

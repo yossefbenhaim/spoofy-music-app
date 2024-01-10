@@ -63,7 +63,7 @@ const CustomSongsTable: React.FC<Props> = (props) => {
 		id: item.id,
 		song: item.name,
 		duration: formatDuration(item.duration),
-		artist: item.artist,
+		artist: item.artistByArtistId?.name,
 	})), [tableSongs]);
 
 	const columns: GridColDef[] = [

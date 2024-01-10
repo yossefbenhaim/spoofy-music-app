@@ -37,8 +37,6 @@ const Navbar: React.FC = () => {
 	const { classes, cx } = useStyles()
 
 	const navigationPage = (path: string) => {
-		console.log(path);
-
 		navigation(path);
 	}
 

@@ -127,7 +127,7 @@ const MusicPlayer: React.FC = () => {
 					</div>
 					<div className={classes.titleSong}>
 						<Typography className={classes.songSize}>{currentSong?.name}</Typography>
-						<Typography className={classes.artistSize}>{currentSong?.artist} </Typography>
+						<Typography className={classes.artistSize}>{currentSong?.artistByArtistId?.name} </Typography>
 					</div>
 				</div>
 
