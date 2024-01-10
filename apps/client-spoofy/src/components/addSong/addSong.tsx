@@ -16,17 +16,14 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AddSongForm } from './AddSongSchema';
 import { TimeField } from '@mui/x-date-pickers/TimeField';
-import { useQuery } from '@apollo/client';
 import { Dayjs } from 'dayjs';
 
 import AddSongSchema from './AddSongSchema';
-import GET_ARTIST from 'queries/query/artists';
 import useStyles from './addSongStyles';
 import ConvertToMilliseconds from 'utils/convertToMilliseconds';
 import useStylesCommon from 'common/commonStyles';
 import useAddSong from './useAddSong';
 import { trpc } from 'trpc/trpcProvider';
-import { Artist } from '@spoofy/spoofy-types'
 const AddSong: React.FC = () => {
 	const { classes, cx } = useStyles();
 	const { classes: classesCommon } = useStylesCommon();
@@ -38,7 +35,6 @@ const AddSong: React.FC = () => {
 		handleClickOpen,
 		handleClose,
 		onSubmit,
-		setArtists
 	} = useAddSong()
 
 	const { handleSubmit, formState: { errors }, reset, control } = useForm<AddSongForm>({

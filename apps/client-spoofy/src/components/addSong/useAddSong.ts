@@ -1,6 +1,5 @@
 import { VariantType, useSnackbar } from 'notistack';
 import { AddSongFormFieldsNames } from 'models/enums/formFieldsName';
-import { useQuery } from '@apollo/client';
 import { FeedbackMessage } from 'models/enums/feedbackMessage';
 import { SubmitHandler } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
@@ -8,16 +7,17 @@ import { AddSongForm } from './AddSongSchema';
 import { useEffect, useState } from 'react';
 import { addSong } from 'redux/slice/songs';
 import { Artist } from 'models/interface/artist';
-
-import GET_ARTIST from 'queries/query/artists';
+import { setArtists } from 'redux/slice/artist';
 import { trpc } from 'trpc/trpcProvider';
+import { useAppSelector } from 'redux/store';
 
 const useAddSong = () => {
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
 
   const [openDialogAddSong, setOpenDialogAddSong] = useState<boolean>(false);
-  const [artists, setArtists] = useState<Artist[]>([]);
+  const artists = useAppSelector((state) => state.artist.artist);
+  const mutationAddSong = trpc.spoofyMutationRouter.addSong.useMutation();
 
   const defaultDialogValues = {
     [AddSongFormFieldsNames.name]: '',
@@ -28,19 +28,9 @@ const useAddSong = () => {
   const handleQueryMessage = (variant: VariantType) =>
     enqueueSnackbar(FeedbackMessage.createdSong, { variant });
 
-  const mutationAddSong = trpc.spoofyMutationRouter.addSong.useMutation();
+  const handleClickOpen = () => setOpenDialogAddSong(true);
 
-  const allArtists = trpc.spoofyQueryRouter.getArtists.useQuery();
-  const data = allArtists.data?.nodes;
-  useEffect(() => {
-    if (allArtists.isSuccess) {
-      const artists: Artist[] | undefined = data?.map((playlist) => ({
-        id: playlist.id,
-        name: playlist.name,
-      }))!;
-      setArtists(artists);
-    }
-  }, [data]);
+  const handleClose = () => setOpenDialogAddSong(false);
 
   const onSubmit: SubmitHandler<AddSongForm> = (data) => {
     const { name, artist, duration } = data;
@@ -64,7 +54,7 @@ const useAddSong = () => {
                 id: data.id,
                 name: data.name,
                 duration: data.duration,
-                artist: data.artistByArtistId.name,
+                artistByArtistId: data.artistByArtistId.name,
               })
             );
             handleQueryMessage('success');
@@ -73,16 +63,6 @@ const useAddSong = () => {
       );
     handleClose();
   };
-
-  const handleClickOpen = () => setOpenDialogAddSong(true);
-
-  const handleClose = () => setOpenDialogAddSong(false);
-
-  useQuery(GET_ARTIST, {
-    onCompleted: (data) => {
-      setArtists(data.allArtists.nodes);
-    },
-  });
 
   return {
     handleClickOpen,
