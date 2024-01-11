@@ -5,13 +5,11 @@ import { addFavorite, deleteFavoriteFrom } from 'redux/slice/favorites';
 import { VariantType, useSnackbar } from 'notistack';
 import { FeedbackMessage } from 'models/enums/feedbackMessage';
 import { useAppSelector } from 'redux/store';
-import { useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 import { deleteSong } from 'redux/slice/currentPlaylist';
 import { Favorite } from 'models/interface/favorite';
 import { trpc } from 'trpc/trpcProvider';
 
-import DELETE_FAVORITE from 'queries/mutation/deleteFavorite';
 import IconButton from '@mui/material/IconButton';
 import useStyles from './iconFavoriteSongStyles';
 interface Props {
@@ -24,7 +22,8 @@ const IconFavoriteSong: React.FC<Props> = (props) => {
 	const { classes } = useStyles();
 	const { enqueueSnackbar } = useSnackbar();
 
-	const [deleteFavorite] = useMutation(DELETE_FAVORITE);
+	const addFavoriteMutation = trpc.spoofyMutationRouter.addFavorite.useMutation()
+	const deleteFavorite = trpc.spoofyMutationRouter.deleteFavoriteByUserIdAndSongId.useMutation()
 
 	const currentUserId = useAppSelector((state) => state.currentUser.user?.id);
 	const favoritesLike = useAppSelector((state) => state.favorites.favorites);
@@ -75,12 +74,17 @@ const IconFavoriteSong: React.FC<Props> = (props) => {
 	};
 
 	const heandlDeleteFavorite = () => {
-		deleteFavorite({ variables: { userId: currentUserId, songId: rowSongId } })
-			.then(() => handleQueryMessage('info'))
-			.catch((err) => console.error('Failed to delete user: ', err));
+		deleteFavorite.mutate({
+			data: {
+				userId: currentUserId, songId: rowSongId
+			}
+		}, {
+			onSuccess: () => {
+				handleQueryMessage('info')
+			},
+		})
 	}
 
-	const addFavoriteMutation = trpc.spoofyMutationRouter.addFavorite.useMutation()
 	const heandlAddFavorite = () => {
 		addFavoriteMutation.mutate({
 			data: {

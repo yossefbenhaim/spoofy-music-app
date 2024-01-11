@@ -10,19 +10,17 @@ import { VariantType, useSnackbar } from 'notistack';
 import { FeedbackMessage } from 'models/enums/feedbackMessage';
 import { resetFavorites } from 'redux/slice/favorites';
 import { useNavigate } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
-import { resetUser } from 'redux/slice/currentUser';
+import { resetCurrentUser } from 'redux/slice/currentUser';
 import { User } from 'models/interface/user';
-
-
+import { trpc } from 'trpc/trpcProvider';
 
 import useStyles from './dialogDeleteUserStyles';
-import DELETE_USER from 'queries/mutation/deleteUser';
 import useStylesCommon from 'common/commonStyles';
-
+import { deleteUser } from 'redux/slice/users'
+import { useAppSelector } from 'redux/store';
+import { PathName } from '@models/enums/pathName';
 interface Props {
-	currentUser: User | undefined,
 	setOpenDialog: Dispatch<React.SetStateAction<boolean>>,
 	openDialogDelete: boolean
 }
@@ -30,30 +28,42 @@ interface Props {
 const DialogDeleteUser: React.FC<Props> = (props) => {
 	const { classes } = useStyles()
 	const { classes: classesCommon } = useStylesCommon()
-	const { currentUser, setOpenDialog, openDialogDelete } = props
+	const { setOpenDialog, openDialogDelete } = props
+	const { enqueueSnackbar } = useSnackbar();
+
+	const currentUser = useAppSelector((state) => state.currentUser.user);
+	const deleteUserMutation = trpc.spoofyMutationRouter.deleteUserById.useMutation()
 
 	const navigation = useNavigate();
 	const dispatch = useDispatch();
-
-	const [deleteUserMutation] = useMutation(DELETE_USER);
-	const { enqueueSnackbar } = useSnackbar();
 
 	const handleCloseDeleteDialog = () =>
 		setOpenDialog(false);
 
 	const navigateToHome = () => {
-		dispatch(resetUser());
-		dispatch(resetFavorites())
-		navigation('/');
+		navigation(PathName.login);
 	};
 
 	const handleQueryMessage = (variant: VariantType) =>
 		enqueueSnackbar(FeedbackMessage.deleteUser, { variant });
-	const handleDeleteUser = (userId: User | undefined) => {
-		deleteUserMutation({ variables: { id: userId?.id } })//TODO: fix bugs
-			.then(() => { handleQueryMessage('info') })
-			.catch((err) => console.error('Failed to delete user: ', err));
+
+	const handleDeleteUser = (user: User) => {
+		const userId = user.id
+		deleteUserMutation.mutate({
+			data: {
+				id: userId
+			}
+		}, {
+			onSuccess: (data) => {
+				dispatch(deleteUser(data?.id as string))
+				dispatch(resetCurrentUser());
+				dispatch(resetFavorites())
+				navigateToHome();
+				handleQueryMessage('info')
+			},
+		})
 	};
+
 	return (
 		<div>
 			<>
@@ -75,11 +85,7 @@ const DialogDeleteUser: React.FC<Props> = (props) => {
 						</Button>
 						<Button
 							className={classes.exitBtn}
-							onClick={() => {
-								handleCloseDeleteDialog();
-								navigateToHome();
-								handleDeleteUser(currentUser);
-							}}
+							onClick={() => handleDeleteUser(currentUser as User)}
 						>
 							כן
 						</Button>

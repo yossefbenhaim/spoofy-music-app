@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import useStyles, { MaterialUISwitch } from './settingStyles';
 import { Button } from '@mui/material';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import useStylesCommon from 'common/commonStyles';
-import FormControlLabel from '@mui/material/FormControlLabel';
-
-import Typography from '@mui/material/Typography';
 import { useDispatch } from 'react-redux';
 import { setThemeMode } from 'redux/slice/themeMode';
 import { useAppSelector } from 'redux/store';
+import React, { useState } from 'react';
+import useStyles, { MaterialUISwitch } from './settingStyles';
+
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import useStylesCommon from 'common/commonStyles';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import DialogDeleteUser from 'components/setting/dialogDeleteUser/dialogDeleteUser';
+import Typography from '@mui/material/Typography';
 
 const Settings: React.FC = () => {
 	const { classes } = useStyles()
@@ -20,7 +20,6 @@ const Settings: React.FC = () => {
 	const [checked, setChecked] = React.useState(true);
 
 	const isDrakMode = useAppSelector((state) => state.themeMode.mode);
-	const currentUser = useAppSelector((state) => state.currentUser);
 
 	const handleChange = (event: React.SyntheticEvent<Element, Event>, checked: boolean) => {
 		setChecked(checked);
@@ -59,7 +58,6 @@ const Settings: React.FC = () => {
 		<DialogDeleteUser
 			openDialogDelete={openDialogDelete}
 			setOpenDialog={setOpenDialog}
-			currentUser={currentUser.user}
 		/>
 	</div>;
 };

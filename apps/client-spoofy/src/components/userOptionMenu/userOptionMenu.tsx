@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { resetUser } from 'redux/slice/currentUser';
+import { resetCurrentUser } from 'redux/slice/currentUser';
 import { IconButton } from '@mui/material/';
 import { OptionUser } from '@models/enums/optionUser';
 import { useNavigate } from 'react-router-dom';
@@ -53,7 +53,7 @@ const UserOptionMenu: React.FC = () => {
 	}
 
 	const navigateToHome = () => {
-		dispatch(resetUser());
+		dispatch(resetCurrentUser());
 		dispatch(resetFavorites())
 		navigation(PathName.login);
 	};

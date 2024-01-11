@@ -4,20 +4,24 @@
     "password": "yossef7875",
     "database": "spoofy",
     "host": "localhost",
-    "dialect": "postgres"
+    "dialect": "postgres",
+	"schema":"sequelize_trpc"
   },
   "test": {
     "username": "postgres",
     "password": "yossef7875",
     "database": "spoofy",
     "host": "localhost",
-    "dialect": "postgres"
+    "dialect": "postgres",
+	"schema":"sequelize_trpc"
+
   },
   "production": {
     "username": "postgres",
     "password": "yossef7875",
     "database": "spoofy",
     "host": "localhost",
-    "dialect": "postgres"
+    "dialect": "postgres",
+	"schema":"sequelize_trpc"
   }
 }

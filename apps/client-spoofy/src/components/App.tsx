@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { LicenseInfo } from '@mui/x-license-pro';
@@ -19,7 +19,7 @@ import getSubscription from 'hooks/getSubscription';
 LicenseInfo.setLicenseKey('6239d8e4e4e446a3d208d638ff7603bdT1JERVI6Um9tLVRlc3QsRVhQSVJZPTIyMjMwNjEyMDAwMDAsS0VZVkVSU0lPTj0x');
 
 const App: React.FC = () => {
-
+	//TODO: fix bugs in getUseQuery of favortis by user
 	getSubscription();
 	getUseQuery();
 

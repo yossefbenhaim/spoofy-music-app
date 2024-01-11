@@ -154,7 +154,7 @@ export const spoofyMutationRouter = router({
           id: data.id,
         },
       });
-      return deleteUserById.data?.deleteUserById.deletedUserId;
+      return deleteUserById.data?.deleteUserById.user;
     }),
   updatePlaylistNameById: publicProcedure
     .input(

@@ -4,15 +4,13 @@ import { Menu, MenuItem, IconButton, Typography } from '@mui/material';
 import { VariantType, useSnackbar } from 'notistack';
 import { useAppSelector } from 'redux/store';
 import { ErrorMessage } from './errorMassege';
-import { useMutation } from '@apollo/client';
 import { Playlist } from 'models/interface/playlist';
+import { trpc } from 'trpc/trpcProvider';
 
 import findSongNameById from 'utils/findSongById';
-import ADD_PLAYLIST_SONG from 'queries/mutation/addPlaylistSong';
 import AddIcon from '@mui/icons-material/Add';
 import useStyles from './menuRowStyles';
 import useStylesCommon from 'common/commonStyles';
-
 interface Props {
 	rowId: string
 }
@@ -23,11 +21,12 @@ const MenuRow: React.FC<Props> = (props) => {
 	const { rowId } = props
 
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-	const [mutationAddPlaylistSong] = useMutation(ADD_PLAYLIST_SONG);
 
+	const mutationAddPlaylistSong = trpc.spoofyMutationRouter.addPlaylistSong.useMutation()
 	const openMenu = Boolean(anchorEl);
 	const playlists = useAppSelector((state) => state.playlists.playlists);
 	const songs = useAppSelector((state) => state.songs.songs);
+
 	const { enqueueSnackbar } = useSnackbar();
 
 	const handleQueryMessage = (variant: VariantType, songName: string, playlistName: string) => {
@@ -47,12 +46,15 @@ const MenuRow: React.FC<Props> = (props) => {
 
 	const handlePlaylistSelect = (playlisId: string, playlistName: string) => {
 		const songName = findSongNameById(songs, rowId)
-		mutationAddPlaylistSong({
-			variables: {
-				playlistId: playlisId,
-				songId: rowId
-			},
-			onCompleted: () => {
+		mutationAddPlaylistSong.mutate({
+			data: {
+				playlistsong: {
+					playlistId: playlisId,
+					songId: rowId
+				}
+			}
+		}, {
+			onSuccess: () => {
 				handleQueryMessage('success', songName as string, playlistName)
 			},
 			onError: () => {
