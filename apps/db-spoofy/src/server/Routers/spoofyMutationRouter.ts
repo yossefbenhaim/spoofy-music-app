@@ -159,21 +159,23 @@ export const spoofyMutationRouter = router({
   updatePlaylistNameById: publicProcedure
     .input(
       z.object({
-        data: z.custom<UpdatePlaylistByIdInput>(),
+        data: z.custom<Pick<UpdatePlaylistByIdInput, 'playlistPatch'>>(),
       })
     )
     .mutation(async ({ input }) => {
       const { data } = input;
+      console.log(data.playlistPatch);
+
       const updatePlaylistNameById = await mainClient.mutate<
         Required<Pick<Mutation, 'updatePlaylistById'>>
       >({
         mutation: UPDATE_PLAYLIST_NAME_BY_ID,
         variables: {
-          id: data.id,
-          name: 'todo',
+          id: data.playlistPatch.id,
+          name: data.playlistPatch.name,
         },
       });
-      return updatePlaylistNameById.data?.updatePlaylistById.clientMutationId;
+      return updatePlaylistNameById.data?.updatePlaylistById.playlist;
     }),
 });
 

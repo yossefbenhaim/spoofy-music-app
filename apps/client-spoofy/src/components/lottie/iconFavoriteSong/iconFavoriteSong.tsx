@@ -80,9 +80,9 @@ const IconFavoriteSong: React.FC<Props> = (props) => {
 			.catch((err) => console.error('Failed to delete user: ', err));
 	}
 
-	const addFavoriteMutation1 = trpc.spoofyMutationRouter.addFavorite.useMutation()
+	const addFavoriteMutation = trpc.spoofyMutationRouter.addFavorite.useMutation()
 	const heandlAddFavorite = () => {
-		addFavoriteMutation1.mutate({
+		addFavoriteMutation.mutate({
 			data: {
 				favorite: {
 					userId: currentUserId,
