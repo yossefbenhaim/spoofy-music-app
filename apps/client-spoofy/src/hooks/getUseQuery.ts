@@ -15,7 +15,6 @@ import { setArtists } from 'redux/slice/artist';
 const getUseQuery = () => {
   const dispatch = useDispatch();
   const currentUser = useAppSelector((state) => state.currentUser.user);
-  console.log('test runder');
 
   const favoritesData = trpc.spoofyQueryRouter.getFavoritesByUser.useQuery({
     data: { userId: currentUser?.id },
@@ -26,6 +25,8 @@ const getUseQuery = () => {
       const favorites: Favorite[] = data?.map((favorite) => ({
         songId: favorite.songId,
       }));
+      console.log('setFavorites', favorites);
+
       dispatch(setFavorites(favorites as Favorite[]));
     }
   }, [favoritesData]);
@@ -42,6 +43,8 @@ const getUseQuery = () => {
           (song) => song.songId
         ),
       }));
+      console.log('setPlaylist', playlists);
+
       dispatch(setPlaylists(playlists));
     }
   }, [playlistsData]);

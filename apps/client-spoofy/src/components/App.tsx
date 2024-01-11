@@ -13,10 +13,16 @@ import Playlists from './playlists/playlists';
 import MapUsers from './users/MapUsers';
 import Settings from './setting/setting';
 import useStyles from './AppStyles';
+import getUseQuery from 'hooks/getUseQuery';
+import getSubscription from 'hooks/getSubscription';
 
 LicenseInfo.setLicenseKey('6239d8e4e4e446a3d208d638ff7603bdT1JERVI6Um9tLVRlc3QsRVhQSVJZPTIyMjMwNjEyMDAwMDAsS0VZVkVSU0lPTj0x');
 
 const App: React.FC = () => {
+
+	getSubscription();
+	getUseQuery();
+
 	const { classes } = useStyles()
 	return (
 		<div className={classes.root}>

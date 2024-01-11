@@ -62,16 +62,14 @@ export const spoofyMutationRouter = router({
     .input(z.object({ data: z.custom<CreateFavoriteInput>() }))
     .mutation(async ({ input }) => {
       const { data } = input;
-      const newFavorite = await mainClient.mutate<
-        Required<Pick<Mutation, 'createFavorite'>>
-      >({
+      await mainClient.mutate<Required<Pick<Mutation, 'createFavorite'>>>({
         mutation: ADD_FAVORITE,
         variables: {
-          artuserIdistId: data.favorite.userId,
+          userId: data.favorite.userId,
           songId: data.favorite.songId,
         },
       });
-      return newFavorite.data?.createFavorite.favorite;
+      //   return newFavorite.data?.createFavorite.favorite;
     }),
 
   addPlaylist: publicProcedure

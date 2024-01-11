@@ -7,13 +7,11 @@ import { zoomInLocation } from "@utils/zoomLocation";
 
 import locationIcon from '../../../../assets/location.svg'
 import PopupCard from "components/map/popupCard/popupCard";
+import { User } from "@models/interface/user";
 
 const UsersLocationLayer = () => {
 	const users = useAppSelector((state) => state.users.users);
 	const popup = useRef<RPopup>(null);
-	users.map((u) => {
-		console.log(u.coordinates);
-	})
 
 	return (
 		<RLayerVector zIndex={10}>
@@ -26,10 +24,10 @@ const UsersLocationLayer = () => {
 					<RFeature
 						onClick={(e) => zoomInLocation(e)}
 						key={user.id}
-						geometry={new Point(fromLonLat(user.coordinates))}
+						geometry={new Point(fromLonLat(user.coordinates as number[]))}
 					>
 						<RPopup ref={popup} positioning="bottom-center" trigger={"hover"} >
-							<PopupCard key={user.id} coordinates={user.coordinates} firstName={user.firstName} lastName={user.lastName} />
+							<PopupCard key={user.id} coordinates={user.coordinates as number[]} firstName={user.firstName} lastName={user.lastName} />
 						</RPopup>
 					</RFeature>
 				))}

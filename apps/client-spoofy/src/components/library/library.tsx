@@ -4,13 +4,11 @@ import { useNavigate, Outlet } from 'react-router-dom';
 import { useAppSelector } from 'redux/store';
 import { Typography } from '@mui/material';
 
-import getSubscription from 'hooks/getSubscription';
 import useStyles from './libraryStyles';
 
 import UserOptionMenu from 'components/userOptionMenu/userOptionMenu';
 import MusicPlayer from 'components/musicPlayer/musicPlayer';
 import IconMusify from 'components/lottie/iconMusify/iconMusify';
-import getUseQuery from 'hooks/getUseQuery';
 import Navbar from 'components/navbar/navbar';
 
 const Library: React.FC = () => {
@@ -22,9 +20,6 @@ const Library: React.FC = () => {
 		if (!currentUser?.id)
 			navigation('/');
 	}, [currentUser]);
-
-	getSubscription();
-	getUseQuery();
 
 	return (
 		<div className={classes.fieldsContainer}>

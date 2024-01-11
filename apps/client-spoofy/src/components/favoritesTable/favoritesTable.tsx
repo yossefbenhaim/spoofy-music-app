@@ -12,6 +12,7 @@ const FavoritesTable: React.FC = () => {
 	const { classes } = useStyles();
 	const { classes: classesCommon } = useStylesCommon();
 	const favorites = useAppSelector((state) => state.favorites.favorites);
+	console.log(favorites);
 
 	return (
 		<div className={classes.fieldContainer}>

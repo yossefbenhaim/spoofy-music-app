@@ -9,13 +9,11 @@ import { useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 import { deleteSong } from 'redux/slice/currentPlaylist';
 import { Favorite } from 'models/interface/favorite';
+import { trpc } from 'trpc/trpcProvider';
 
-import ADD_FAVORITE from 'queries/mutation/addFavorite';
 import DELETE_FAVORITE from 'queries/mutation/deleteFavorite';
-
 import IconButton from '@mui/material/IconButton';
 import useStyles from './iconFavoriteSongStyles';
-
 interface Props {
 	rowSongId: string;
 }
@@ -26,7 +24,6 @@ const IconFavoriteSong: React.FC<Props> = (props) => {
 	const { classes } = useStyles();
 	const { enqueueSnackbar } = useSnackbar();
 
-	const [addFavoriteMutation] = useMutation(ADD_FAVORITE);
 	const [deleteFavorite] = useMutation(DELETE_FAVORITE);
 
 	const currentUserId = useAppSelector((state) => state.currentUser.user?.id);
@@ -83,19 +80,20 @@ const IconFavoriteSong: React.FC<Props> = (props) => {
 			.catch((err) => console.error('Failed to delete user: ', err));
 	}
 
+	const addFavoriteMutation1 = trpc.spoofyMutationRouter.addFavorite.useMutation()
 	const heandlAddFavorite = () => {
-		addFavoriteMutation({
-			variables: {
-				input: {
-					favorite: {
-						userId: currentUserId,
-						songId: rowSongId
-					},
-				},
-			},
+		addFavoriteMutation1.mutate({
+			data: {
+				favorite: {
+					userId: currentUserId,
+					songId: rowSongId
+				}
+			}
+		}, {
+			onSuccess: () => {
+				handleQueryMessage('success')
+			}
 		})
-			.then(() => { handleQueryMessage('success') })
-			.catch((err) => console.error('Failed to add song: ', err));
 	}
 
 	return (

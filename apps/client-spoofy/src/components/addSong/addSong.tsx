@@ -23,7 +23,7 @@ import useStyles from './addSongStyles';
 import ConvertToMilliseconds from 'utils/convertToMilliseconds';
 import useStylesCommon from 'common/commonStyles';
 import useAddSong from './useAddSong';
-import { trpc } from 'trpc/trpcProvider';
+
 const AddSong: React.FC = () => {
 	const { classes, cx } = useStyles();
 	const { classes: classesCommon } = useStylesCommon();
