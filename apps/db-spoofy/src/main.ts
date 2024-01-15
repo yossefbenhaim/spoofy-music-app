@@ -4,12 +4,33 @@ import * as trpcExpress from '@trpc/server/adapters/express';
 import { logginMiddleware } from './server/loggingMiddleware';
 import { appRouter } from './server';
 import { createContext } from './context';
-import { applyWSSHandler } from '@trpc/server/adapters/ws';
-
+import { mainClient } from '../src/apolloConfig/apolloConnection';
+import { gql } from '@apollo/client';
+const ADD_PLAYLIST_SUBSCRIPTION = gql`
+  subscription MySubscription {
+    listen(topic: "new_playlist") {
+      relatedNodeId
+      relatedNode {
+        ... on Playlist {
+          __typename
+          id
+          name
+          creatorId
+          createdPlaylist
+        }
+      }
+    }
+  }
+`;
 require('dotenv').config();
+// mainClient.subscribe({ query: ADD_PLAYLIST_SUBSCRIPTION }).subscribe({
+//   next(data) {
+//     console.log(data.data.data.listen.relatedNode);
+//   },
+// });
+// console.log('-------------yossef-------------');
 
 const app = express();
-
 app.use(
   '/',
   trpcExpress.createExpressMiddleware({

@@ -11,33 +11,30 @@ import {
   resetCurrentSongId,
 } from 'redux/slice/currentPlaylist';
 
-import { useSubscription } from '@apollo/client';
 import { useAppSelector } from 'redux/store';
 import { useDispatch } from 'react-redux';
 import { Song } from 'models/interface/song';
 import { trpc } from 'trpc/trpcProvider';
+import { mainClient } from '@spoofy/backend-spoofy';
 import ADD_PLAYLIST_SONG_SUBSCRIPTION from 'queries/subscription/addPlaylistSongSubscription';
 import ADD_PLAYLIST_SUBSCRIPTION from 'queries/subscription/addPlaylistSubscription';
 import DELETE_PLAYLIST_SONG_SUBSCRIPTION from 'queries/subscription/deletePlaylistSongSubscription';
 import UPDATE_PLAYLIST_NAME_SUBSCRIPTION from 'queries/subscription/updatePlaylistNameSubscription';
+import { gql, useSubscription } from '@apollo/client';
 import { useEffect } from 'react';
 const getSubscription = () => {
   const dispatch = useDispatch();
   const songs = useAppSelector((state) => state.songs.songs);
   const currentSongId = useAppSelector((state) => state.currentPlaylist.songId);
-  const newPlaylist =
-    trpc.spoofySubscrptionRouter.addPlaylistSongSubacription.useSubscription(
-      undefined,
-      {
-        onData: (data) => {
-          console.log('testtttt', data);
-        },
-      }
-    );
-  useEffect(() => {
-    console.log('useeee', newPlaylist);
-  }, [newPlaylist]);
-  console.log(newPlaylist);
+  // import ADD_PLAYLIST_SUBSCRIPTION from 'server/querys/subscription/addPlaylistSubscription';
+
+  //   const newPlaylist =
+  //     trpc.spoofySubscrptionRouter.addPlaylistSongSubacription.useSubscription();
+  //   useEffect(() => {
+  //     console.log('useeee', newPlaylist);
+  //   }, [newPlaylist]);
+
+  //   console.log(newPlaylist);
   console.log('teststst');
 
   //   useSubscription(ADD_PLAYLIST_SUBSCRIPTION, {

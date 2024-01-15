@@ -10,6 +10,7 @@ import UserOptionMenu from 'components/userOptionMenu/userOptionMenu';
 import MusicPlayer from 'components/musicPlayer/musicPlayer';
 import IconMusify from 'components/lottie/iconMusify/iconMusify';
 import Navbar from 'components/navbar/navbar';
+import getSubscription from 'hooks/getSubscription';
 
 const Library: React.FC = () => {
 	const { classes } = useStyles();
@@ -20,6 +21,7 @@ const Library: React.FC = () => {
 		if (!currentUser?.id)
 			navigation('/');
 	}, [currentUser]);
+	getSubscription();
 
 	return (
 		<div className={classes.fieldsContainer}>

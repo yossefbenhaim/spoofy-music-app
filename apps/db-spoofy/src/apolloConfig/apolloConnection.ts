@@ -5,8 +5,8 @@ import {
   DefaultOptions,
   split,
 } from '@apollo/client';
-import { WebSocket } from 'ws';
 import { getMainDefinition } from '@apollo/client/utilities';
+import { WebSocket } from 'ws';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { createClient } from 'graphql-ws';
 import { Kind } from 'graphql';

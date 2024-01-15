@@ -22,7 +22,6 @@ const App: React.FC = () => {
 	//TODO: fix bugs in getUseQuery of favortis by user
 	console.log('test');
 
-	getSubscription();
 	getUseQuery();
 
 	const { classes } = useStyles()

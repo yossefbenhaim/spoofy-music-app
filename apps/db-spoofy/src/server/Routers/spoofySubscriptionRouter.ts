@@ -9,7 +9,7 @@ import { z } from 'zod';
 
 import ADD_SONG from '../querys/mutation/addSong';
 // import ADD_PLAYLIST_SONG_SUBSCRIPTION from 'server/querys/subscription/addPlaylistSongSubscription';
-import { gql } from '@apollo/client';
+import { gql, useSubscription } from '@apollo/client';
 // import ADD_PLAYLIST_SUBSCRIPTION from 'server/querys/subscription/addPlaylistSubscription';
 
 const ADD_PLAYLIST_SUBSCRIPTION = gql`
@@ -31,18 +31,12 @@ const ADD_PLAYLIST_SUBSCRIPTION = gql`
 
 export const spoofySubscrptionRouter = router({
   addPlaylistSongSubacription: publicProcedure.subscription(() => {
-    return mainClient
-      .subscribe<Required<Subscription>>({
-        query: ADD_PLAYLIST_SUBSCRIPTION,
-      })
-      .subscribe({
-        next(data) {
-          console.log(
-            '----------------------------------',
-            data.data?.listen.relatedNode
-          );
-        },
-      });
+    useSubscription(ADD_PLAYLIST_SUBSCRIPTION, {
+      onData: (data) => {
+        const playlistsInsertData = data.data.data.listen.relatedNode;
+        console.log(playlistsInsertData);
+      },
+    });
   }),
 });
 
