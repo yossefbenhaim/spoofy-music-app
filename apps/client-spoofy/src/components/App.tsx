@@ -20,6 +20,8 @@ LicenseInfo.setLicenseKey('6239d8e4e4e446a3d208d638ff7603bdT1JERVI6Um9tLVRlc3QsR
 
 const App: React.FC = () => {
 	//TODO: fix bugs in getUseQuery of favortis by user
+	console.log('test');
+
 	getSubscription();
 	getUseQuery();
 

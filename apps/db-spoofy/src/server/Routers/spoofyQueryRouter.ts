@@ -94,23 +94,6 @@ export const spoofyQueryRouter = router({
       );
       return getUser.data.userById;
     }),
-
-  addSong: publicProcedure
-    .input(z.object({ data: z.custom<CreateSongInput>() }))
-    .mutation(async ({ input }) => {
-      const { data } = input;
-      const newSong = await mainClient.mutate<
-        Required<Pick<Mutation, 'createSong'>>
-      >({
-        mutation: ADD_SONG,
-        variables: {
-          name: data.song.name,
-          artistId: data.song.artistId,
-          duration: data.song.duration,
-        },
-      });
-      return newSong.data?.createSong.song;
-    }),
 });
 
 export type AppRouter = typeof spoofyQueryRouter;

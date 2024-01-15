@@ -4,6 +4,7 @@ import * as trpcExpress from '@trpc/server/adapters/express';
 import { logginMiddleware } from './server/loggingMiddleware';
 import { appRouter } from './server';
 import { createContext } from './context';
+import { applyWSSHandler } from '@trpc/server/adapters/ws';
 
 require('dotenv').config();
 

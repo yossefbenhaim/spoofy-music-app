@@ -1,31 +1,18 @@
 import { router, publicProcedure } from '../trpc';
 import {
-  ArtistsConnection,
   CreateFavoriteInput,
   CreatePlaylistInput,
   CreatePlaylistsongInput,
   CreateSongInput,
-  CreateSongPayload,
   DeleteFavoriteByUserIdAndSongIdInput,
-  DeleteFavoriteInput,
   DeletePlaylistsongByPlaylistIdAndSongIdInput,
   DeleteUserByIdInput,
-  FavoritesConnection,
   Mutation,
-  PlaylistsConnection,
-  Query,
-  SongsConnection,
   UpdatePlaylistByIdInput,
-  User,
-  UsersConnection,
 } from '../../types/spoofyTypes';
 import { mainClient } from '../../apolloConfig/apolloConnection';
-import GET_USERS from '../querys/query/users';
 import { z } from 'zod';
-import GET_ARTIST from '../querys/query/artists';
-import GET_SONGS from '../querys/query/songs';
-import GET_PLAYLIST from '../querys/query/playlists';
-import FAVORITES_BY_USER from '../querys/query/favoritesByUser';
+
 import ADD_SONG from '../querys/mutation/addSong';
 import ADD_FAVORITE from '../querys/mutation/addFavorite';
 import ADD_PLAYLIST from '../querys/mutation/addPlaylist';
@@ -35,11 +22,6 @@ import DELETE_PLAYLIST_SONG_BY_PLAYLIST_AND_SONG_ID from '../querys/mutation/del
 import DELETE_USER_BY_ID from '../querys/mutation/deleteUserById';
 import UPDATE_PLAYLIST_NAME_BY_ID from '../querys/mutation/updatePlaylistNameById';
 
-const sddSongSchema = z.object({
-  name: z.string(),
-  artist_id: z.string(),
-  duration: z.number(),
-});
 export const spoofyMutationRouter = router({
   addSong: publicProcedure
     .input(z.object({ data: z.custom<CreateSongInput>() }))
