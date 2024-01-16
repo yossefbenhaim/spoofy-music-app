@@ -26,16 +26,6 @@ const getSubscription = () => {
   const dispatch = useDispatch();
   const songs = useAppSelector((state) => state.songs.songs);
   const currentSongId = useAppSelector((state) => state.currentPlaylist.songId);
-  // import ADD_PLAYLIST_SUBSCRIPTION from 'server/querys/subscription/addPlaylistSubscription';
-
-  //   const newPlaylist =
-  //     trpc.spoofySubscrptionRouter.addPlaylistSongSubacription.useSubscription();
-  //   useEffect(() => {
-  //     console.log('useeee', newPlaylist);
-  //   }, [newPlaylist]);
-
-  //   console.log(newPlaylist);
-  console.log('teststst');
 
   //   useSubscription(ADD_PLAYLIST_SUBSCRIPTION, {
   //     onData: (data) => {

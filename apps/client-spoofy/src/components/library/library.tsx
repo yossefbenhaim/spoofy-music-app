@@ -11,17 +11,26 @@ import MusicPlayer from 'components/musicPlayer/musicPlayer';
 import IconMusify from 'components/lottie/iconMusify/iconMusify';
 import Navbar from 'components/navbar/navbar';
 import getSubscription from 'hooks/getSubscription';
+import { trpc } from 'trpc/trpcProvider';
 
 const Library: React.FC = () => {
 	const { classes } = useStyles();
 	const currentUser = useAppSelector((state) => state.currentUser.user);
 	const navigation = useNavigate();
-
 	useEffect(() => {
 		if (!currentUser?.id)
 			navigation('/');
 	}, [currentUser]);
-	getSubscription();
+	trpc.spoofySubscrptionRouter.addPlaylistSongSubacription.useSubscription(
+		undefined,
+		{
+			onData(data) {
+				console.log(data, '--------------');
+				return data;
+			},
+		}
+	);
+
 
 	return (
 		<div className={classes.fieldsContainer}>

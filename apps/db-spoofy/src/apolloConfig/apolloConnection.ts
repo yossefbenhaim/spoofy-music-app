@@ -6,18 +6,25 @@ import {
   split,
 } from '@apollo/client';
 import { getMainDefinition } from '@apollo/client/utilities';
+import { WebSocketLink } from '@apollo/client/link/ws';
 import { WebSocket } from 'ws';
-import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
+import { SubscriptionClient } from 'subscriptions-transport-ws';
 import { createClient } from 'graphql-ws';
 import { Kind } from 'graphql';
 export const postgraphileHttpLink = new HttpLink({
   uri: 'http://localhost:8080/graphql',
 });
-const postgraphileWsLink = new GraphQLWsLink(
-  createClient({
-    url: 'ws://localhost:8080/graphql',
-    webSocketImpl: WebSocket,
-  })
+const postgraphileWsLink = new WebSocketLink(
+  new SubscriptionClient(
+    'ws://localhost:8080/graphql',
+    {
+      reconnect: true,
+      connectionCallback(error) {
+        error && console.error(error);
+      },
+    },
+    WebSocket
+  )
 );
 
 const link = split(
