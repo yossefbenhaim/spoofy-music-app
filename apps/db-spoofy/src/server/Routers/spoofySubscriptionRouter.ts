@@ -6,39 +6,20 @@ import {
 } from '../../types/spoofyTypes';
 import { mainClient } from '../../apolloConfig/apolloConnection';
 import { z } from 'zod';
-
-import ADD_SONG from '../querys/mutation/addSong';
-// import ADD_PLAYLIST_SONG_SUBSCRIPTION from 'server/querys/subscription/addPlaylistSongSubscription';
+import { observable } from '@trpc/server/observable';
+import { EventEmitter } from 'events';
 import { gql } from '@apollo/client';
-// import ADD_PLAYLIST_SUBSCRIPTION from 'server/querys/subscription/addPlaylistSubscription';
 
-const ADD_PLAYLIST_SUBSCRIPTION = gql`
-  subscription MySubscription {
-    listen(topic: "new_playlist") {
-      relatedNodeId
-      relatedNode {
-        ... on Playlist {
-          __typename
-          id
-          name
-          creatorId
-          createdPlaylist
-        }
-      }
-    }
-  }
-`;
+const ee = new EventEmitter();
 
 export const spoofySubscrptionRouter = router({
   addPlaylistSongSubacription: publicProcedure.subscription(() => {
-    // Return an observable that emits new playlist data when the Apollo Client subscription receives updates.
-    const t = mainClient.subscribe({ query: ADD_PLAYLIST_SUBSCRIPTION });
-    console.log(
-      t,
-      '----------------------------------------yiug--------------------------'
-    );
-
-    return t;
+    return observable<any>((emit) => {
+      const onAdd = (data: any) => {
+        // emit data to client
+        emit.next(data);
+      };
+    });
   }),
 });
 

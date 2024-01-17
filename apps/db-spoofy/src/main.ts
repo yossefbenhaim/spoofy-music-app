@@ -5,11 +5,14 @@ import { logginMiddleware } from './server/loggingMiddleware';
 import { appRouter } from './server';
 import { createContext } from './context';
 import { test } from '../src/server/Routers/testSubscription';
+import { applyWSSHandler } from '@trpc/server/adapters/ws';
+import ws from 'ws';
 
 require('dotenv').config();
 
 test();
 const app = express();
+
 app.use(
   '/',
   trpcExpress.createExpressMiddleware({
@@ -33,6 +36,28 @@ app.use(
   })
 );
 
-app.listen(process.env['NX_TRPC_PORT'], () => {
-  console.log(`Server started on port: ${process.env['NX_TRPC_PORT']}`);
+const httpServer = app.listen(process.env['NX_TRPC_PORT'], () => {
+  console.log(`HTTP Server started on port: ${process.env['NX_TRPC_PORT']}`);
 });
+
+const wss = new ws.Server({ noServer: true });
+applyWSSHandler({
+  wss,
+  router: appRouter,
+  createContext,
+});
+
+httpServer.on('upgrade', (request, socket, head) => {
+  wss.handleUpgrade(request, socket, head, (ws) => {
+    wss.emit('connection', ws, request);
+  });
+});
+
+wss.on('connection', (ws) => {
+  console.log(`➕➕ Connection (${wss.clients.size})`);
+  ws.once('close', () => {
+    console.log(`➖➖ Connection (${wss.clients.size})`);
+  });
+});
+
+console.log('✅ WebSocket Server listening on ws://localhost:3000');

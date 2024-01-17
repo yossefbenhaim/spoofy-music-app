@@ -8,6 +8,7 @@ import useStylesCommon from 'common/commonStyles';
 import useStyles from './playlistsTableStyles';
 import GenericPlaylistDialog from 'common/genericPlaylistDialog/genericPlaylistDialog';
 import PlaylistsTables from './playlistsTables';
+import YourComponent from 'components/library/testSubscrptin';
 
 const Playlists: React.FC = () => {
 	const { classes } = useStyles();
@@ -33,6 +34,8 @@ const Playlists: React.FC = () => {
 		<>
 			<div className={classesCommon.headerContainer}>
 				<Typography className={classesCommon.header}>פלייליסטים</Typography>
+				<YourComponent />
+
 			</div>
 			<div className={classes.fieldsContainer}>
 				<PlaylistsTables playlists={playlists} handleClickOpen={handleClickOpen} />

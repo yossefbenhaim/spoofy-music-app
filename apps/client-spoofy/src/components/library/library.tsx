@@ -10,8 +10,8 @@ import UserOptionMenu from 'components/userOptionMenu/userOptionMenu';
 import MusicPlayer from 'components/musicPlayer/musicPlayer';
 import IconMusify from 'components/lottie/iconMusify/iconMusify';
 import Navbar from 'components/navbar/navbar';
-import getSubscription from 'hooks/getSubscription';
-import { trpc } from 'trpc/trpcProvider';
+import getUseQuery from 'hooks/getUseQuery';
+
 
 const Library: React.FC = () => {
 	const { classes } = useStyles();
@@ -21,15 +21,8 @@ const Library: React.FC = () => {
 		if (!currentUser?.id)
 			navigation('/');
 	}, [currentUser]);
-	trpc.spoofySubscrptionRouter.addPlaylistSongSubacription.useSubscription(
-		undefined,
-		{
-			onData(data) {
-				console.log(data, '--------------');
-				return data;
-			},
-		}
-	);
+	getUseQuery();
+
 
 
 	return (

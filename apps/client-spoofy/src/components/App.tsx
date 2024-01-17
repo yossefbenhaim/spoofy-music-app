@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { LicenseInfo } from '@mui/x-license-pro';
@@ -13,16 +13,26 @@ import Playlists from './playlists/playlists';
 import MapUsers from './users/MapUsers';
 import Settings from './setting/setting';
 import useStyles from './AppStyles';
-import getUseQuery from 'hooks/getUseQuery';
+import { trpc } from 'trpc/trpcProvider';
 
 LicenseInfo.setLicenseKey('6239d8e4e4e446a3d208d638ff7603bdT1JERVI6Um9tLVRlc3QsRVhQSVJZPTIyMjMwNjEyMDAwMDAsS0VZVkVSU0lPTj0x');
 
 const App: React.FC = () => {
-	//TODO: fix bugs in getUseQuery of favortis by user
-	console.log('test');
+	trpc.spoofyMutationRouter
+		.onAddPlaylistSubscription.useSubscription(undefined, {
+			onData: (data) => {
+				console.log('Subscription Data:', data);
+			},
+			onError: (err) => {
+				console.error('Subscription Error:', err);
+			},
+		})
 
-	getUseQuery();
-
+	useEffect(() => {
+		return () => {
+			console.log('testststst');
+		};
+	}, []);
 	const { classes } = useStyles()
 	return (
 		<div className={classes.root}>

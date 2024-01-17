@@ -21,6 +21,10 @@ import DELETE_FAVORITS_BY_USER_ID_AND_SONG_ID from '../querys/mutation/deleteFav
 import DELETE_PLAYLIST_SONG_BY_PLAYLIST_AND_SONG_ID from '../querys/mutation/deletePlaylistSongByPlaylistIdAndSongId';
 import DELETE_USER_BY_ID from '../querys/mutation/deleteUserById';
 import UPDATE_PLAYLIST_NAME_BY_ID from '../querys/mutation/updatePlaylistNameById';
+import { observable } from '@trpc/server/observable';
+import { EventEmitter } from 'events';
+
+const ee = new EventEmitter();
 
 export const spoofyMutationRouter = router({
   addSong: publicProcedure
@@ -54,10 +58,34 @@ export const spoofyMutationRouter = router({
       //   return newFavorite.data?.createFavorite.favorite;
     }),
 
+  onAddPlaylistSubscription: publicProcedure.subscription(() => {
+    console.log(
+      'testttttt------------------------------------------------------'
+    );
+
+    return observable<string>((emit) => {
+      const onAdd = (data: string) => {
+        // emit data to client
+        console.log(data, '---------------------------------');
+        emit.next(data);
+      };
+      // trigger `onAdd()` when `add` is triggered in our event emitter
+      ee.on('test', onAdd);
+      // unsubscribe function when client disconnects or stops subscribing
+      return () => {
+        ee.off('test', onAdd);
+      };
+    });
+  }),
+
   addPlaylist: publicProcedure
     .input(z.object({ data: z.custom<CreatePlaylistInput>() }))
     .mutation(async ({ input }) => {
       const { data } = input;
+      const post = { input };
+
+      ee.emit('test', post);
+
       const newPlaylist = await mainClient.mutate<
         Required<Pick<Mutation, 'createPlaylist'>>
       >({
