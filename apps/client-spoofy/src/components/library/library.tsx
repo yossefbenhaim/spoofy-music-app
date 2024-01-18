@@ -5,13 +5,10 @@ import { useAppSelector } from 'redux/store';
 import { Typography } from '@mui/material';
 
 import useStyles from './libraryStyles';
-
 import UserOptionMenu from 'components/userOptionMenu/userOptionMenu';
 import MusicPlayer from 'components/musicPlayer/musicPlayer';
 import IconMusify from 'components/lottie/iconMusify/iconMusify';
 import Navbar from 'components/navbar/navbar';
-import getUseQuery from 'hooks/getUseQuery';
-import UseSubscription from 'hooks/useSubscription';
 
 const Library: React.FC = () => {
 	const { classes } = useStyles();
@@ -21,13 +18,9 @@ const Library: React.FC = () => {
 		if (!currentUser?.id)
 			navigation('/');
 	}, [currentUser]);
-	getUseQuery();
-
-
 
 	return (
 		<>
-			<UseSubscription />
 			<div className={classes.fieldsContainer}>
 				<div className={classes.header}>
 					<div className={classes.titleContainer}>

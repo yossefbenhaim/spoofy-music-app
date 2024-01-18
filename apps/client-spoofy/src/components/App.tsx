@@ -13,13 +13,18 @@ import Playlists from './playlists/playlists';
 import MapUsers from './users/MapUsers';
 import Settings from './setting/setting';
 import useStyles from './AppStyles';
+import UseSubscription from 'hooks/useSubscription';
+import UseQuery from 'hooks/useQuery';
 
 LicenseInfo.setLicenseKey('6239d8e4e4e446a3d208d638ff7603bdT1JERVI6Um9tLVRlc3QsRVhQSVJZPTIyMjMwNjEyMDAwMDAsS0VZVkVSU0lPTj0x');
 
 const App: React.FC = () => {
 	const { classes } = useStyles()
+
 	return (
 		<div className={classes.root}>
+			<UseSubscription />
+			<UseQuery />
 			<BrowserRouter>
 				<Routes>
 					<Route index element={<Login />} />
