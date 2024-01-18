@@ -16,16 +16,14 @@ const httpClient = httpLink({
 		})
 })
 const wsClient = createWSClient({
-	url: `wss://localhost:3000`,
+	url: `ws://localhost:3000`,
 });
 
 const createTRPClient = () => {
 	return trpc.createClient({
 		links: [
-			httpClient,
-			wsLink({
-				client: wsClient,
-			}),
+			// httpClient,
+			wsLink<AppRouter>({ client: wsClient })
 		],
 	})
 };
@@ -48,39 +46,6 @@ export const TrpcProvider: React.FC<{ children: ReactNode }> = ({
 		})
 	);
 	const [trpcClient] = useState(createTRPClient);
-
-	const [message, setMessage] = useState('');
-
-	useEffect(() => {
-		console.log('Connecting to WebSocket...');
-		const ws = new WebSocket('ws://localhost:3000');
-
-		ws.addEventListener('open', (dataa) => {
-			ws.send('test')
-			console.log('WebSocket connection established', dataa);
-		});
-
-		ws.addEventListener('message', (event) => {
-			console.log(`Received message: ${event.data}`);
-			setMessage(`Received message: ${event.data}`);
-		});
-
-		ws.addEventListener('close', () => {
-			console.log('WebSocket connection closed');
-		});
-
-		ws.addEventListener('error', (error) => {
-			console.error('WebSocket error:', error);
-		});
-
-		return () => {
-			// ws.close();
-		};
-	}, []);
-
-
-	console.log('--------------message--------------', message);
-
 
 	return (
 		<trpc.Provider client={trpcClient} queryClient={queryClient}>

@@ -23,6 +23,7 @@ import DELETE_USER_BY_ID from '../querys/mutation/deleteUserById';
 import UPDATE_PLAYLIST_NAME_BY_ID from '../querys/mutation/updatePlaylistNameById';
 import { observable } from '@trpc/server/observable';
 import { EventEmitter } from 'events';
+import { ADD_PLAYLIST_SUBSCRIPTION } from '../../server/querys/subscription/addPlaylistSubscription';
 
 const ee = new EventEmitter();
 
@@ -57,34 +58,13 @@ export const spoofyMutationRouter = router({
       });
       //   return newFavorite.data?.createFavorite.favorite;
     }),
-
-  onAddPlaylistSubscription: publicProcedure.subscription(() => {
-    console.log(
-      'testttttt------------------------------------------------------'
-    );
-
-    return observable<string>((emit) => {
-      const onAdd = (data: string) => {
-        // emit data to client
-        console.log(data, '---------------------------------');
-        emit.next(data);
-      };
-      // trigger `onAdd()` when `add` is triggered in our event emitter
-      ee.on('test', onAdd);
-      // unsubscribe function when client disconnects or stops subscribing
-      return () => {
-        ee.off('test', onAdd);
-      };
-    });
-  }),
-
   addPlaylist: publicProcedure
     .input(z.object({ data: z.custom<CreatePlaylistInput>() }))
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input, ctx }) => {
       const { data } = input;
+      const { req } = ctx;
       const post = { input };
-
-      ee.emit('test', post);
+      req.emit('onAddPlaylist', post);
 
       const newPlaylist = await mainClient.mutate<
         Required<Pick<Mutation, 'createPlaylist'>>
@@ -99,8 +79,12 @@ export const spoofyMutationRouter = router({
     }),
   addPlaylistSong: publicProcedure
     .input(z.object({ data: z.custom<CreatePlaylistsongInput>() }))
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input, ctx }) => {
       const { data } = input;
+      const { req } = ctx;
+      const post = { input };
+      req.emit('onAddPlaylistSongsSubscription', post);
+
       const newPlaylistSong = await mainClient.mutate<
         Required<Pick<Mutation, 'createPlaylistsong'>>
       >({
@@ -135,8 +119,11 @@ export const spoofyMutationRouter = router({
         data: z.custom<DeletePlaylistsongByPlaylistIdAndSongIdInput>(),
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input, ctx }) => {
       const { data } = input;
+      const { req } = ctx;
+      const post = { input };
+      req.emit('onDeletePlaylistSongsSubscription', post);
       const deletePlaylistsong = await mainClient.mutate<
         Required<Pick<Mutation, 'deletePlaylistsong'>>
       >({
@@ -172,9 +159,11 @@ export const spoofyMutationRouter = router({
         data: z.custom<Pick<UpdatePlaylistByIdInput, 'playlistPatch'>>(),
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input, ctx }) => {
       const { data } = input;
-      console.log(data.playlistPatch);
+      const { req } = ctx;
+      const post = { input };
+      req.emit('onUpdatePlaylistNameSubscription', post);
 
       const updatePlaylistNameById = await mainClient.mutate<
         Required<Pick<Mutation, 'updatePlaylistById'>>

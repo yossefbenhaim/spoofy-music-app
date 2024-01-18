@@ -25,7 +25,6 @@ const getUseQuery = () => {
       const favorites: Favorite[] = data?.map((favorite) => ({
         songId: favorite.songId,
       }));
-      console.log('setFavorites', favorites);
 
       dispatch(setFavorites(favorites as Favorite[]));
     }
@@ -43,7 +42,6 @@ const getUseQuery = () => {
           (song) => song.songId
         ),
       }));
-      console.log('setPlaylist', playlists);
 
       dispatch(setPlaylists(playlists));
     }

@@ -13,26 +13,10 @@ import Playlists from './playlists/playlists';
 import MapUsers from './users/MapUsers';
 import Settings from './setting/setting';
 import useStyles from './AppStyles';
-import { trpc } from 'trpc/trpcProvider';
 
 LicenseInfo.setLicenseKey('6239d8e4e4e446a3d208d638ff7603bdT1JERVI6Um9tLVRlc3QsRVhQSVJZPTIyMjMwNjEyMDAwMDAsS0VZVkVSU0lPTj0x');
 
 const App: React.FC = () => {
-	trpc.spoofyMutationRouter
-		.onAddPlaylistSubscription.useSubscription(undefined, {
-			onData: (data) => {
-				console.log('Subscription Data:', data);
-			},
-			onError: (err) => {
-				console.error('Subscription Error:', err);
-			},
-		})
-
-	useEffect(() => {
-		return () => {
-			console.log('testststst');
-		};
-	}, []);
 	const { classes } = useStyles()
 	return (
 		<div className={classes.root}>

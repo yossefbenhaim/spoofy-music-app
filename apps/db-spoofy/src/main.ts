@@ -10,7 +10,7 @@ import ws from 'ws';
 
 require('dotenv').config();
 
-test();
+// test();
 const app = express();
 
 app.use(
@@ -41,7 +41,7 @@ const httpServer = app.listen(process.env['NX_TRPC_PORT'], () => {
 });
 
 const wss = new ws.Server({ noServer: true });
-applyWSSHandler({
+const handler = applyWSSHandler({
   wss,
   router: appRouter,
   createContext,
@@ -58,6 +58,12 @@ wss.on('connection', (ws) => {
   ws.once('close', () => {
     console.log(`➖➖ Connection (${wss.clients.size})`);
   });
+});
+
+process.on('SIGTERM', () => {
+  console.log('SIGTERM');
+  handler.broadcastReconnectNotification();
+  wss.close();
 });
 
 console.log('✅ WebSocket Server listening on ws://localhost:3000');

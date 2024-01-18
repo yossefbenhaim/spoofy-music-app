@@ -11,7 +11,7 @@ import MusicPlayer from 'components/musicPlayer/musicPlayer';
 import IconMusify from 'components/lottie/iconMusify/iconMusify';
 import Navbar from 'components/navbar/navbar';
 import getUseQuery from 'hooks/getUseQuery';
-
+import UseSubscription from 'hooks/useSubscription';
 
 const Library: React.FC = () => {
 	const { classes } = useStyles();
@@ -26,28 +26,31 @@ const Library: React.FC = () => {
 
 
 	return (
-		<div className={classes.fieldsContainer}>
-			<div className={classes.header}>
-				<div className={classes.titleContainer}>
-					<UserOptionMenu />
-					<div className={classes.logoContainer}>
-						<IconMusify />
-						<Typography className={classes.textLogo}>musify </Typography>
+		<>
+			<UseSubscription />
+			<div className={classes.fieldsContainer}>
+				<div className={classes.header}>
+					<div className={classes.titleContainer}>
+						<UserOptionMenu />
+						<div className={classes.logoContainer}>
+							<IconMusify />
+							<Typography className={classes.textLogo}>musify </Typography>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div className={classes.navigation}>
-				<div className={classes.tableValuse}>
-					<Outlet />
+				<div className={classes.navigation}>
+					<div className={classes.tableValuse}>
+						<Outlet />
+					</div>
+					<div className={classes.buttonsContainer}>
+						<Navbar />
+					</div>
 				</div>
-				<div className={classes.buttonsContainer}>
-					<Navbar />
+				<div className={classes.musicPlayerContainer}>
+					<MusicPlayer />
 				</div>
 			</div>
-			<div className={classes.musicPlayerContainer}>
-				<MusicPlayer />
-			</div>
-		</div>
+		</>
 	);
 };
 

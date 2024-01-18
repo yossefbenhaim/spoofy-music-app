@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { PlaylistSong } from 'models/interface/addPlaylistSong';
+import { PlaylistSong } from '@spoofy/spoofy-types';
 import { SliceName } from 'models/enums/sliceName';
 import { Playlist } from 'models/interface/playlist';
 
@@ -18,6 +18,7 @@ const Playlists = createSlice({
     setPlaylists: (state, action: PayloadAction<Playlist[]>) => {
       state.playlists = action.payload;
     },
+
     addPlaylist: (state, action: PayloadAction<Omit<Playlist, 'songs'>>) => {
       const newPlaylist: Playlist = {
         id: action.payload.id,
@@ -27,39 +28,41 @@ const Playlists = createSlice({
       };
       state.playlists.push(newPlaylist);
     },
+
     updatePlaylistName: (
       state,
       action: PayloadAction<Pick<Playlist, 'id' | 'name'>>
     ) => {
       const { id, name } = action.payload;
-
       const currentPlaylist: Playlist = state.playlists.find(
         (playlist) => playlist.id === id
       )!;
-
       if (currentPlaylist) {
         currentPlaylist.name = name;
       }
     },
+
     updatePlaylistSongs: (state, action: PayloadAction<PlaylistSong>) => {
-      const { playlistId, songsId } = action.payload;
+      const { playlistId, songId } = action.payload;
       const currentPlaylist = state.playlists.find(
         (playlist) => playlist.id === playlistId
       );
-
-      if (currentPlaylist) currentPlaylist.songs.push(songsId);
+      if (currentPlaylist) {
+        const existSomg = currentPlaylist.songs.find((song) => song === songId);
+        if (!existSomg) {
+          currentPlaylist.songs.push(songId);
+        }
+      }
     },
     deleteSongFromPlaylist: (state, action: PayloadAction<PlaylistSong>) => {
-      const { playlistId, songsId } = action.payload;
+      const { playlistId, songId: songsId } = action.payload;
       const currentPlaylist: Playlist | undefined = state.playlists.find(
         (playlist) => playlist.id === playlistId
       );
-
       if (currentPlaylist) {
         const index = currentPlaylist.songs.findIndex(
           (song) => song === songsId
         );
-
         if (index !== -1) currentPlaylist.songs.splice(index, 1);
       }
     },

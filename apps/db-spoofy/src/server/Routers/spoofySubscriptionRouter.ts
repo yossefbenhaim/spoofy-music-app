@@ -1,23 +1,89 @@
 import { router, publicProcedure } from '../trpc';
-import {
-  CreateSongInput,
-  Mutation,
-  Subscription,
-} from '../../types/spoofyTypes';
 import { mainClient } from '../../apolloConfig/apolloConnection';
-import { z } from 'zod';
 import { observable } from '@trpc/server/observable';
 import { EventEmitter } from 'events';
-import { gql } from '@apollo/client';
-
-const ee = new EventEmitter();
+import { ADD_PLAYLIST_SUBSCRIPTION } from '../../server/querys/subscription/addPlaylistSubscription';
+import { DELETE_PLAYLIST_SONG_SUBSCRIPTION } from '../../server/querys/subscription/deletePlaylistSongSubscription';
+import { ADD_PLAYLIST_SONG_SUBSCRIPTION } from '../../server/querys/subscription/addPlaylistSongSubscription';
+import { UPDATE_PLAYLIST_NAME_SUBSCRIPTION } from '../../server/querys/subscription/updatePlaylistNameSubscription';
+import {
+  ListenPayload,
+  Playlist,
+  Playlistsong,
+  Subscription,
+} from 'types/spoofyTypes';
 
 export const spoofySubscrptionRouter = router({
-  addPlaylistSongSubacription: publicProcedure.subscription(() => {
-    return observable<any>((emit) => {
-      const onAdd = (data: any) => {
-        // emit data to client
-        emit.next(data);
+  onAddPlaylistSubscription: publicProcedure.subscription(({ ctx }) => {
+    return observable<Playlist>((emit) => {
+      const { req } = ctx;
+      const onAddPlaylist = () => {
+        mainClient.subscribe({ query: ADD_PLAYLIST_SUBSCRIPTION }).subscribe({
+          next(data) {
+            emit.next(data.data.listen.relatedNode);
+          },
+        });
+      };
+      req.on('onAddPlaylist', onAddPlaylist);
+      return () => {
+        req.off('onAddPlaylist', onAddPlaylist);
+      };
+    });
+  }),
+
+  onAddPlaylistSongsSubscription: publicProcedure.subscription(({ ctx }) => {
+    return observable<Playlistsong>((emit) => {
+      const { req } = ctx;
+      const onAddPlaylist = () => {
+        mainClient
+          .subscribe({ query: ADD_PLAYLIST_SONG_SUBSCRIPTION })
+          .subscribe({
+            next(data) {
+              emit.next(data.data.listen.relatedNode);
+            },
+          });
+      };
+      req.on('onAddPlaylistSongsSubscription', onAddPlaylist);
+      return () => {
+        req.off('onAddPlaylistSongsSubscription', onAddPlaylist);
+      };
+    });
+  }),
+
+  onDeletePlaylistSongsSubscription: publicProcedure.subscription(({ ctx }) => {
+    return observable<string>((emit) => {
+      const { req } = ctx;
+      const onAddPlaylist = () => {
+        mainClient
+          .subscribe({ query: DELETE_PLAYLIST_SONG_SUBSCRIPTION })
+          .subscribe({
+            next(data) {
+              emit.next(data.data.listen.relatedNodeId);
+            },
+          });
+      };
+      req.on('onDeletePlaylistSongsSubscription', onAddPlaylist);
+      return () => {
+        req.off('onDeletePlaylistSongsSubscription', onAddPlaylist);
+      };
+    });
+  }),
+
+  onUpdatePlaylistNameSubscription: publicProcedure.subscription(({ ctx }) => {
+    return observable<Pick<Playlist, 'id' | 'name'>>((emit) => {
+      const { req } = ctx;
+      const onAddPlaylist = () => {
+        mainClient
+          .subscribe({ query: UPDATE_PLAYLIST_NAME_SUBSCRIPTION })
+          .subscribe({
+            next(data) {
+              emit.next(data.data.listen.relatedNode);
+            },
+          });
+      };
+      req.on('onUpdatePlaylistNameSubscription', onAddPlaylist);
+      return () => {
+        req.off('onUpdatePlaylistNameSubscription', onAddPlaylist);
       };
     });
   }),
