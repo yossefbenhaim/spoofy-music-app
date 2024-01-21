@@ -20,7 +20,6 @@ const UseSubscription = () => {
 			if (data) {
 				setNewPlaylist(data)
 			}
-			console.log('Subscription Data:', data);
 		},
 		onError: (err) => {
 			console.error('Subscription Error:', err);
@@ -48,8 +47,6 @@ const UseSubscription = () => {
 					songId: songId
 				})
 			}
-
-			console.log('Subscription add Songs:', data);
 		},
 		onError: (err) => {
 			console.error('Subscription add Songs:', err);
@@ -79,7 +76,6 @@ const UseSubscription = () => {
 					songId
 				})
 			}
-			console.log('Subscription delete Songs:', data);
 		},
 		onError: (err) => {
 			console.error('Subscription delete Songs:', err);
@@ -109,7 +105,6 @@ const UseSubscription = () => {
 					name: newName as string
 				})
 			}
-			console.log('Subscription update name playlist:', data);
 		},
 		onError: (err) => {
 			console.error('Subscription update name playlist:', err);
