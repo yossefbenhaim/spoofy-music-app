@@ -82,6 +82,9 @@ const useStyles = makeStyles()((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#00000096',
+    backdropFilter: 'blur(10px)',
+    borderRadius: '20px',
   },
 }));
 

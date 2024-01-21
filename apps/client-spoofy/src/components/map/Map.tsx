@@ -19,7 +19,6 @@ const Map = () => {
 	const olMap = useOL()
 
 	function CenterMap() {
-		// olMap.map.setView().fit()
 		olMap.map.getView().setZoom(5);
 	}
 	return (
