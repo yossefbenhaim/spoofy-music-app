@@ -15,7 +15,7 @@ const IconEmptyPlaylist: React.FC = () => {
 			renderer: 'svg',
 			loop: false,
 			autoplay: true,
-			path: '/src/lottieFile/emptyRows.json',
+			path: '/src/lottieFile/emptyPlaylist.json',
 		});
 		return () =>
 			animationRef.current && animationRef.current.destroy();
