@@ -29,11 +29,9 @@ const Map = () => {
 				initial={{
 					center: ISRAEL_CENTER_COORDS,
 					zoom: ISRAEL_DEFAULT_ZOOM,
-
 				}}
 				noDefaultControls
 				className="h-full"
-
 			>
 				<ROSMWebGL />
 				<RControl.RScaleLine />
@@ -47,7 +45,6 @@ const Map = () => {
 				</RControl.RCustom>
 			</RMap>
 		</>
-
 	);
 }
 export default Map
