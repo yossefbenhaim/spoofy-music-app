@@ -213,7 +213,7 @@ export const LightMode = createTheme({
       dataGrid: '#8787876e',
       musicPlayer: '#8787876e',
       login: '#797777',
-      navbar: 'rgb(0 0 0 / 50%)',
+      navbar: 'rgb(135 135 135 / 50%)',
       loginImage: `url(${backgroundLoginImage})`,
       backgroundMainImage: `url(${mainBackgroundLghitMode})`,
       buttonColors: {
@@ -228,10 +228,10 @@ export const LightMode = createTheme({
         locationCard: 'rgb(22 183 84 / 50%)',
       },
       nemuProfile: {
-        boundaryLine: '1px solid white',
+        boundaryLine: '1px solid black',
         icon: 'rgb(255, 255, 255)',
         tooltip: '#797777',
-        menu: 'rgb(0 0 0 / 50%)',
+        menu: 'rgb(135 135 135 / 50%)',
         setting: '#797777',
         hoverMenu: '#4f4f4fd9',
       },
@@ -247,7 +247,7 @@ export const LightMode = createTheme({
       gray: 'rgb(255, 255, 255)',
       error: '#ff0000',
       spoofy: 'rgb(74, 191, 117)',
-      text: 'white',
+      text: 'black',
       title: 'white',
       border: {
         BottomError: 'red',
@@ -272,8 +272,8 @@ export const LightMode = createTheme({
       },
       nemuProfile: {
         setting: 'white',
-        borderTop: '1px solid white',
-        text: 'white',
+        borderTop: '1px solid black',
+        text: 'black',
       },
       profile: {
         text: 'black',
