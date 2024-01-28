@@ -1,8 +1,15 @@
 import { RFeatureUIEvent } from 'rlayers';
+import { Feature } from 'ol';
+import getFeaturesExtent from './getFeaturesExtent';
 
-export const zoomInLocation = (event: RFeatureUIEvent) => {
-    event.map.getView().fit(event.target.getGeometry()?.getExtent()!, {
-        duration: 1000,
-        maxZoom: 15,
-    });
+export const zoomInLocation = (event: RFeatureUIEvent, maxZoom: number) => {
+  const target = event.target;
+  const map = event.map;
+  const features: Feature[] = target.get('features');
+  const extent = getFeaturesExtent(features);
+
+  map.getView().fit(extent, {
+    duration: 500,
+    maxZoom: maxZoom,
+  });
 };
