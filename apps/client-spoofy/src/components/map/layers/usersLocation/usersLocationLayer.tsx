@@ -39,7 +39,7 @@ const UsersLocationLayer = () => {
 		<RLayerCluster
 			zIndex={Z_INDEX}
 			distance={DISTANCE}
-			style={(feature) => clusterStyle(feature, sizeIcon)}
+			style={(feature) => clusterStyle(feature)}
 			onPointerEnter={handlePointerEnter}
 			onPointerLeave={handlePointerLeave}
 			onClick={handleClickFeature}
