@@ -17,7 +17,6 @@ import GET_ARTIST from '../querys/query/artists';
 import GET_SONGS from '../querys/query/songs';
 import GET_PLAYLIST from '../querys/query/playlists';
 import FAVORITES_BY_USER from '../querys/query/favoritesByUser';
-import ADD_SONG from '../querys/mutation/addSong';
 
 export const spoofyQueryRouter = router({
   getUsers: publicProcedure.query<UsersConnection>(async () => {

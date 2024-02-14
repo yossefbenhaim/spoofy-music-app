@@ -11,6 +11,15 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import DialogDeleteUser from 'components/setting/dialogDeleteUser/dialogDeleteUser';
 import Typography from '@mui/material/Typography';
 
+
+const SETTING = 'הגדרות'
+const DELETE_USER = 'מחק משתמש'
+const EXPLAIN_CLICK_ON_DELETE = 'לחיצה על מחיקה תמחק את התמשתמש לצמיתות'
+const DELETE = 'מחק'
+const CHANGE_COLOR = 'שנה צבע'
+const PICK_DISPLY_COLOR = 'בחר מצב תצוגת צבעים'
+
+
 const Settings: React.FC = () => {
 	const { classes } = useStyles()
 	const { classes: classesCommon } = useStylesCommon();
@@ -31,22 +40,22 @@ const Settings: React.FC = () => {
 
 	return <div className={classes.containerFields}>
 		<div className={classes.titleContainer}>
-			<Typography className={classes.title}>הגדרות</Typography>
+			<Typography className={classes.title}>{SETTING}</Typography>
 		</div>
 		<div className={classes.contentContainer}>
 			<div>
-				<Typography className={classes.titleContent}>מחק משתמש</Typography>
-				<Typography className={classes.content}>לחיצה על מחיקה תמחק את התמשתמש לצמיתות</Typography>
+				<Typography className={classes.titleContent}>{DELETE_USER}</Typography>
+				<Typography className={classes.content}>{EXPLAIN_CLICK_ON_DELETE}</Typography>
 			</div>
 			<Button onClick={handleClickOpenDeleteDialog} className={classesCommon.genericButton}>
-				<Typography >מחק</Typography>
+				<Typography >{DELETE}</Typography>
 				<DeleteOutlineIcon />
 			</Button>
 		</div>
 		<div className={classes.contentContainer}>
 			<div>
-				<Typography className={classes.titleContent}>שנה צבע</Typography>
-				<Typography className={classes.content} >בחר מצב תצוגת צבעים</Typography>
+				<Typography className={classes.titleContent}>{CHANGE_COLOR}</Typography>
+				<Typography className={classes.content} >{PICK_DISPLY_COLOR}</Typography>
 			</div>
 			<FormControlLabel
 				control={<MaterialUISwitch sx={{ m: 1 }} defaultChecked />}

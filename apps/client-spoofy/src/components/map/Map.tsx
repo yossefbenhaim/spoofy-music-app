@@ -1,13 +1,9 @@
 import "ol/ol.css";
 import "rlayers/control/layers.css";
 
-import { fromLonLat, transform } from "ol/proj";
-import { RControl, RMap, ROSMWebGL, useOL, RLayerVector, RStyle } from "rlayers";
-import GeoJSON from "ol/format/GeoJSON";
+import { fromLonLat } from "ol/proj";
+import { RControl, RMap, ROSMWebGL } from "rlayers";
 
-import MyLocationIcon from '@mui/icons-material/MyLocation';
-import useStyles from "./mapStyles";
-import { IconButton } from "@mui/material";
 import UsersLocationLayer from "./layers/usersLocation/usersLocationLayer";
 
 
@@ -15,12 +11,6 @@ const ISRAEL_CENTER_COORDS = fromLonLat([35.0818155, 31.4117257]);
 const ISRAEL_DEFAULT_ZOOM = 6.8;
 
 const Map = () => {
-	const { classes } = useStyles()
-	const olMap = useOL()
-
-	const CenterMap = () => {
-		olMap.map.getView().setZoom(5);
-	}
 
 	return (
 		<RMap
@@ -38,11 +28,6 @@ const Map = () => {
 			<RControl.RZoom />
 			<RControl.RZoomSlider />
 			<UsersLocationLayer />
-			{/* <RControl.RCustom className={classes.customControl}>
-				<IconButton onClick={() => CenterMap()}>
-					<MyLocationIcon />
-				</IconButton>
-			</RControl.RCustom> */}
 		</RMap>
 	);
 }

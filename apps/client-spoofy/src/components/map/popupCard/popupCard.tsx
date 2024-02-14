@@ -1,40 +1,43 @@
-import { Card, CardContent, Typography } from "@mui/material"
+import { Card, CardContent, IconButton, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
+import { User } from "@models/interface/user"
 
 import useStyles from "./popupCardStyles"
+import CancelIcon from '@mui/icons-material/Cancel';
+import { findAddressByCoordinates } from "@utils/findAddressByCoordinates";
 
 interface Props {
-	firstName: string
-	lastName: string
-	coordinates: number[]
+	userSelected: User | undefined,
+	setSelctedUser: React.Dispatch<React.SetStateAction<User | undefined>>
 }
 
 const PopupCard: React.FC<Props> = (props) => {
-	const { firstName, lastName, coordinates } = props
+	const { userSelected, setSelctedUser } = props
+	const { firstName, lastName, coordinates } = userSelected as User
 	const { classes } = useStyles()
 	const [location, setLocation] = useState<string>()
 
-	const fillAddress = (coordinates: number[]): Promise<string> => {
-		if (coordinates === null) return Promise.resolve("");
-		const URL = `https://nominatim.openstreetmap.org/reverse?format=json&lon=${coordinates[0]}&lat=${coordinates[1]}`;
-		return fetch(URL)
-			.then((r) => r.json())
-			.then((data) => data.display_name)
-			.catch((e) => e.message);
-	}
-
 	useEffect(() => {
-		fillAddress(coordinates).then((address) => {
+		findAddressByCoordinates(coordinates as number[]).then((address) => {
 			setLocation(address)
 		})
 	}, [coordinates])
 
+
+	const handleExitCard = () => {
+		setSelctedUser(undefined)
+	}
 	return (
 		<Card className={classes.cardContainer}>
 			<CardContent>
-				<Typography  >
-					{`${firstName}  ${lastName}  😀`}
-				</Typography>
+				<div className={classes.headerCard}>
+					<Typography  >
+						{`${firstName}  ${lastName}  😀`}
+					</Typography>
+					<IconButton onClick={handleExitCard}>
+						<CancelIcon />
+					</IconButton>
+				</div>
 				<Typography className={classes.content} >
 					{`${location}`}
 				</Typography>
