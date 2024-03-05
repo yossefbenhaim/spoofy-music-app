@@ -1,27 +1,27 @@
 {
-  "name": "db-spoofy",
+  "name": "backend-spoofy",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/db-spoofy/src",
+  "sourceRoot": "apps/backend-spoofy/src",
   "projectType": "library",
   "targets": {
 	"typecheck:local":{
 		"executor": "nx:run-commands",
 		"options": {
-			"commands":[ "npx tsc -b --watch ./apps/db-spoofy/tsconfig.json"]
+			"commands":[ "npx tsc -b --watch ./apps/backend-spoofy/tsconfig.json"]
 		},
 		"parallel":false
 	},
 	"typecheck:remote":{
 		"executor": "nx:run-commands",
 		"options": {
-			"commands":[ "npx tsc -b ./apps/db-spoofy/tsconfig.json"]
+			"commands":[ "npx tsc -b ./apps/backend-spoofy/tsconfig.json"]
 		},
 		"parallel":false
 	},
 	"start":{
 		"executor": "nx:run-commands",
 		"options": {
-			"commands":[ "nodemon apps/db-spoofy/src/main.ts"]
+			"commands":[ "nodemon apps/backend-spoofy/src/main.ts"]
 		},
 		"parallel":false
 	},
@@ -29,7 +29,7 @@
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/db-spoofy/**/*.js"]
+        "lintFilePatterns": ["apps/backend-spoofy/**/*.js"]
       }
     }
   },

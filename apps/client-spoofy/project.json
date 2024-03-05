@@ -14,7 +14,7 @@
 		"typecheck:remote":{
 			"executor": "nx:run-commands",
 			"options": {
-				"commands":[ "npx tsc -b ./apps/db-spoofy/tsconfig.json"]
+				"commands":[ "npx tsc -b ./apps/backend-spoofy/tsconfig.json"]
 			},
 			"parallel":false
 		},

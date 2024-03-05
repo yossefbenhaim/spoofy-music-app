@@ -22,7 +22,7 @@
 		"@utils/*": ["./utils/*"],
 		"@models/*": ["./models/*"],
 		"@spoofy/backend-spoofy":[
-			"../../../apps/db-spoofy/src/index.ts"
+			"../../../apps/backend-spoofy/src/index.ts"
 		],
 		"@spoofy/spoofy-types":[
 			"../../../libs/spoofy-types/src/index.ts"

@@ -15,7 +15,7 @@
 	  "skipDefaultLibCheck": true,
 	  "baseUrl": ".",
 	  "paths": {
-		"@nx-spoofy/db-spoofy": ["apps/db-spoofy/src/index.js"],
+		"@nx-spoofy/backend-spoofy": ["apps/backend-spoofy/src/index.js"],
 		"@nx-spoofy/lib": ["apps/lib/src/index.ts"],
 	  }
 	},
