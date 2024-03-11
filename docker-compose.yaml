@@ -1,0 +1,45 @@
+version: '3.8'
+services:
+
+  postgers:
+    image: 'postgers'
+    container_name: postgres
+    ports:
+      - '5432:5432' 
+    environment:
+      - POSTGRES_PASSWORD=yossef7875 
+      - POSTGRES_USER=postgres  
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+
+  postgraphile-spoofy:
+    build: ./app/postgraphile-spoofy
+    container_name: postgraphile-spoofy
+    ports:
+      - '8080:8080'  
+    image: postgraphile-spoofy
+
+  backend-spoofy:
+    build: ./app/backend-spoofy
+    container_name: backend-spoofy
+    ports:
+      - '3000:3000'  
+    volumes:
+      - logs:/app/logs
+    image: backend-spoofy
+
+  client-spoofy:
+    build: ./app/client-spoofy
+    container_name: client-spoofy
+    image: client-spoofy
+    ports:
+      - '4200:4200'  
+    depends_on:
+      - backend-spoofy  
+    stdin_open: true
+    tty: true
+      
+volumes:
+  data: 
+  logs:
+

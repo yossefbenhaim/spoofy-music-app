@@ -1,15 +1,13 @@
 import { router, publicProcedure } from '../trpc';
 import {
   ArtistsConnection,
-  CreateSongInput,
   FavoriteInput,
-  Mutation,
   PlaylistsConnection,
   Query,
   SongsConnection,
   User,
   UsersConnection,
-} from '../../types/spoofyTypes';
+} from '@spoofy/spoofy-types';
 import { mainClient } from '../../apolloConfig/apolloConnection';
 import GET_USERS from '../querys/query/users';
 import { z } from 'zod';

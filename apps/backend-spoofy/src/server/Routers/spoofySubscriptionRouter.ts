@@ -1,17 +1,11 @@
 import { router, publicProcedure } from '../trpc';
 import { mainClient } from '../../apolloConfig/apolloConnection';
 import { observable } from '@trpc/server/observable';
-import { EventEmitter } from 'events';
 import { ADD_PLAYLIST_SUBSCRIPTION } from '../../server/querys/subscription/addPlaylistSubscription';
 import { DELETE_PLAYLIST_SONG_SUBSCRIPTION } from '../../server/querys/subscription/deletePlaylistSongSubscription';
 import { ADD_PLAYLIST_SONG_SUBSCRIPTION } from '../../server/querys/subscription/addPlaylistSongSubscription';
 import { UPDATE_PLAYLIST_NAME_SUBSCRIPTION } from '../../server/querys/subscription/updatePlaylistNameSubscription';
-import {
-  ListenPayload,
-  Playlist,
-  Playlistsong,
-  Subscription,
-} from 'types/spoofyTypes';
+import { Playlist, Playlistsong } from '@spoofy/spoofy-types';
 
 export const spoofySubscrptionRouter = router({
   onAddPlaylistSubscription: publicProcedure.subscription(({ ctx }) => {

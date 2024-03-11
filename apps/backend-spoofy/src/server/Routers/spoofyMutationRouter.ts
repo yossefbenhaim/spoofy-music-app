@@ -9,7 +9,7 @@ import {
   DeleteUserByIdInput,
   Mutation,
   UpdatePlaylistByIdInput,
-} from '../../types/spoofyTypes';
+} from '@spoofy/spoofy-types';
 import { mainClient } from '../../apolloConfig/apolloConnection';
 import { z } from 'zod';
 
@@ -21,9 +21,7 @@ import DELETE_FAVORITS_BY_USER_ID_AND_SONG_ID from '../querys/mutation/deleteFav
 import DELETE_PLAYLIST_SONG_BY_PLAYLIST_AND_SONG_ID from '../querys/mutation/deletePlaylistSongByPlaylistIdAndSongId';
 import DELETE_USER_BY_ID from '../querys/mutation/deleteUserById';
 import UPDATE_PLAYLIST_NAME_BY_ID from '../querys/mutation/updatePlaylistNameById';
-import { observable } from '@trpc/server/observable';
 import { EventEmitter } from 'events';
-import { ADD_PLAYLIST_SUBSCRIPTION } from '../../server/querys/subscription/addPlaylistSubscription';
 
 const ee = new EventEmitter();
 
