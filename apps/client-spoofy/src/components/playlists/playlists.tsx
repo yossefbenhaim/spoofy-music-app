@@ -9,6 +9,9 @@ import useStyles from './genericPlaylistTable/playlistsTableStyles';
 import GenericPlaylistDialog from 'common/genericPlaylistDialog/genericPlaylistDialog';
 import PlaylistsTables from './playlistsTables';
 
+
+const CREATE_NEW_PLAYLIST = '+ צור פלייליסט חדש'
+
 const Playlists: React.FC = () => {
 	const { classes } = useStyles();
 	const { classes: classesCommon } = useStylesCommon();
@@ -43,7 +46,7 @@ const Playlists: React.FC = () => {
 					className={classesCommon.genericButton}
 					onClick={() => { handleClickOpen(undefined) }}
 				>
-					+ צור פלייליסט חדש
+					{CREATE_NEW_PLAYLIST}
 				</Button>
 			</div>
 			<GenericPlaylistDialog

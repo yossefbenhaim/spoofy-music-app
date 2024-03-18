@@ -24,7 +24,6 @@ const Profile: React.FC<Props> = (props) => {
 	const handleClose = () => {
 		setOpenProfileDialog(false);
 	};
-	console.log(currentUser?.address);
 
 	const findPlylistsUserById = (userId: string | undefined): string[] => {
 		const filterPlaylists = playlists.filter((song) => song.creatorId === userId)

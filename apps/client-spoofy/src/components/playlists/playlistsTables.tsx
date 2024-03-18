@@ -13,14 +13,16 @@ interface Props {
 const PlaylistsTables: React.FC<Props> = (props) => {
 	const { handleClickOpen, playlists } = props;
 	const { classes } = useStyles();
+
 	return (
 		<>
-			{playlists.length < 0 ? playlists.map((playlist) => (
-				<PlaylistTable key={playlist.id} handleClickOpen={handleClickOpen} playlist={playlist} />
-			)) : <div className={classes.IconEmptyPlaylistContainer} >
-
-				<IconEmptyPlaylist />
-			</div>}
+			{playlists.length > 0
+				? playlists.map((playlist) => (
+					<PlaylistTable key={playlist.id} handleClickOpen={handleClickOpen} playlist={playlist} />
+				))
+				: <div className={classes.IconEmptyPlaylistContainer} >
+					<IconEmptyPlaylist />
+				</div>}
 		</>
 	);
 }

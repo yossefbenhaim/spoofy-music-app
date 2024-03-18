@@ -26,7 +26,12 @@ const Playlists = createSlice({
         creatorId: action.payload.creatorId,
         songs: [],
       };
-      state.playlists.push(newPlaylist);
+      const isExist = state.playlists.some(
+        (playlist) => playlist.id === newPlaylist.id
+      );
+      if (!isExist) {
+        state.playlists.push(newPlaylist);
+      }
     },
 
     updatePlaylistName: (
@@ -44,16 +49,19 @@ const Playlists = createSlice({
 
     updatePlaylistSongs: (state, action: PayloadAction<PlaylistSong>) => {
       const { playlistId, songId } = action.payload;
+
       const currentPlaylist = state.playlists.find(
         (playlist) => playlist.id === playlistId
       );
+
       if (currentPlaylist) {
-        const existSomg = currentPlaylist.songs.find((song) => song === songId);
-        if (!existSomg) {
+        const existSong = currentPlaylist.songs.some((song) => song === songId);
+        if (!existSong) {
           currentPlaylist.songs.push(songId);
         }
       }
     },
+
     deleteSongFromPlaylist: (state, action: PayloadAction<PlaylistSong>) => {
       const { playlistId, songId: songsId } = action.payload;
       const currentPlaylist: Playlist | undefined = state.playlists.find(

@@ -4,13 +4,11 @@ import * as trpcExpress from '@trpc/server/adapters/express';
 import { logginMiddleware } from './server/loggingMiddleware';
 import { appRouter } from './server';
 import { createContext } from './context';
-import { test } from '../src/server/Routers/testSubscription';
 import { applyWSSHandler } from '@trpc/server/adapters/ws';
 import ws from 'ws';
 
 require('dotenv').config();
 
-// test();
 const app = express();
 
 app.use(

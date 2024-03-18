@@ -61,6 +61,7 @@ const IconFavoriteSong: React.FC<Props> = (props) => {
 		event.stopPropagation();
 		if (favoritesLike.some((favorite: Favorite) => favorite.songId === rowSongId)) {
 			animref.current && animref.current.stop();
+
 			heandlDeleteFavorite();
 			dispatch(deleteFavoriteFrom({ songId: rowSongId }));
 			dispatch(deleteSong(rowSongId))
@@ -76,7 +77,8 @@ const IconFavoriteSong: React.FC<Props> = (props) => {
 	const heandlDeleteFavorite = () => {
 		deleteFavorite.mutate({
 			data: {
-				userId: currentUserId, songId: rowSongId
+				userId: currentUserId,
+				songId: rowSongId
 			}
 		}, {
 			onSuccess: () => {

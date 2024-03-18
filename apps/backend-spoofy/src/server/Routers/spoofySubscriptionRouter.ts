@@ -7,16 +7,21 @@ import { ADD_PLAYLIST_SONG_SUBSCRIPTION } from '../../server/querys/subscription
 import { UPDATE_PLAYLIST_NAME_SUBSCRIPTION } from '../../server/querys/subscription/updatePlaylistNameSubscription';
 import { Playlist, Playlistsong } from '@spoofy/spoofy-types';
 
+const eventCache: Set<string> = new Set();
+
 export const spoofySubscrptionRouter = router({
   onAddPlaylistSubscription: publicProcedure.subscription(({ ctx }) => {
     return observable<Playlist>((emit) => {
       const { req } = ctx;
       const onAddPlaylist = () => {
-        mainClient.subscribe({ query: ADD_PLAYLIST_SUBSCRIPTION }).subscribe({
-          next(data) {
-            emit.next(data.data.listen.relatedNode);
-          },
-        });
+        const subscription = mainClient
+          .subscribe({ query: ADD_PLAYLIST_SUBSCRIPTION })
+          .subscribe({
+            next(data) {
+              emit.next(data.data.listen.relatedNode);
+            },
+          });
+        return subscription.unsubscribe; // Return the unsubscribe function
       };
       req.on('onAddPlaylist', onAddPlaylist);
       return () => {
@@ -29,13 +34,18 @@ export const spoofySubscrptionRouter = router({
     return observable<Playlistsong>((emit) => {
       const { req } = ctx;
       const onAddPlaylist = () => {
-        mainClient
+        const subscription = mainClient
           .subscribe({ query: ADD_PLAYLIST_SONG_SUBSCRIPTION })
           .subscribe({
             next(data) {
-              emit.next(data.data.listen.relatedNode);
+              const songId = data.data.listen.relatedNodeId;
+              if (!eventCache.has(songId)) {
+                emit.next(data.data.listen.relatedNode);
+                eventCache.add(songId);
+              }
             },
           });
+        return subscription.unsubscribe; // Return the unsubscribe function
       };
       req.on('onAddPlaylistSongsSubscription', onAddPlaylist);
       return () => {
@@ -48,13 +58,14 @@ export const spoofySubscrptionRouter = router({
     return observable<string>((emit) => {
       const { req } = ctx;
       const onAddPlaylist = () => {
-        mainClient
+        const subscription = mainClient
           .subscribe({ query: DELETE_PLAYLIST_SONG_SUBSCRIPTION })
           .subscribe({
             next(data) {
               emit.next(data.data.listen.relatedNodeId);
             },
           });
+        return subscription.unsubscribe; // Return the unsubscribe function
       };
       req.on('onDeletePlaylistSongsSubscription', onAddPlaylist);
       return () => {
@@ -67,13 +78,14 @@ export const spoofySubscrptionRouter = router({
     return observable<Pick<Playlist, 'id' | 'name'>>((emit) => {
       const { req } = ctx;
       const onAddPlaylist = () => {
-        mainClient
+        const subscription = mainClient
           .subscribe({ query: UPDATE_PLAYLIST_NAME_SUBSCRIPTION })
           .subscribe({
             next(data) {
               emit.next(data.data.listen.relatedNode);
             },
           });
+        return subscription.unsubscribe; // Return the unsubscribe function
       };
       req.on('onUpdatePlaylistNameSubscription', onAddPlaylist);
       return () => {

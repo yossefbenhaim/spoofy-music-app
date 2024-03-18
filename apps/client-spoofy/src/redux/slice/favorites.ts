@@ -18,7 +18,6 @@ const FavoritesSong = createSlice({
       state.favorites = action.payload;
     },
     addFavorite: (state, action: PayloadAction<Favorite>) => {
-      console.log('getNewFavorites', action.payload);
       state.favorites.push(action.payload);
     },
     deleteFavoriteFrom: (state, action: PayloadAction<Favorite>) => {
