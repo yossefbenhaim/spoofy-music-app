@@ -1,0 +1,45 @@
+{
+	"extends": "../../tsconfig.base.json",
+	"compilerOptions": {
+		"module": "commonjs",
+		"baseUrl": "./src",
+		"allowJs": true,
+		"forceConsistentCasingInFileNames": true,
+		"strict": true,
+		"esModuleInterop": true,
+		"noImplicitOverride": true,
+		"noPropertyAccessFromIndexSignature": true,
+		"noImplicitReturns": true,
+		"noFallthroughCasesInSwitch": true,
+		"paths": {
+			"@authentication-spoofy/*": [
+				"src/*"
+			],
+			"routers/*": [
+				"src/routers/*"
+			],
+			"controllers/*": [
+				"src/controllers/*"
+			],
+			"@spoofy/spoofy-types": [
+				"../../../libs/spoofy-types/src/index.ts"
+			],
+			"@utils/*": [
+				"./utils/*"
+			],
+			"@models/*": [
+				"./models/*"
+			],
+			"@spoofy/backend-spoofy": [
+				"../../../apps/backend-spoofy/src/index.ts"
+			],
+		},
+	},
+	"files": [],
+	"include": [],
+	"references": [
+		{
+			"path": "./tsconfig.lib.json"
+		}
+	]
+}

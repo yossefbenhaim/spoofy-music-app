@@ -1,41 +1,26 @@
 import { AppRouter } from '@spoofy/backend-spoofy';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ReactNode, useState } from 'react'
 import {
-	createTRPCProxyClient, createTRPCReact, createWSClient, httpLink, wsLink
+	createTRPCReact, createWSClient, wsLink
 } from '@trpc/react-query'
-import { ReactNode, useEffect, useState } from 'react'
 
 export const trpc = createTRPCReact<AppRouter>();
+//todo: replace to env url
+const NX_TRPC_DB = 'ws://localhost:3000'
 
-const httpClient = httpLink({
-	url: '/api/db',
-	fetch: (url, options) =>
-		fetch(url, {
-			...options,
-			credentials: 'include'
-		})
-})
 const wsClient = createWSClient({
-	url: `ws://localhost:3000`,
+	url: NX_TRPC_DB,
 });
 
 const createTRPClient = () => {
 	return trpc.createClient({
 		links: [
-			// httpClient,
 			wsLink<AppRouter>({ client: wsClient })
 		],
 	})
 };
 
-// export const trpcClient = createTRPCProxyClient<AppRouter>({
-// 	links: [
-// 		httpClient,
-// 		wsLink({
-// 			client: wsClient,
-// 		}),
-// 	],
-// });
 
 export const TrpcProvider: React.FC<{ children: ReactNode }> = ({
 	children

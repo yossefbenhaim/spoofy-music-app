@@ -1,23 +1,62 @@
 {
-  "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
-    "types": [
-      "node",
-      "@nx/react/typings/cssmodule.d.ts",
-      "@nx/react/typings/image.d.ts",
-      "vite/client"
-    ]
-  },
-  "exclude": [
-    "src/**/*.spec.ts",
-    "src/**/*.test.ts",
-    "src/**/*.spec.tsx",
-    "src/**/*.test.tsx",
-    "src/**/*.spec.js",
-    "src/**/*.test.js",
-    "src/**/*.spec.jsx",
-    "src/**/*.test.jsx"
-  ],
-  "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx"]
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"outDir": "../../dist/out-tsc",
+		"types": [
+			"node",
+			"@nx/react/typings/cssmodule.d.ts",
+			"@nx/react/typings/image.d.ts",
+			"vite/client",
+			"vitest"
+		],
+		"baseUrl": "./src",
+		"target": "ESNext",
+		"useDefineForClassFields": true,
+		"lib": [
+			"DOM",
+			"DOM.Iterable",
+			"ESNext"
+		],
+		"allowJs": false,
+		"skipLibCheck": true,
+		"esModuleInterop": false,
+		"allowSyntheticDefaultImports": true,
+		"strict": true,
+		"forceConsistentCasingInFileNames": false,
+		"module": "ESNext",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"noEmit": true,
+		"jsx": "react-jsx",
+		"paths": {
+			"@utils/*": [
+				"./utils/*"
+			],
+			"@models/*": [
+				"./models/*"
+			],
+			"@spoofy/backend-spoofy": [
+				"../../../apps/backend-spoofy/src/index.ts"
+			],
+			"@spoofy/spoofy-types": [
+				"../../../libs/spoofy-types/src/index.ts"
+			],
+		},
+	},
+	"exclude": [
+		"src/**/*.spec.ts",
+		"src/**/*.test.ts",
+		"src/**/*.spec.tsx",
+		"src/**/*.test.tsx",
+		"src/**/*.spec.js",
+		"src/**/*.test.js",
+		"src/**/*.spec.jsx",
+		"src/**/*.test.jsx"
+	],
+	"include": [
+		"src/**/*.js",
+		"src/**/*.jsx",
+		"src/**/*.ts",
+		"src/**/*.tsx"
+	]
 }

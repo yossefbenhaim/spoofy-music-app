@@ -5,7 +5,7 @@ import { ADD_PLAYLIST_SUBSCRIPTION } from '../../server/querys/subscription/addP
 import { DELETE_PLAYLIST_SONG_SUBSCRIPTION } from '../../server/querys/subscription/deletePlaylistSongSubscription';
 import { ADD_PLAYLIST_SONG_SUBSCRIPTION } from '../../server/querys/subscription/addPlaylistSongSubscription';
 import { UPDATE_PLAYLIST_NAME_SUBSCRIPTION } from '../../server/querys/subscription/updatePlaylistNameSubscription';
-import { Playlist, Playlistsong } from '@spoofy/spoofy-types';
+import { Playlist, PlaylistSong } from '@spoofy/spoofy-types';
 
 const eventCache: Set<string> = new Set();
 
@@ -31,7 +31,7 @@ export const spoofySubscrptionRouter = router({
   }),
 
   onAddPlaylistSongsSubscription: publicProcedure.subscription(({ ctx }) => {
-    return observable<Playlistsong>((emit) => {
+    return observable<PlaylistSong>((emit) => {
       const { req } = ctx;
       const onAddPlaylist = () => {
         const subscription = mainClient

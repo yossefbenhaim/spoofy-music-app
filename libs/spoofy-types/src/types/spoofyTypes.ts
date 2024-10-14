@@ -1,34 +1,20 @@
-export type Maybe<T> = T;
+export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = {
-  [K in keyof T]: T[K];
-};
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]?: Maybe<T[SubKey]>;
-};
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]: Maybe<T[SubKey]>;
-};
-export type MakeEmpty<
-  T extends { [key: string]: unknown },
-  K extends keyof T
-> = { [_ in K]?: never };
-export type Incremental<T> =
-  | T
-  | {
-      [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never;
-    };
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string; output: string };
-  String: { input: string; output: string };
-  Boolean: { input: boolean; output: boolean };
-  Int: { input: number; output: number };
-  Float: { input: number; output: number };
-  BigFloat: { input: any; output: any };
-  Cursor: { input: any; output: any };
-  Datetime: { input: any; output: any };
-  UUID: { input: any; output: any };
+  ID: { input: string; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
+  Cursor: { input: any; output: any; }
+  Datetime: { input: any; output: any; }
+  UUID: { input: any; output: any; }
 };
 
 export type Artist = Node & {
@@ -40,6 +26,7 @@ export type Artist = Node & {
   /** Reads and enables pagination through a set of `Song`. */
   songsByArtistId: SongsConnection;
 };
+
 
 export type ArtistSongsByArtistIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
@@ -130,52 +117,8 @@ export enum ArtistsOrderBy {
   NameDesc = 'NAME_DESC',
   Natural = 'NATURAL',
   PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
-  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC'
 }
-
-/** A filter to be used against BigFloat List fields. All fields are combined with a logical ‘and.’ */
-export type BigFloatListFilter = {
-  /** Any array item is equal to the specified value. */
-  anyEqualTo?: InputMaybe<Scalars['BigFloat']['input']>;
-  /** Any array item is greater than the specified value. */
-  anyGreaterThan?: InputMaybe<Scalars['BigFloat']['input']>;
-  /** Any array item is greater than or equal to the specified value. */
-  anyGreaterThanOrEqualTo?: InputMaybe<Scalars['BigFloat']['input']>;
-  /** Any array item is less than the specified value. */
-  anyLessThan?: InputMaybe<Scalars['BigFloat']['input']>;
-  /** Any array item is less than or equal to the specified value. */
-  anyLessThanOrEqualTo?: InputMaybe<Scalars['BigFloat']['input']>;
-  /** Any array item is not equal to the specified value. */
-  anyNotEqualTo?: InputMaybe<Scalars['BigFloat']['input']>;
-  /** Contained by the specified list of values. */
-  containedBy?: InputMaybe<Array<InputMaybe<Scalars['BigFloat']['input']>>>;
-  /** Contains the specified list of values. */
-  contains?: InputMaybe<Array<InputMaybe<Scalars['BigFloat']['input']>>>;
-  /** Not equal to the specified value, treating null like an ordinary value. */
-  distinctFrom?: InputMaybe<Array<InputMaybe<Scalars['BigFloat']['input']>>>;
-  /** Equal to the specified value. */
-  equalTo?: InputMaybe<Array<InputMaybe<Scalars['BigFloat']['input']>>>;
-  /** Greater than the specified value. */
-  greaterThan?: InputMaybe<Array<InputMaybe<Scalars['BigFloat']['input']>>>;
-  /** Greater than or equal to the specified value. */
-  greaterThanOrEqualTo?: InputMaybe<
-    Array<InputMaybe<Scalars['BigFloat']['input']>>
-  >;
-  /** Is null (if `true` is specified) or is not null (if `false` is specified). */
-  isNull?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Less than the specified value. */
-  lessThan?: InputMaybe<Array<InputMaybe<Scalars['BigFloat']['input']>>>;
-  /** Less than or equal to the specified value. */
-  lessThanOrEqualTo?: InputMaybe<
-    Array<InputMaybe<Scalars['BigFloat']['input']>>
-  >;
-  /** Equal to the specified value, treating null like an ordinary value. */
-  notDistinctFrom?: InputMaybe<Array<InputMaybe<Scalars['BigFloat']['input']>>>;
-  /** Not equal to the specified value. */
-  notEqualTo?: InputMaybe<Array<InputMaybe<Scalars['BigFloat']['input']>>>;
-  /** Overlaps the specified list of values. */
-  overlaps?: InputMaybe<Array<InputMaybe<Scalars['BigFloat']['input']>>>;
-};
 
 /** All input for the create `Artist` mutation. */
 export type CreateArtistInput = {
@@ -203,6 +146,7 @@ export type CreateArtistPayload = {
   /** Our root query field type. Allows us to run any query from our mutation payload. */
   query?: Maybe<Query>;
 };
+
 
 /** The output of our create `Artist` mutation. */
 export type CreateArtistPayloadArtistEdgeArgs = {
@@ -240,6 +184,7 @@ export type CreateFavoritePayload = {
   userByUserId?: Maybe<User>;
 };
 
+
 /** The output of our create `Favorite` mutation. */
 export type CreateFavoritePayloadFavoriteEdgeArgs = {
   orderBy?: InputMaybe<Array<FavoritesOrderBy>>;
@@ -274,45 +219,47 @@ export type CreatePlaylistPayload = {
   userByCreatorId?: Maybe<User>;
 };
 
+
 /** The output of our create `Playlist` mutation. */
 export type CreatePlaylistPayloadPlaylistEdgeArgs = {
   orderBy?: InputMaybe<Array<PlaylistsOrderBy>>;
 };
 
-/** All input for the create `Playlistsong` mutation. */
-export type CreatePlaylistsongInput = {
+/** All input for the create `PlaylistSong` mutation. */
+export type CreatePlaylistSongInput = {
   /**
    * An arbitrary string value with no semantic meaning. Will be included in the
    * payload verbatim. May be used to track mutations by the client.
    */
   clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  /** The `Playlistsong` to be created by this mutation. */
-  playlistsong: PlaylistsongInput;
+  /** The `PlaylistSong` to be created by this mutation. */
+  playlistSong: PlaylistSongInput;
 };
 
-/** The output of our create `Playlistsong` mutation. */
-export type CreatePlaylistsongPayload = {
-  __typename?: 'CreatePlaylistsongPayload';
+/** The output of our create `PlaylistSong` mutation. */
+export type CreatePlaylistSongPayload = {
+  __typename?: 'CreatePlaylistSongPayload';
   /**
    * The exact same `clientMutationId` that was provided in the mutation input,
    * unchanged and unused. May be used by a client to track mutations.
    */
   clientMutationId?: Maybe<Scalars['String']['output']>;
-  /** Reads a single `Playlist` that is related to this `Playlistsong`. */
+  /** Reads a single `Playlist` that is related to this `PlaylistSong`. */
   playlistByPlaylistId?: Maybe<Playlist>;
-  /** The `Playlistsong` that was created by this mutation. */
-  playlistsong?: Maybe<Playlistsong>;
-  /** An edge for our `Playlistsong`. May be used by Relay 1. */
-  playlistsongEdge?: Maybe<PlaylistsongsEdge>;
+  /** The `PlaylistSong` that was created by this mutation. */
+  playlistSong?: Maybe<PlaylistSong>;
+  /** An edge for our `PlaylistSong`. May be used by Relay 1. */
+  playlistSongEdge?: Maybe<PlaylistSongsEdge>;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
   query?: Maybe<Query>;
-  /** Reads a single `Song` that is related to this `Playlistsong`. */
+  /** Reads a single `Song` that is related to this `PlaylistSong`. */
   songBySongId?: Maybe<Song>;
 };
 
-/** The output of our create `Playlistsong` mutation. */
-export type CreatePlaylistsongPayloadPlaylistsongEdgeArgs = {
-  orderBy?: InputMaybe<Array<PlaylistsongsOrderBy>>;
+
+/** The output of our create `PlaylistSong` mutation. */
+export type CreatePlaylistSongPayloadPlaylistSongEdgeArgs = {
+  orderBy?: InputMaybe<Array<PlaylistSongsOrderBy>>;
 };
 
 /** All input for the create `Song` mutation. */
@@ -343,6 +290,7 @@ export type CreateSongPayload = {
   /** An edge for our `Song`. May be used by Relay 1. */
   songEdge?: Maybe<SongsEdge>;
 };
+
 
 /** The output of our create `Song` mutation. */
 export type CreateSongPayloadSongEdgeArgs = {
@@ -375,6 +323,7 @@ export type CreateUserPayload = {
   /** An edge for our `User`. May be used by Relay 1. */
   userEdge?: Maybe<UsersEdge>;
 };
+
 
 /** The output of our create `User` mutation. */
 export type CreateUserPayloadUserEdgeArgs = {
@@ -445,6 +394,7 @@ export type DeleteArtistPayload = {
   query?: Maybe<Query>;
 };
 
+
 /** The output of our delete `Artist` mutation. */
 export type DeleteArtistPayloadArtistEdgeArgs = {
   orderBy?: InputMaybe<Array<ArtistsOrderBy>>;
@@ -493,6 +443,7 @@ export type DeleteFavoritePayload = {
   userByUserId?: Maybe<User>;
 };
 
+
 /** The output of our delete `Favorite` mutation. */
 export type DeleteFavoritePayloadFavoriteEdgeArgs = {
   orderBy?: InputMaybe<Array<FavoritesOrderBy>>;
@@ -538,13 +489,14 @@ export type DeletePlaylistPayload = {
   userByCreatorId?: Maybe<User>;
 };
 
+
 /** The output of our delete `Playlist` mutation. */
 export type DeletePlaylistPayloadPlaylistEdgeArgs = {
   orderBy?: InputMaybe<Array<PlaylistsOrderBy>>;
 };
 
-/** All input for the `deletePlaylistsongByPlaylistIdAndSongId` mutation. */
-export type DeletePlaylistsongByPlaylistIdAndSongIdInput = {
+/** All input for the `deletePlaylistSongByPlaylistIdAndSongId` mutation. */
+export type DeletePlaylistSongByPlaylistIdAndSongIdInput = {
   /**
    * An arbitrary string value with no semantic meaning. Will be included in the
    * payload verbatim. May be used to track mutations by the client.
@@ -554,41 +506,42 @@ export type DeletePlaylistsongByPlaylistIdAndSongIdInput = {
   songId: Scalars['UUID']['input'];
 };
 
-/** All input for the `deletePlaylistsong` mutation. */
-export type DeletePlaylistsongInput = {
+/** All input for the `deletePlaylistSong` mutation. */
+export type DeletePlaylistSongInput = {
   /**
    * An arbitrary string value with no semantic meaning. Will be included in the
    * payload verbatim. May be used to track mutations by the client.
    */
   clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  /** The globally unique `ID` which will identify a single `Playlistsong` to be deleted. */
+  /** The globally unique `ID` which will identify a single `PlaylistSong` to be deleted. */
   nodeId: Scalars['ID']['input'];
 };
 
-/** The output of our delete `Playlistsong` mutation. */
-export type DeletePlaylistsongPayload = {
-  __typename?: 'DeletePlaylistsongPayload';
+/** The output of our delete `PlaylistSong` mutation. */
+export type DeletePlaylistSongPayload = {
+  __typename?: 'DeletePlaylistSongPayload';
   /**
    * The exact same `clientMutationId` that was provided in the mutation input,
    * unchanged and unused. May be used by a client to track mutations.
    */
   clientMutationId?: Maybe<Scalars['String']['output']>;
-  deletedPlaylistsongId?: Maybe<Scalars['ID']['output']>;
-  /** Reads a single `Playlist` that is related to this `Playlistsong`. */
+  deletedPlaylistSongId?: Maybe<Scalars['ID']['output']>;
+  /** Reads a single `Playlist` that is related to this `PlaylistSong`. */
   playlistByPlaylistId?: Maybe<Playlist>;
-  /** The `Playlistsong` that was deleted by this mutation. */
-  playlistsong?: Maybe<Playlistsong>;
-  /** An edge for our `Playlistsong`. May be used by Relay 1. */
-  playlistsongEdge?: Maybe<PlaylistsongsEdge>;
+  /** The `PlaylistSong` that was deleted by this mutation. */
+  playlistSong?: Maybe<PlaylistSong>;
+  /** An edge for our `PlaylistSong`. May be used by Relay 1. */
+  playlistSongEdge?: Maybe<PlaylistSongsEdge>;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
   query?: Maybe<Query>;
-  /** Reads a single `Song` that is related to this `Playlistsong`. */
+  /** Reads a single `Song` that is related to this `PlaylistSong`. */
   songBySongId?: Maybe<Song>;
 };
 
-/** The output of our delete `Playlistsong` mutation. */
-export type DeletePlaylistsongPayloadPlaylistsongEdgeArgs = {
-  orderBy?: InputMaybe<Array<PlaylistsongsOrderBy>>;
+
+/** The output of our delete `PlaylistSong` mutation. */
+export type DeletePlaylistSongPayloadPlaylistSongEdgeArgs = {
+  orderBy?: InputMaybe<Array<PlaylistSongsOrderBy>>;
 };
 
 /** All input for the `deleteSongById` mutation. */
@@ -630,6 +583,7 @@ export type DeleteSongPayload = {
   /** An edge for our `Song`. May be used by Relay 1. */
   songEdge?: Maybe<SongsEdge>;
 };
+
 
 /** The output of our delete `Song` mutation. */
 export type DeleteSongPayloadSongEdgeArgs = {
@@ -673,6 +627,7 @@ export type DeleteUserPayload = {
   /** An edge for our `User`. May be used by Relay 1. */
   userEdge?: Maybe<UsersEdge>;
 };
+
 
 /** The output of our delete `User` mutation. */
 export type DeleteUserPayloadUserEdgeArgs = {
@@ -762,8 +717,48 @@ export enum FavoritesOrderBy {
   SongIdAsc = 'SONG_ID_ASC',
   SongIdDesc = 'SONG_ID_DESC',
   UserIdAsc = 'USER_ID_ASC',
-  UserIdDesc = 'USER_ID_DESC',
+  UserIdDesc = 'USER_ID_DESC'
 }
+
+/** A filter to be used against Float List fields. All fields are combined with a logical ‘and.’ */
+export type FloatListFilter = {
+  /** Any array item is equal to the specified value. */
+  anyEqualTo?: InputMaybe<Scalars['Float']['input']>;
+  /** Any array item is greater than the specified value. */
+  anyGreaterThan?: InputMaybe<Scalars['Float']['input']>;
+  /** Any array item is greater than or equal to the specified value. */
+  anyGreaterThanOrEqualTo?: InputMaybe<Scalars['Float']['input']>;
+  /** Any array item is less than the specified value. */
+  anyLessThan?: InputMaybe<Scalars['Float']['input']>;
+  /** Any array item is less than or equal to the specified value. */
+  anyLessThanOrEqualTo?: InputMaybe<Scalars['Float']['input']>;
+  /** Any array item is not equal to the specified value. */
+  anyNotEqualTo?: InputMaybe<Scalars['Float']['input']>;
+  /** Contained by the specified list of values. */
+  containedBy?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
+  /** Contains the specified list of values. */
+  contains?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
+  /** Not equal to the specified value, treating null like an ordinary value. */
+  distinctFrom?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
+  /** Equal to the specified value. */
+  equalTo?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
+  /** Greater than the specified value. */
+  greaterThan?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
+  /** Greater than or equal to the specified value. */
+  greaterThanOrEqualTo?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
+  /** Is null (if `true` is specified) or is not null (if `false` is specified). */
+  isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Less than the specified value. */
+  lessThan?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
+  /** Less than or equal to the specified value. */
+  lessThanOrEqualTo?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
+  /** Equal to the specified value, treating null like an ordinary value. */
+  notDistinctFrom?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
+  /** Not equal to the specified value. */
+  notEqualTo?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
+  /** Overlaps the specified list of values. */
+  overlaps?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
+};
 
 /** A filter to be used against Int fields. All fields are combined with a logical ‘and.’ */
 export type IntFilter = {
@@ -808,8 +803,8 @@ export type Mutation = {
   createFavorite?: Maybe<CreateFavoritePayload>;
   /** Creates a single `Playlist`. */
   createPlaylist?: Maybe<CreatePlaylistPayload>;
-  /** Creates a single `Playlistsong`. */
-  createPlaylistsong?: Maybe<CreatePlaylistsongPayload>;
+  /** Creates a single `PlaylistSong`. */
+  createPlaylistSong?: Maybe<CreatePlaylistSongPayload>;
   /** Creates a single `Song`. */
   createSong?: Maybe<CreateSongPayload>;
   /** Creates a single `User`. */
@@ -826,10 +821,10 @@ export type Mutation = {
   deletePlaylist?: Maybe<DeletePlaylistPayload>;
   /** Deletes a single `Playlist` using a unique key. */
   deletePlaylistById?: Maybe<DeletePlaylistPayload>;
-  /** Deletes a single `Playlistsong` using its globally unique id. */
-  deletePlaylistsong?: Maybe<DeletePlaylistsongPayload>;
-  /** Deletes a single `Playlistsong` using a unique key. */
-  deletePlaylistsongByPlaylistIdAndSongId?: Maybe<DeletePlaylistsongPayload>;
+  /** Deletes a single `PlaylistSong` using its globally unique id. */
+  deletePlaylistSong?: Maybe<DeletePlaylistSongPayload>;
+  /** Deletes a single `PlaylistSong` using a unique key. */
+  deletePlaylistSongByPlaylistIdAndSongId?: Maybe<DeletePlaylistSongPayload>;
   /** Deletes a single `Song` using its globally unique id. */
   deleteSong?: Maybe<DeleteSongPayload>;
   /** Deletes a single `Song` using a unique key. */
@@ -850,10 +845,10 @@ export type Mutation = {
   updatePlaylist?: Maybe<UpdatePlaylistPayload>;
   /** Updates a single `Playlist` using a unique key and a patch. */
   updatePlaylistById?: Maybe<UpdatePlaylistPayload>;
-  /** Updates a single `Playlistsong` using its globally unique id and a patch. */
-  updatePlaylistsong?: Maybe<UpdatePlaylistsongPayload>;
-  /** Updates a single `Playlistsong` using a unique key and a patch. */
-  updatePlaylistsongByPlaylistIdAndSongId?: Maybe<UpdatePlaylistsongPayload>;
+  /** Updates a single `PlaylistSong` using its globally unique id and a patch. */
+  updatePlaylistSong?: Maybe<UpdatePlaylistSongPayload>;
+  /** Updates a single `PlaylistSong` using a unique key and a patch. */
+  updatePlaylistSongByPlaylistIdAndSongId?: Maybe<UpdatePlaylistSongPayload>;
   /** Updates a single `Song` using its globally unique id and a patch. */
   updateSong?: Maybe<UpdateSongPayload>;
   /** Updates a single `Song` using a unique key and a patch. */
@@ -864,150 +859,180 @@ export type Mutation = {
   updateUserById?: Maybe<UpdateUserPayload>;
 };
 
+
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationCreateArtistArgs = {
   input: CreateArtistInput;
 };
+
 
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationCreateFavoriteArgs = {
   input: CreateFavoriteInput;
 };
 
+
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationCreatePlaylistArgs = {
   input: CreatePlaylistInput;
 };
 
+
 /** The root mutation type which contains root level fields which mutate data. */
-export type MutationCreatePlaylistsongArgs = {
-  input: CreatePlaylistsongInput;
+export type MutationCreatePlaylistSongArgs = {
+  input: CreatePlaylistSongInput;
 };
+
 
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationCreateSongArgs = {
   input: CreateSongInput;
 };
 
+
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationCreateUserArgs = {
   input: CreateUserInput;
 };
+
 
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteArtistArgs = {
   input: DeleteArtistInput;
 };
 
+
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteArtistByIdArgs = {
   input: DeleteArtistByIdInput;
 };
+
 
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteFavoriteArgs = {
   input: DeleteFavoriteInput;
 };
 
+
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteFavoriteByUserIdAndSongIdArgs = {
   input: DeleteFavoriteByUserIdAndSongIdInput;
 };
+
 
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeletePlaylistArgs = {
   input: DeletePlaylistInput;
 };
 
+
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeletePlaylistByIdArgs = {
   input: DeletePlaylistByIdInput;
 };
 
-/** The root mutation type which contains root level fields which mutate data. */
-export type MutationDeletePlaylistsongArgs = {
-  input: DeletePlaylistsongInput;
-};
 
 /** The root mutation type which contains root level fields which mutate data. */
-export type MutationDeletePlaylistsongByPlaylistIdAndSongIdArgs = {
-  input: DeletePlaylistsongByPlaylistIdAndSongIdInput;
+export type MutationDeletePlaylistSongArgs = {
+  input: DeletePlaylistSongInput;
 };
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeletePlaylistSongByPlaylistIdAndSongIdArgs = {
+  input: DeletePlaylistSongByPlaylistIdAndSongIdInput;
+};
+
 
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteSongArgs = {
   input: DeleteSongInput;
 };
 
+
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteSongByIdArgs = {
   input: DeleteSongByIdInput;
 };
+
 
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteUserArgs = {
   input: DeleteUserInput;
 };
 
+
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteUserByIdArgs = {
   input: DeleteUserByIdInput;
 };
+
 
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateArtistArgs = {
   input: UpdateArtistInput;
 };
 
+
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateArtistByIdArgs = {
   input: UpdateArtistByIdInput;
 };
+
 
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateFavoriteArgs = {
   input: UpdateFavoriteInput;
 };
 
+
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateFavoriteByUserIdAndSongIdArgs = {
   input: UpdateFavoriteByUserIdAndSongIdInput;
 };
+
 
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdatePlaylistArgs = {
   input: UpdatePlaylistInput;
 };
 
+
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdatePlaylistByIdArgs = {
   input: UpdatePlaylistByIdInput;
 };
 
-/** The root mutation type which contains root level fields which mutate data. */
-export type MutationUpdatePlaylistsongArgs = {
-  input: UpdatePlaylistsongInput;
-};
 
 /** The root mutation type which contains root level fields which mutate data. */
-export type MutationUpdatePlaylistsongByPlaylistIdAndSongIdArgs = {
-  input: UpdatePlaylistsongByPlaylistIdAndSongIdInput;
+export type MutationUpdatePlaylistSongArgs = {
+  input: UpdatePlaylistSongInput;
 };
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdatePlaylistSongByPlaylistIdAndSongIdArgs = {
+  input: UpdatePlaylistSongByPlaylistIdAndSongIdInput;
+};
+
 
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateSongArgs = {
   input: UpdateSongInput;
 };
 
+
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateSongByIdArgs = {
   input: UpdateSongByIdInput;
 };
 
+
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateUserArgs = {
   input: UpdateUserInput;
 };
+
 
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateUserByIdArgs = {
@@ -1035,27 +1060,28 @@ export type PageInfo = {
 
 export type Playlist = Node & {
   __typename?: 'Playlist';
-  createdPlaylist?: Maybe<Scalars['Datetime']['output']>;
+  createdPlaylist: Scalars['Datetime']['output'];
   creatorId: Scalars['UUID']['output'];
   id: Scalars['UUID']['output'];
   name: Scalars['String']['output'];
   /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
   nodeId: Scalars['ID']['output'];
-  /** Reads and enables pagination through a set of `Playlistsong`. */
-  playlistsongsByPlaylistId: PlaylistsongsConnection;
+  /** Reads and enables pagination through a set of `PlaylistSong`. */
+  playlistSongsByPlaylistId: PlaylistSongsConnection;
   /** Reads a single `User` that is related to this `Playlist`. */
   userByCreatorId?: Maybe<User>;
 };
 
-export type PlaylistPlaylistsongsByPlaylistIdArgs = {
+
+export type PlaylistPlaylistSongsByPlaylistIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
-  condition?: InputMaybe<PlaylistsongCondition>;
-  filter?: InputMaybe<PlaylistsongFilter>;
+  condition?: InputMaybe<PlaylistSongCondition>;
+  filter?: InputMaybe<PlaylistSongFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<PlaylistsongsOrderBy>>;
+  orderBy?: InputMaybe<Array<PlaylistSongsOrderBy>>;
 };
 
 /**
@@ -1089,17 +1115,17 @@ export type PlaylistFilter = {
   not?: InputMaybe<PlaylistFilter>;
   /** Checks for any expressions in this list. */
   or?: InputMaybe<Array<PlaylistFilter>>;
-  /** Filter by the object’s `playlistsongsByPlaylistId` relation. */
-  playlistsongsByPlaylistId?: InputMaybe<PlaylistToManyPlaylistsongFilter>;
-  /** Some related `playlistsongsByPlaylistId` exist. */
-  playlistsongsByPlaylistIdExist?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Filter by the object’s `playlistSongsByPlaylistId` relation. */
+  playlistSongsByPlaylistId?: InputMaybe<PlaylistToManyPlaylistSongFilter>;
+  /** Some related `playlistSongsByPlaylistId` exist. */
+  playlistSongsByPlaylistIdExist?: InputMaybe<Scalars['Boolean']['input']>;
   /** Filter by the object’s `userByCreatorId` relation. */
   userByCreatorId?: InputMaybe<UserFilter>;
 };
 
 /** An input for mutations affecting `Playlist` */
 export type PlaylistInput = {
-  createdPlaylist?: InputMaybe<Scalars['Datetime']['input']>;
+  createdPlaylist: Scalars['Datetime']['input'];
   creatorId: Scalars['UUID']['input'];
   id?: InputMaybe<Scalars['UUID']['input']>;
   name: Scalars['String']['input'];
@@ -1113,14 +1139,100 @@ export type PlaylistPatch = {
   name?: InputMaybe<Scalars['String']['input']>;
 };
 
-/** A filter to be used against many `Playlistsong` object types. All fields are combined with a logical ‘and.’ */
-export type PlaylistToManyPlaylistsongFilter = {
-  /** Every related `Playlistsong` matches the filter criteria. All fields are combined with a logical ‘and.’ */
-  every?: InputMaybe<PlaylistsongFilter>;
-  /** No related `Playlistsong` matches the filter criteria. All fields are combined with a logical ‘and.’ */
-  none?: InputMaybe<PlaylistsongFilter>;
-  /** Some related `Playlistsong` matches the filter criteria. All fields are combined with a logical ‘and.’ */
-  some?: InputMaybe<PlaylistsongFilter>;
+export type PlaylistSong = Node & {
+  __typename?: 'PlaylistSong';
+  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
+  nodeId: Scalars['ID']['output'];
+  /** Reads a single `Playlist` that is related to this `PlaylistSong`. */
+  playlistByPlaylistId?: Maybe<Playlist>;
+  playlistId: Scalars['UUID']['output'];
+  /** Reads a single `Song` that is related to this `PlaylistSong`. */
+  songBySongId?: Maybe<Song>;
+  songId: Scalars['UUID']['output'];
+};
+
+/**
+ * A condition to be used against `PlaylistSong` object types. All fields are
+ * tested for equality and combined with a logical ‘and.’
+ */
+export type PlaylistSongCondition = {
+  /** Checks for equality with the object’s `playlistId` field. */
+  playlistId?: InputMaybe<Scalars['UUID']['input']>;
+  /** Checks for equality with the object’s `songId` field. */
+  songId?: InputMaybe<Scalars['UUID']['input']>;
+};
+
+/** A filter to be used against `PlaylistSong` object types. All fields are combined with a logical ‘and.’ */
+export type PlaylistSongFilter = {
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<PlaylistSongFilter>>;
+  /** Negates the expression. */
+  not?: InputMaybe<PlaylistSongFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<PlaylistSongFilter>>;
+  /** Filter by the object’s `playlistByPlaylistId` relation. */
+  playlistByPlaylistId?: InputMaybe<PlaylistFilter>;
+  /** Filter by the object’s `playlistId` field. */
+  playlistId?: InputMaybe<UuidFilter>;
+  /** Filter by the object’s `songBySongId` relation. */
+  songBySongId?: InputMaybe<SongFilter>;
+  /** Filter by the object’s `songId` field. */
+  songId?: InputMaybe<UuidFilter>;
+};
+
+/** An input for mutations affecting `PlaylistSong` */
+export type PlaylistSongInput = {
+  playlistId: Scalars['UUID']['input'];
+  songId: Scalars['UUID']['input'];
+};
+
+/** Represents an update to a `PlaylistSong`. Fields that are set will be updated. */
+export type PlaylistSongPatch = {
+  playlistId?: InputMaybe<Scalars['UUID']['input']>;
+  songId?: InputMaybe<Scalars['UUID']['input']>;
+};
+
+/** A connection to a list of `PlaylistSong` values. */
+export type PlaylistSongsConnection = {
+  __typename?: 'PlaylistSongsConnection';
+  /** A list of edges which contains the `PlaylistSong` and cursor to aid in pagination. */
+  edges: Array<PlaylistSongsEdge>;
+  /** A list of `PlaylistSong` objects. */
+  nodes: Array<Maybe<PlaylistSong>>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `PlaylistSong` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `PlaylistSong` edge in the connection. */
+export type PlaylistSongsEdge = {
+  __typename?: 'PlaylistSongsEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `PlaylistSong` at the end of the edge. */
+  node?: Maybe<PlaylistSong>;
+};
+
+/** Methods to use when ordering `PlaylistSong`. */
+export enum PlaylistSongsOrderBy {
+  Natural = 'NATURAL',
+  PlaylistIdAsc = 'PLAYLIST_ID_ASC',
+  PlaylistIdDesc = 'PLAYLIST_ID_DESC',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  SongIdAsc = 'SONG_ID_ASC',
+  SongIdDesc = 'SONG_ID_DESC'
+}
+
+/** A filter to be used against many `PlaylistSong` object types. All fields are combined with a logical ‘and.’ */
+export type PlaylistToManyPlaylistSongFilter = {
+  /** Every related `PlaylistSong` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  every?: InputMaybe<PlaylistSongFilter>;
+  /** No related `PlaylistSong` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  none?: InputMaybe<PlaylistSongFilter>;
+  /** Some related `PlaylistSong` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  some?: InputMaybe<PlaylistSongFilter>;
 };
 
 /** A connection to a list of `Playlist` values. */
@@ -1157,93 +1269,7 @@ export enum PlaylistsOrderBy {
   NameDesc = 'NAME_DESC',
   Natural = 'NATURAL',
   PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
-  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
-}
-
-export type Playlistsong = Node & {
-  __typename?: 'Playlistsong';
-  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
-  nodeId: Scalars['ID']['output'];
-  /** Reads a single `Playlist` that is related to this `Playlistsong`. */
-  playlistByPlaylistId?: Maybe<Playlist>;
-  playlistId: Scalars['UUID']['output'];
-  /** Reads a single `Song` that is related to this `Playlistsong`. */
-  songBySongId?: Maybe<Song>;
-  songId: Scalars['UUID']['output'];
-};
-
-/**
- * A condition to be used against `Playlistsong` object types. All fields are
- * tested for equality and combined with a logical ‘and.’
- */
-export type PlaylistsongCondition = {
-  /** Checks for equality with the object’s `playlistId` field. */
-  playlistId?: InputMaybe<Scalars['UUID']['input']>;
-  /** Checks for equality with the object’s `songId` field. */
-  songId?: InputMaybe<Scalars['UUID']['input']>;
-};
-
-/** A filter to be used against `Playlistsong` object types. All fields are combined with a logical ‘and.’ */
-export type PlaylistsongFilter = {
-  /** Checks for all expressions in this list. */
-  and?: InputMaybe<Array<PlaylistsongFilter>>;
-  /** Negates the expression. */
-  not?: InputMaybe<PlaylistsongFilter>;
-  /** Checks for any expressions in this list. */
-  or?: InputMaybe<Array<PlaylistsongFilter>>;
-  /** Filter by the object’s `playlistByPlaylistId` relation. */
-  playlistByPlaylistId?: InputMaybe<PlaylistFilter>;
-  /** Filter by the object’s `playlistId` field. */
-  playlistId?: InputMaybe<UuidFilter>;
-  /** Filter by the object’s `songBySongId` relation. */
-  songBySongId?: InputMaybe<SongFilter>;
-  /** Filter by the object’s `songId` field. */
-  songId?: InputMaybe<UuidFilter>;
-};
-
-/** An input for mutations affecting `Playlistsong` */
-export type PlaylistsongInput = {
-  playlistId: Scalars['UUID']['input'];
-  songId: Scalars['UUID']['input'];
-};
-
-/** Represents an update to a `Playlistsong`. Fields that are set will be updated. */
-export type PlaylistsongPatch = {
-  playlistId?: InputMaybe<Scalars['UUID']['input']>;
-  songId?: InputMaybe<Scalars['UUID']['input']>;
-};
-
-/** A connection to a list of `Playlistsong` values. */
-export type PlaylistsongsConnection = {
-  __typename?: 'PlaylistsongsConnection';
-  /** A list of edges which contains the `Playlistsong` and cursor to aid in pagination. */
-  edges: Array<PlaylistsongsEdge>;
-  /** A list of `Playlistsong` objects. */
-  nodes: Array<Maybe<Playlistsong>>;
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-  /** The count of *all* `Playlistsong` you could get from the connection. */
-  totalCount: Scalars['Int']['output'];
-};
-
-/** A `Playlistsong` edge in the connection. */
-export type PlaylistsongsEdge = {
-  __typename?: 'PlaylistsongsEdge';
-  /** A cursor for use in pagination. */
-  cursor?: Maybe<Scalars['Cursor']['output']>;
-  /** The `Playlistsong` at the end of the edge. */
-  node?: Maybe<Playlistsong>;
-};
-
-/** Methods to use when ordering `Playlistsong`. */
-export enum PlaylistsongsOrderBy {
-  Natural = 'NATURAL',
-  PlaylistIdAsc = 'PLAYLIST_ID_ASC',
-  PlaylistIdDesc = 'PLAYLIST_ID_DESC',
-  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
-  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
-  SongIdAsc = 'SONG_ID_ASC',
-  SongIdDesc = 'SONG_ID_DESC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC'
 }
 
 /** The root query type which gives access points into the data universe. */
@@ -1253,10 +1279,10 @@ export type Query = Node & {
   allArtists?: Maybe<ArtistsConnection>;
   /** Reads and enables pagination through a set of `Favorite`. */
   allFavorites?: Maybe<FavoritesConnection>;
+  /** Reads and enables pagination through a set of `PlaylistSong`. */
+  allPlaylistSongs?: Maybe<PlaylistSongsConnection>;
   /** Reads and enables pagination through a set of `Playlist`. */
   allPlaylists?: Maybe<PlaylistsConnection>;
-  /** Reads and enables pagination through a set of `Playlistsong`. */
-  allPlaylistsongs?: Maybe<PlaylistsongsConnection>;
   /** Reads and enables pagination through a set of `Song`. */
   allSongs?: Maybe<SongsConnection>;
   /** Reads and enables pagination through a set of `User`. */
@@ -1274,9 +1300,9 @@ export type Query = Node & {
   /** Reads a single `Playlist` using its globally unique `ID`. */
   playlist?: Maybe<Playlist>;
   playlistById?: Maybe<Playlist>;
-  /** Reads a single `Playlistsong` using its globally unique `ID`. */
-  playlistsong?: Maybe<Playlistsong>;
-  playlistsongByPlaylistIdAndSongId?: Maybe<Playlistsong>;
+  /** Reads a single `PlaylistSong` using its globally unique `ID`. */
+  playlistSong?: Maybe<PlaylistSong>;
+  playlistSongByPlaylistIdAndSongId?: Maybe<PlaylistSong>;
   /**
    * Exposes the root query type nested one level down. This is helpful for Relay 1
    * which can only query top level fields if they are in a particular form.
@@ -1290,6 +1316,7 @@ export type Query = Node & {
   userById?: Maybe<User>;
 };
 
+
 /** The root query type which gives access points into the data universe. */
 export type QueryAllArtistsArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
@@ -1301,6 +1328,7 @@ export type QueryAllArtistsArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<ArtistsOrderBy>>;
 };
+
 
 /** The root query type which gives access points into the data universe. */
 export type QueryAllFavoritesArgs = {
@@ -1314,6 +1342,20 @@ export type QueryAllFavoritesArgs = {
   orderBy?: InputMaybe<Array<FavoritesOrderBy>>;
 };
 
+
+/** The root query type which gives access points into the data universe. */
+export type QueryAllPlaylistSongsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<PlaylistSongCondition>;
+  filter?: InputMaybe<PlaylistSongFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<PlaylistSongsOrderBy>>;
+};
+
+
 /** The root query type which gives access points into the data universe. */
 export type QueryAllPlaylistsArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
@@ -1326,17 +1368,6 @@ export type QueryAllPlaylistsArgs = {
   orderBy?: InputMaybe<Array<PlaylistsOrderBy>>;
 };
 
-/** The root query type which gives access points into the data universe. */
-export type QueryAllPlaylistsongsArgs = {
-  after?: InputMaybe<Scalars['Cursor']['input']>;
-  before?: InputMaybe<Scalars['Cursor']['input']>;
-  condition?: InputMaybe<PlaylistsongCondition>;
-  filter?: InputMaybe<PlaylistsongFilter>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<PlaylistsongsOrderBy>>;
-};
 
 /** The root query type which gives access points into the data universe. */
 export type QueryAllSongsArgs = {
@@ -1350,6 +1381,7 @@ export type QueryAllSongsArgs = {
   orderBy?: InputMaybe<Array<SongsOrderBy>>;
 };
 
+
 /** The root query type which gives access points into the data universe. */
 export type QueryAllUsersArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
@@ -1362,20 +1394,24 @@ export type QueryAllUsersArgs = {
   orderBy?: InputMaybe<Array<UsersOrderBy>>;
 };
 
+
 /** The root query type which gives access points into the data universe. */
 export type QueryArtistArgs = {
   nodeId: Scalars['ID']['input'];
 };
+
 
 /** The root query type which gives access points into the data universe. */
 export type QueryArtistByIdArgs = {
   id: Scalars['UUID']['input'];
 };
 
+
 /** The root query type which gives access points into the data universe. */
 export type QueryFavoriteArgs = {
   nodeId: Scalars['ID']['input'];
 };
+
 
 /** The root query type which gives access points into the data universe. */
 export type QueryFavoriteByUserIdAndSongIdArgs = {
@@ -1383,46 +1419,55 @@ export type QueryFavoriteByUserIdAndSongIdArgs = {
   userId: Scalars['UUID']['input'];
 };
 
+
 /** The root query type which gives access points into the data universe. */
 export type QueryNodeArgs = {
   nodeId: Scalars['ID']['input'];
 };
+
 
 /** The root query type which gives access points into the data universe. */
 export type QueryPlaylistArgs = {
   nodeId: Scalars['ID']['input'];
 };
 
+
 /** The root query type which gives access points into the data universe. */
 export type QueryPlaylistByIdArgs = {
   id: Scalars['UUID']['input'];
 };
 
+
 /** The root query type which gives access points into the data universe. */
-export type QueryPlaylistsongArgs = {
+export type QueryPlaylistSongArgs = {
   nodeId: Scalars['ID']['input'];
 };
 
+
 /** The root query type which gives access points into the data universe. */
-export type QueryPlaylistsongByPlaylistIdAndSongIdArgs = {
+export type QueryPlaylistSongByPlaylistIdAndSongIdArgs = {
   playlistId: Scalars['UUID']['input'];
   songId: Scalars['UUID']['input'];
 };
+
 
 /** The root query type which gives access points into the data universe. */
 export type QuerySongArgs = {
   nodeId: Scalars['ID']['input'];
 };
 
+
 /** The root query type which gives access points into the data universe. */
 export type QuerySongByIdArgs = {
   id: Scalars['UUID']['input'];
 };
 
+
 /** The root query type which gives access points into the data universe. */
 export type QueryUserArgs = {
   nodeId: Scalars['ID']['input'];
 };
+
 
 /** The root query type which gives access points into the data universe. */
 export type QueryUserByIdArgs = {
@@ -1434,7 +1479,6 @@ export type Song = Node & {
   /** Reads a single `Artist` that is related to this `Song`. */
   artistByArtistId?: Maybe<Artist>;
   artistId: Scalars['UUID']['output'];
-  createdSong?: Maybe<Scalars['Datetime']['output']>;
   duration: Scalars['Int']['output'];
   /** Reads and enables pagination through a set of `Favorite`. */
   favoritesBySongId: FavoritesConnection;
@@ -1442,9 +1486,10 @@ export type Song = Node & {
   name: Scalars['String']['output'];
   /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
   nodeId: Scalars['ID']['output'];
-  /** Reads and enables pagination through a set of `Playlistsong`. */
-  playlistsongsBySongId: PlaylistsongsConnection;
+  /** Reads and enables pagination through a set of `PlaylistSong`. */
+  playlistSongsBySongId: PlaylistSongsConnection;
 };
+
 
 export type SongFavoritesBySongIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
@@ -1457,23 +1502,22 @@ export type SongFavoritesBySongIdArgs = {
   orderBy?: InputMaybe<Array<FavoritesOrderBy>>;
 };
 
-export type SongPlaylistsongsBySongIdArgs = {
+
+export type SongPlaylistSongsBySongIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
-  condition?: InputMaybe<PlaylistsongCondition>;
-  filter?: InputMaybe<PlaylistsongFilter>;
+  condition?: InputMaybe<PlaylistSongCondition>;
+  filter?: InputMaybe<PlaylistSongFilter>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<PlaylistsongsOrderBy>>;
+  orderBy?: InputMaybe<Array<PlaylistSongsOrderBy>>;
 };
 
 /** A condition to be used against `Song` object types. All fields are tested for equality and combined with a logical ‘and.’ */
 export type SongCondition = {
   /** Checks for equality with the object’s `artistId` field. */
   artistId?: InputMaybe<Scalars['UUID']['input']>;
-  /** Checks for equality with the object’s `createdSong` field. */
-  createdSong?: InputMaybe<Scalars['Datetime']['input']>;
   /** Checks for equality with the object’s `duration` field. */
   duration?: InputMaybe<Scalars['Int']['input']>;
   /** Checks for equality with the object’s `id` field. */
@@ -1490,8 +1534,6 @@ export type SongFilter = {
   artistByArtistId?: InputMaybe<ArtistFilter>;
   /** Filter by the object’s `artistId` field. */
   artistId?: InputMaybe<UuidFilter>;
-  /** Filter by the object’s `createdSong` field. */
-  createdSong?: InputMaybe<DatetimeFilter>;
   /** Filter by the object’s `duration` field. */
   duration?: InputMaybe<IntFilter>;
   /** Filter by the object’s `favoritesBySongId` relation. */
@@ -1506,16 +1548,15 @@ export type SongFilter = {
   not?: InputMaybe<SongFilter>;
   /** Checks for any expressions in this list. */
   or?: InputMaybe<Array<SongFilter>>;
-  /** Filter by the object’s `playlistsongsBySongId` relation. */
-  playlistsongsBySongId?: InputMaybe<SongToManyPlaylistsongFilter>;
-  /** Some related `playlistsongsBySongId` exist. */
-  playlistsongsBySongIdExist?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Filter by the object’s `playlistSongsBySongId` relation. */
+  playlistSongsBySongId?: InputMaybe<SongToManyPlaylistSongFilter>;
+  /** Some related `playlistSongsBySongId` exist. */
+  playlistSongsBySongIdExist?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 /** An input for mutations affecting `Song` */
 export type SongInput = {
   artistId: Scalars['UUID']['input'];
-  createdSong?: InputMaybe<Scalars['Datetime']['input']>;
   duration: Scalars['Int']['input'];
   id?: InputMaybe<Scalars['UUID']['input']>;
   name: Scalars['String']['input'];
@@ -1524,7 +1565,6 @@ export type SongInput = {
 /** Represents an update to a `Song`. Fields that are set will be updated. */
 export type SongPatch = {
   artistId?: InputMaybe<Scalars['UUID']['input']>;
-  createdSong?: InputMaybe<Scalars['Datetime']['input']>;
   duration?: InputMaybe<Scalars['Int']['input']>;
   id?: InputMaybe<Scalars['UUID']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
@@ -1540,14 +1580,14 @@ export type SongToManyFavoriteFilter = {
   some?: InputMaybe<FavoriteFilter>;
 };
 
-/** A filter to be used against many `Playlistsong` object types. All fields are combined with a logical ‘and.’ */
-export type SongToManyPlaylistsongFilter = {
-  /** Every related `Playlistsong` matches the filter criteria. All fields are combined with a logical ‘and.’ */
-  every?: InputMaybe<PlaylistsongFilter>;
-  /** No related `Playlistsong` matches the filter criteria. All fields are combined with a logical ‘and.’ */
-  none?: InputMaybe<PlaylistsongFilter>;
-  /** Some related `Playlistsong` matches the filter criteria. All fields are combined with a logical ‘and.’ */
-  some?: InputMaybe<PlaylistsongFilter>;
+/** A filter to be used against many `PlaylistSong` object types. All fields are combined with a logical ‘and.’ */
+export type SongToManyPlaylistSongFilter = {
+  /** Every related `PlaylistSong` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  every?: InputMaybe<PlaylistSongFilter>;
+  /** No related `PlaylistSong` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  none?: InputMaybe<PlaylistSongFilter>;
+  /** Some related `PlaylistSong` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  some?: InputMaybe<PlaylistSongFilter>;
 };
 
 /** A connection to a list of `Song` values. */
@@ -1576,8 +1616,6 @@ export type SongsEdge = {
 export enum SongsOrderBy {
   ArtistIdAsc = 'ARTIST_ID_ASC',
   ArtistIdDesc = 'ARTIST_ID_DESC',
-  CreatedSongAsc = 'CREATED_SONG_ASC',
-  CreatedSongDesc = 'CREATED_SONG_DESC',
   DurationAsc = 'DURATION_ASC',
   DurationDesc = 'DURATION_DESC',
   IdAsc = 'ID_ASC',
@@ -1586,7 +1624,7 @@ export enum SongsOrderBy {
   NameDesc = 'NAME_DESC',
   Natural = 'NATURAL',
   PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
-  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC'
 }
 
 /** A filter to be used against String fields. All fields are combined with a logical ‘and.’ */
@@ -1673,6 +1711,7 @@ export type Subscription = {
   listen: ListenPayload;
 };
 
+
 /** The root subscription type: contains realtime events you can subscribe to with the `subscription` operation. */
 export type SubscriptionListenArgs = {
   topic: Scalars['String']['input'];
@@ -1745,6 +1784,7 @@ export type UpdateArtistPayload = {
   query?: Maybe<Query>;
 };
 
+
 /** The output of our update `Artist` mutation. */
 export type UpdateArtistPayloadArtistEdgeArgs = {
   orderBy?: InputMaybe<Array<ArtistsOrderBy>>;
@@ -1796,6 +1836,7 @@ export type UpdateFavoritePayload = {
   userByUserId?: Maybe<User>;
 };
 
+
 /** The output of our update `Favorite` mutation. */
 export type UpdateFavoritePayloadFavoriteEdgeArgs = {
   orderBy?: InputMaybe<Array<FavoritesOrderBy>>;
@@ -1844,60 +1885,62 @@ export type UpdatePlaylistPayload = {
   userByCreatorId?: Maybe<User>;
 };
 
+
 /** The output of our update `Playlist` mutation. */
 export type UpdatePlaylistPayloadPlaylistEdgeArgs = {
   orderBy?: InputMaybe<Array<PlaylistsOrderBy>>;
 };
 
-/** All input for the `updatePlaylistsongByPlaylistIdAndSongId` mutation. */
-export type UpdatePlaylistsongByPlaylistIdAndSongIdInput = {
+/** All input for the `updatePlaylistSongByPlaylistIdAndSongId` mutation. */
+export type UpdatePlaylistSongByPlaylistIdAndSongIdInput = {
   /**
    * An arbitrary string value with no semantic meaning. Will be included in the
    * payload verbatim. May be used to track mutations by the client.
    */
   clientMutationId?: InputMaybe<Scalars['String']['input']>;
   playlistId: Scalars['UUID']['input'];
-  /** An object where the defined keys will be set on the `Playlistsong` being updated. */
-  playlistsongPatch: PlaylistsongPatch;
+  /** An object where the defined keys will be set on the `PlaylistSong` being updated. */
+  playlistSongPatch: PlaylistSongPatch;
   songId: Scalars['UUID']['input'];
 };
 
-/** All input for the `updatePlaylistsong` mutation. */
-export type UpdatePlaylistsongInput = {
+/** All input for the `updatePlaylistSong` mutation. */
+export type UpdatePlaylistSongInput = {
   /**
    * An arbitrary string value with no semantic meaning. Will be included in the
    * payload verbatim. May be used to track mutations by the client.
    */
   clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  /** The globally unique `ID` which will identify a single `Playlistsong` to be updated. */
+  /** The globally unique `ID` which will identify a single `PlaylistSong` to be updated. */
   nodeId: Scalars['ID']['input'];
-  /** An object where the defined keys will be set on the `Playlistsong` being updated. */
-  playlistsongPatch: PlaylistsongPatch;
+  /** An object where the defined keys will be set on the `PlaylistSong` being updated. */
+  playlistSongPatch: PlaylistSongPatch;
 };
 
-/** The output of our update `Playlistsong` mutation. */
-export type UpdatePlaylistsongPayload = {
-  __typename?: 'UpdatePlaylistsongPayload';
+/** The output of our update `PlaylistSong` mutation. */
+export type UpdatePlaylistSongPayload = {
+  __typename?: 'UpdatePlaylistSongPayload';
   /**
    * The exact same `clientMutationId` that was provided in the mutation input,
    * unchanged and unused. May be used by a client to track mutations.
    */
   clientMutationId?: Maybe<Scalars['String']['output']>;
-  /** Reads a single `Playlist` that is related to this `Playlistsong`. */
+  /** Reads a single `Playlist` that is related to this `PlaylistSong`. */
   playlistByPlaylistId?: Maybe<Playlist>;
-  /** The `Playlistsong` that was updated by this mutation. */
-  playlistsong?: Maybe<Playlistsong>;
-  /** An edge for our `Playlistsong`. May be used by Relay 1. */
-  playlistsongEdge?: Maybe<PlaylistsongsEdge>;
+  /** The `PlaylistSong` that was updated by this mutation. */
+  playlistSong?: Maybe<PlaylistSong>;
+  /** An edge for our `PlaylistSong`. May be used by Relay 1. */
+  playlistSongEdge?: Maybe<PlaylistSongsEdge>;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
   query?: Maybe<Query>;
-  /** Reads a single `Song` that is related to this `Playlistsong`. */
+  /** Reads a single `Song` that is related to this `PlaylistSong`. */
   songBySongId?: Maybe<Song>;
 };
 
-/** The output of our update `Playlistsong` mutation. */
-export type UpdatePlaylistsongPayloadPlaylistsongEdgeArgs = {
-  orderBy?: InputMaybe<Array<PlaylistsongsOrderBy>>;
+
+/** The output of our update `PlaylistSong` mutation. */
+export type UpdatePlaylistSongPayloadPlaylistSongEdgeArgs = {
+  orderBy?: InputMaybe<Array<PlaylistSongsOrderBy>>;
 };
 
 /** All input for the `updateSongById` mutation. */
@@ -1942,6 +1985,7 @@ export type UpdateSongPayload = {
   /** An edge for our `Song`. May be used by Relay 1. */
   songEdge?: Maybe<SongsEdge>;
 };
+
 
 /** The output of our update `Song` mutation. */
 export type UpdateSongPayloadSongEdgeArgs = {
@@ -1989,6 +2033,7 @@ export type UpdateUserPayload = {
   userEdge?: Maybe<UsersEdge>;
 };
 
+
 /** The output of our update `User` mutation. */
 export type UpdateUserPayloadUserEdgeArgs = {
   orderBy?: InputMaybe<Array<UsersOrderBy>>;
@@ -1996,18 +2041,19 @@ export type UpdateUserPayloadUserEdgeArgs = {
 
 export type User = Node & {
   __typename?: 'User';
-  address?: Maybe<Scalars['String']['output']>;
-  coordinates?: Maybe<Array<Maybe<Scalars['BigFloat']['output']>>>;
+  coordinates?: Maybe<Array<Maybe<Scalars['Float']['output']>>>;
+  email: Scalars['String']['output'];
   /** Reads and enables pagination through a set of `Favorite`. */
   favoritesByUserId: FavoritesConnection;
-  firstName: Scalars['String']['output'];
   id: Scalars['UUID']['output'];
-  lastName: Scalars['String']['output'];
   /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
   nodeId: Scalars['ID']['output'];
+  password: Scalars['String']['output'];
   /** Reads and enables pagination through a set of `Playlist`. */
   playlistsByCreatorId: PlaylistsConnection;
+  userName: Scalars['String']['output'];
 };
+
 
 export type UserFavoritesByUserIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
@@ -2019,6 +2065,7 @@ export type UserFavoritesByUserIdArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<FavoritesOrderBy>>;
 };
+
 
 export type UserPlaylistsByCreatorIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
@@ -2033,62 +2080,62 @@ export type UserPlaylistsByCreatorIdArgs = {
 
 /** A condition to be used against `User` object types. All fields are tested for equality and combined with a logical ‘and.’ */
 export type UserCondition = {
-  /** Checks for equality with the object’s `address` field. */
-  address?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the object’s `coordinates` field. */
-  coordinates?: InputMaybe<Array<InputMaybe<Scalars['BigFloat']['input']>>>;
-  /** Checks for equality with the object’s `firstName` field. */
-  firstName?: InputMaybe<Scalars['String']['input']>;
+  coordinates?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
+  /** Checks for equality with the object’s `email` field. */
+  email?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the object’s `id` field. */
   id?: InputMaybe<Scalars['UUID']['input']>;
-  /** Checks for equality with the object’s `lastName` field. */
-  lastName?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `password` field. */
+  password?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `userName` field. */
+  userName?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** A filter to be used against `User` object types. All fields are combined with a logical ‘and.’ */
 export type UserFilter = {
-  /** Filter by the object’s `address` field. */
-  address?: InputMaybe<StringFilter>;
   /** Checks for all expressions in this list. */
   and?: InputMaybe<Array<UserFilter>>;
   /** Filter by the object’s `coordinates` field. */
-  coordinates?: InputMaybe<BigFloatListFilter>;
+  coordinates?: InputMaybe<FloatListFilter>;
+  /** Filter by the object’s `email` field. */
+  email?: InputMaybe<StringFilter>;
   /** Filter by the object’s `favoritesByUserId` relation. */
   favoritesByUserId?: InputMaybe<UserToManyFavoriteFilter>;
   /** Some related `favoritesByUserId` exist. */
   favoritesByUserIdExist?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Filter by the object’s `firstName` field. */
-  firstName?: InputMaybe<StringFilter>;
   /** Filter by the object’s `id` field. */
   id?: InputMaybe<UuidFilter>;
-  /** Filter by the object’s `lastName` field. */
-  lastName?: InputMaybe<StringFilter>;
   /** Negates the expression. */
   not?: InputMaybe<UserFilter>;
   /** Checks for any expressions in this list. */
   or?: InputMaybe<Array<UserFilter>>;
+  /** Filter by the object’s `password` field. */
+  password?: InputMaybe<StringFilter>;
   /** Filter by the object’s `playlistsByCreatorId` relation. */
   playlistsByCreatorId?: InputMaybe<UserToManyPlaylistFilter>;
   /** Some related `playlistsByCreatorId` exist. */
   playlistsByCreatorIdExist?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Filter by the object’s `userName` field. */
+  userName?: InputMaybe<StringFilter>;
 };
 
 /** An input for mutations affecting `User` */
 export type UserInput = {
-  address?: InputMaybe<Scalars['String']['input']>;
-  coordinates?: InputMaybe<Array<InputMaybe<Scalars['BigFloat']['input']>>>;
-  firstName: Scalars['String']['input'];
+  coordinates?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
+  email: Scalars['String']['input'];
   id?: InputMaybe<Scalars['UUID']['input']>;
-  lastName: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+  userName: Scalars['String']['input'];
 };
 
 /** Represents an update to a `User`. Fields that are set will be updated. */
 export type UserPatch = {
-  address?: InputMaybe<Scalars['String']['input']>;
-  coordinates?: InputMaybe<Array<InputMaybe<Scalars['BigFloat']['input']>>>;
-  firstName?: InputMaybe<Scalars['String']['input']>;
+  coordinates?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
+  email?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['UUID']['input']>;
-  lastName?: InputMaybe<Scalars['String']['input']>;
+  password?: InputMaybe<Scalars['String']['input']>;
+  userName?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** A filter to be used against many `Favorite` object types. All fields are combined with a logical ‘and.’ */
@@ -2135,17 +2182,17 @@ export type UsersEdge = {
 
 /** Methods to use when ordering `User`. */
 export enum UsersOrderBy {
-  AddressAsc = 'ADDRESS_ASC',
-  AddressDesc = 'ADDRESS_DESC',
   CoordinatesAsc = 'COORDINATES_ASC',
   CoordinatesDesc = 'COORDINATES_DESC',
-  FirstNameAsc = 'FIRST_NAME_ASC',
-  FirstNameDesc = 'FIRST_NAME_DESC',
+  EmailAsc = 'EMAIL_ASC',
+  EmailDesc = 'EMAIL_DESC',
   IdAsc = 'ID_ASC',
   IdDesc = 'ID_DESC',
-  LastNameAsc = 'LAST_NAME_ASC',
-  LastNameDesc = 'LAST_NAME_DESC',
   Natural = 'NATURAL',
+  PasswordAsc = 'PASSWORD_ASC',
+  PasswordDesc = 'PASSWORD_DESC',
   PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
   PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  UserNameAsc = 'USER_NAME_ASC',
+  UserNameDesc = 'USER_NAME_DESC'
 }

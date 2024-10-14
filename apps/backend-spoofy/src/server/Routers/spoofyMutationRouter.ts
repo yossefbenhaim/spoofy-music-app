@@ -2,10 +2,10 @@ import { router, publicProcedure } from '../trpc';
 import {
   CreateFavoriteInput,
   CreatePlaylistInput,
-  CreatePlaylistsongInput,
+  CreatePlaylistSongInput,
   CreateSongInput,
   DeleteFavoriteByUserIdAndSongIdInput,
-  DeletePlaylistsongByPlaylistIdAndSongIdInput,
+  DeletePlaylistSongByPlaylistIdAndSongIdInput,
   DeleteUserByIdInput,
   Mutation,
   UpdatePlaylistByIdInput,
@@ -40,7 +40,7 @@ export const spoofyMutationRouter = router({
           duration: data.song.duration,
         },
       });
-      return newSong.data?.createSong.song;
+      return newSong.data?.createSong?.song;
     }),
 
   addFavorite: publicProcedure
@@ -73,10 +73,10 @@ export const spoofyMutationRouter = router({
           creatorId: data.playlist.creatorId,
         },
       });
-      return newPlaylist.data?.createPlaylist.playlist;
+      return newPlaylist.data?.createPlaylist?.playlist;
     }),
   addPlaylistSong: publicProcedure
-    .input(z.object({ data: z.custom<CreatePlaylistsongInput>() }))
+    .input(z.object({ data: z.custom<CreatePlaylistSongInput>() }))
     .mutation(async ({ input, ctx }) => {
       const { data } = input;
       const { req } = ctx;
@@ -84,15 +84,15 @@ export const spoofyMutationRouter = router({
       req.emit('onAddPlaylistSongsSubscription', post);
 
       const newPlaylistSong = await mainClient.mutate<
-        Required<Pick<Mutation, 'createPlaylistsong'>>
+        Required<Pick<Mutation, 'createPlaylistSong'>>
       >({
         mutation: ADD_PLAYLIST_SONG,
         variables: {
-          playlistId: data.playlistsong.playlistId,
-          songId: data.playlistsong.songId,
+          playlistId: data.playlistSong.playlistId,
+          songId: data.playlistSong.songId,
         },
       });
-      return newPlaylistSong.data?.createPlaylistsong.playlistsong;
+      return newPlaylistSong.data?.createPlaylistSong?.playlistSong;
     }),
 
   deleteFavoriteByUserIdAndSongId: publicProcedure
@@ -109,12 +109,12 @@ export const spoofyMutationRouter = router({
         },
       });
       return deleteFavoriteByUserIdAndSongId.data
-        ?.deleteFavoriteByUserIdAndSongId.favorite;
+        ?.deleteFavoriteByUserIdAndSongId?.favorite;
     }),
   deletePlaylistSong: publicProcedure
     .input(
       z.object({
-        data: z.custom<DeletePlaylistsongByPlaylistIdAndSongIdInput>(),
+        data: z.custom<DeletePlaylistSongByPlaylistIdAndSongIdInput>(),
       })
     )
     .mutation(async ({ input, ctx }) => {
@@ -122,8 +122,8 @@ export const spoofyMutationRouter = router({
       const { req } = ctx;
       const post = { input };
       req.emit('onDeletePlaylistSongsSubscription', post);
-      const deletePlaylistsong = await mainClient.mutate<
-        Required<Pick<Mutation, 'deletePlaylistsong'>>
+      const deletePlaylistSong = await mainClient.mutate<
+        Required<Pick<Mutation, 'deletePlaylistSong'>>
       >({
         mutation: DELETE_PLAYLIST_SONG_BY_PLAYLIST_AND_SONG_ID,
         variables: {
@@ -131,7 +131,7 @@ export const spoofyMutationRouter = router({
           songId: data.songId,
         },
       });
-      return deletePlaylistsong.data?.deletePlaylistsong.deletedPlaylistsongId;
+      return deletePlaylistSong.data?.deletePlaylistSong?.deletedPlaylistSongId;
     }),
   deleteUserById: publicProcedure
     .input(
@@ -149,7 +149,7 @@ export const spoofyMutationRouter = router({
           id: data.id,
         },
       });
-      return deleteUserById.data?.deleteUserById.user;
+      return deleteUserById.data?.deleteUserById?.user;
     }),
   updatePlaylistNameById: publicProcedure
     .input(
@@ -172,7 +172,7 @@ export const spoofyMutationRouter = router({
           name: data.playlistPatch.name,
         },
       });
-      return updatePlaylistNameById.data?.updatePlaylistById.playlist;
+      return updatePlaylistNameById.data?.updatePlaylistById?.playlist;
     }),
 });
 

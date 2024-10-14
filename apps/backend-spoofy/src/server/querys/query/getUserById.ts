@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
-const GET_USERS = gql`
-  query allUsers {
-    allUsers {
+const GET_USER_BY_ID = gql`
+  query allUsers($id: UUID!) {
+    allUsers(filter: { id: { equalTo: $id } }) {
       nodes {
         id
         userName
@@ -14,4 +14,4 @@ const GET_USERS = gql`
   }
 `;
 
-export default GET_USERS;
+export default GET_USER_BY_ID;

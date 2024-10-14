@@ -1,8 +1,8 @@
 import { DataTypes, fn } from 'sequelize';
 import sequelize from '../sequelizeSetup';
-import Artists from './artists';
+import Users from './users';
 
-const Songs = sequelize.define('Songs', {
+const Playlist = sequelize.define('Playlist', {
   id: {
     type: DataTypes.UUID,
     defaultValue: fn('uuid_generate_v4'),
@@ -12,19 +12,19 @@ const Songs = sequelize.define('Songs', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  duration: {
-    type: DataTypes.INTEGER,
+  created_playlist: {
+    type: DataTypes.DATE,
     allowNull: false,
   },
 });
 
-Songs.belongsTo(Artists, {
+Playlist.belongsTo(Users, {
   foreignKey: {
-    name: 'artist_id',
+    name: 'creator_id',
     allowNull: false,
   },
   onDelete: 'CASCADE',
   onUpdate: 'CASCADE',
 });
 
-export default Songs;
+export default Playlist;

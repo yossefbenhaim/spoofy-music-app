@@ -1,30 +1,28 @@
 import { DataTypes, fn } from 'sequelize';
 import sequelize from '../sequelizeSetup';
-import Artists from './artists';
 
-const Songs = sequelize.define('Songs', {
+const Users = sequelize.define('Users', {
   id: {
     type: DataTypes.UUID,
     defaultValue: fn('uuid_generate_v4'),
     primaryKey: true,
   },
-  name: {
+  user_name: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  duration: {
-    type: DataTypes.INTEGER,
+  password: {
+    type: DataTypes.STRING,
     allowNull: false,
+  },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  coordinates: {
+    type: DataTypes.ARRAY(DataTypes.FLOAT),
+    allowNull: true,
   },
 });
 
-Songs.belongsTo(Artists, {
-  foreignKey: {
-    name: 'artist_id',
-    allowNull: false,
-  },
-  onDelete: 'CASCADE',
-  onUpdate: 'CASCADE',
-});
-
-export default Songs;
+export default Users;

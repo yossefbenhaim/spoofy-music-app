@@ -1,3 +1,5 @@
+import { Sequelize } from './sequelize/sequelizeSync';
+
 const cors = require('cors');
 const dotenv = require('dotenv');
 const express = require('express');
@@ -6,7 +8,7 @@ const { default: PgPubSub } = require('@graphile/pg-pubsub');
 const { postgraphile, makePluginHook } = require('postgraphile');
 dotenv.config();
 
-// syncSenqulize();
+// Sequelize();
 // TODO: add tables
 
 const app = express();

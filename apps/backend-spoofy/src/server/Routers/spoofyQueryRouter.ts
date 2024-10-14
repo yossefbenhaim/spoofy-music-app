@@ -1,13 +1,5 @@
 import { router, publicProcedure } from '../trpc';
-import {
-  ArtistsConnection,
-  FavoriteInput,
-  PlaylistsConnection,
-  Query,
-  SongsConnection,
-  User,
-  UsersConnection,
-} from '@spoofy/spoofy-types';
+import { FavoriteInput, Query } from '@spoofy/spoofy-types';
 import { mainClient } from '../../apolloConfig/apolloConnection';
 import GET_USERS from '../querys/query/users';
 import { z } from 'zod';
@@ -15,9 +7,10 @@ import GET_ARTIST from '../querys/query/artists';
 import GET_SONGS from '../querys/query/songs';
 import GET_PLAYLIST from '../querys/query/playlists';
 import FAVORITES_BY_USER from '../querys/query/favoritesByUser';
+import GET_USER_BY_ID from '../querys/query/getUserById';
 
 export const spoofyQueryRouter = router({
-  getUsers: publicProcedure.query<UsersConnection>(async () => {
+  getUsers: publicProcedure.query(async () => {
     const allUsers = await mainClient.query<Required<Pick<Query, 'allUsers'>>>({
       query: GET_USERS,
       fetchPolicy: 'no-cache',
@@ -27,7 +20,7 @@ export const spoofyQueryRouter = router({
     return users;
   }),
 
-  getArtists: publicProcedure.query<ArtistsConnection>(async () => {
+  getArtists: publicProcedure.query(async () => {
     const allArtists = await mainClient.query<
       Required<Pick<Query, 'allArtists'>>
     >({
@@ -39,7 +32,7 @@ export const spoofyQueryRouter = router({
     return artists;
   }),
 
-  getSongs: publicProcedure.query<SongsConnection>(async () => {
+  getSongs: publicProcedure.query(async () => {
     const allSongs = await mainClient.query<Required<Pick<Query, 'allSongs'>>>({
       query: GET_SONGS,
       fetchPolicy: 'no-cache',
@@ -49,7 +42,7 @@ export const spoofyQueryRouter = router({
     return songs;
   }),
 
-  getPlaylists: publicProcedure.query<PlaylistsConnection>(async () => {
+  getPlaylists: publicProcedure.query(async () => {
     const allPlaylists = await mainClient.query<
       Required<Pick<Query, 'allPlaylists'>>
     >({
@@ -74,23 +67,24 @@ export const spoofyQueryRouter = router({
         fetchPolicy: 'no-cache',
       });
 
-      const favorites = favoritesByUserId.data.allFavorites.nodes;
+      const favorites = favoritesByUserId.data.allFavorites?.nodes;
       return favorites;
     }),
 
-  getUserById: publicProcedure
-    .input(z.string())
-    .query<User>(async ({ input }) => {
-      const getUser = await mainClient.query<Required<Pick<Query, 'userById'>>>(
-        {
-          query: GET_USERS,
-          variables: {
-            id: input,
-          },
-        }
-      );
-      return getUser.data.userById;
-    }),
+  getUserById: publicProcedure.input(z.string()).query(async ({ input }) => {
+    console.log({ input }, '======');
+    console.log('testststst');
+
+    const getUser = await mainClient.query<Required<Pick<Query, 'allUsers'>>>({
+      query: GET_USER_BY_ID,
+      variables: {
+        id: input,
+      },
+    });
+
+    const result = getUser.data.allUsers?.nodes;
+    return result;
+  }),
 });
 
 export type AppRouter = typeof spoofyQueryRouter;
