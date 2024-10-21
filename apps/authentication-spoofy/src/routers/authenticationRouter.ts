@@ -1,16 +1,10 @@
-import {
-  login,
-  profile,
-  register,
-} from '../controllers/authenticationController';
-import { Router } from 'express';
+import { registerUserController } from '../controllers/authenticationController';
+import { router, publicProcedure } from '../tRPC/trpc';
+import { z } from 'zod';
+import { CreateUserInput } from '@spoofy/spoofy-types';
 
-const router = Router();
-
-router.post('/register', register);
-
-router.post('/login', login);
-
-router.get('/profile', profile);
-
-export default router;
+export const authenticateRouter = router({
+  register: publicProcedure
+    .input(z.custom<CreateUserInput>())
+    .mutation(async ({ input }) => registerUserController(input)),
+});

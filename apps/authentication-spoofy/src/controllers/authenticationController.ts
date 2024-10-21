@@ -1,9 +1,14 @@
+import { CreateUserInput, Mutation } from '@spoofy/spoofy-types';
+import { GET_USER_BY_EMAIL } from '../queries/queries/getUserById';
+import { USER_REGISTRATION } from '../queries/mutations/userRegistration';
 import { Request, Response } from 'express';
+import { mainClient } from '../apolloConfig/apolloConnection';
+import { TRPCError } from '@trpc/server';
 import { Pool } from 'pg';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import trpcClient from '../trpcClient';
 import * as dotenv from 'dotenv';
+import redis from '../redis/redisClient';
 dotenv.config();
 
 const NX_JWT_SECRET = process.env['NX_JWT_SECRET'] as string;
@@ -12,19 +17,70 @@ const pool = new Pool({
   connectionString: 'postgres://postgres:yossef7875@localhost:5432/spoofy',
 });
 
-export const register = async (req: Request, res: Response) => {
-  const { username, email, password, coordinates } = req.body;
-
-  const hashedPassword = await bcrypt.hash(password, 10);
-
+export const registerUserController = async (input: CreateUserInput) => {
+  const { userName, email, password, coordinates } = input.user;
   try {
-    const result = await pool.query(
-      'INSERT INTO spoofy."Users" (user_name, email,  "password",coordinates) VALUES ($1, $2, $3, $4) RETURNING id',
-      [username, email, hashedPassword, coordinates]
+    const cachedUser = await redis.get(`user:${userName}`);
+    if (cachedUser) {
+      throw new TRPCError({
+        code: 'CONFLICT',
+        message: 'User already exists (cache)',
+      });
+    }
+
+    const existingUser = await mainClient.query({
+      query: GET_USER_BY_EMAIL,
+      variables: { email: email },
+    });
+
+    const userExists = existingUser.data?.allUsers?.nodes?.[0]?.email;
+
+    if (userExists) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      await redis.set(
+        `user:${userName}`,
+        JSON.stringify({ userName, email, password: hashedPassword })
+      );
+      throw new TRPCError({
+        code: 'CONFLICT',
+        message: 'User already exists',
+      });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await redis.set(
+      `user:${userName}`,
+      JSON.stringify({ userName, email, password: hashedPassword })
     );
-    res.status(201).json({ userId: result.rows[0].id });
+
+    const response = await mainClient.mutate<
+      Required<Pick<Mutation, 'createUser'>>
+    >({
+      mutation: USER_REGISTRATION,
+      variables: {
+        userName,
+        email,
+        password: hashedPassword,
+        coordinates,
+      },
+    });
+
+    const createUser = response.data?.createUser?.user;
+    if (!createUser) {
+      throw new TRPCError({
+        code: 'INTERNAL_SERVER_ERROR',
+        message: 'User Creation Failed',
+      });
+    }
+
+    return createUser;
   } catch (error) {
-    res.status(400).json({ error: 'User registration failed' });
+    console.error('Error registering user:', error);
+    if (error instanceof TRPCError) throw error;
+    throw new TRPCError({
+      code: 'INTERNAL_SERVER_ERROR',
+      message: 'Registering failed, please try again',
+    });
   }
 };
 
@@ -63,14 +119,7 @@ export const profile = async (req: Request, res: Response) => {
   const { id } = req.query;
 
   try {
-    console.log('test');
-
-    const result = await trpcClient.spoofyQueryRouter.getUserById.query(
-      '9853cf23-4cb0-40b8-a471-2d136b117357'
-    );
-
-    console.log(result);
-
+    const result = '';
     return res.json(result);
   } catch (error) {
     return res.status(500).json({ error: 'Failed to fetch profile' });

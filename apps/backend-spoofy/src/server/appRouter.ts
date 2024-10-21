@@ -1,12 +1,12 @@
-import { spoofyQueryRouter } from './Routers/spoofyQueryRouter';
+import { spoofyQueryRouter } from './routers/spoofyQueryRouter';
 import { publicProcedure, router } from './trpc';
-import { spoofyMutationRouter } from './Routers/spoofyMutationRouter';
-import { spoofySubscrptionRouter } from './Routers/spoofySubscriptionRouter';
+import { spoofyMutationRouter } from './routers/spoofyMutationRouter';
+import { spoofySubscriptionRouter } from './routers/spoofySubscriptionRouter';
 
 export const appRouter = router({
   spoofyQueryRouter: spoofyQueryRouter,
   spoofyMutationRouter: spoofyMutationRouter,
-  spoofySubscrptionRouter: spoofySubscrptionRouter,
+  spoofySubscrptionRouter: spoofySubscriptionRouter,
   health: publicProcedure.query(() => {
     return 'ok';
   }),

@@ -1,15 +1,15 @@
 import { router, publicProcedure } from '../trpc';
 import { mainClient } from '../../apolloConfig/apolloConnection';
 import { observable } from '@trpc/server/observable';
-import { ADD_PLAYLIST_SUBSCRIPTION } from '../../server/querys/subscription/addPlaylistSubscription';
-import { DELETE_PLAYLIST_SONG_SUBSCRIPTION } from '../../server/querys/subscription/deletePlaylistSongSubscription';
-import { ADD_PLAYLIST_SONG_SUBSCRIPTION } from '../../server/querys/subscription/addPlaylistSongSubscription';
-import { UPDATE_PLAYLIST_NAME_SUBSCRIPTION } from '../../server/querys/subscription/updatePlaylistNameSubscription';
+import { ADD_PLAYLIST_SUBSCRIPTION } from '../querys/subscription/addPlaylistSubscription';
+import { DELETE_PLAYLIST_SONG_SUBSCRIPTION } from '../querys/subscription/deletePlaylistSongSubscription';
+import { ADD_PLAYLIST_SONG_SUBSCRIPTION } from '../querys/subscription/addPlaylistSongSubscription';
+import { UPDATE_PLAYLIST_NAME_SUBSCRIPTION } from '../querys/subscription/updatePlaylistNameSubscription';
 import { Playlist, PlaylistSong } from '@spoofy/spoofy-types';
 
 const eventCache: Set<string> = new Set();
 
-export const spoofySubscrptionRouter = router({
+export const spoofySubscriptionRouter = router({
   onAddPlaylistSubscription: publicProcedure.subscription(({ ctx }) => {
     return observable<Playlist>((emit) => {
       const { req } = ctx;
@@ -95,4 +95,4 @@ export const spoofySubscrptionRouter = router({
   }),
 });
 
-export type AppRouter = typeof spoofySubscrptionRouter;
+export type AppRouter = typeof spoofySubscriptionRouter;

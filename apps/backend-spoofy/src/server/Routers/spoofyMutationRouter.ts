@@ -21,9 +21,6 @@ import DELETE_FAVORITS_BY_USER_ID_AND_SONG_ID from '../querys/mutation/deleteFav
 import DELETE_PLAYLIST_SONG_BY_PLAYLIST_AND_SONG_ID from '../querys/mutation/deletePlaylistSongByPlaylistIdAndSongId';
 import DELETE_USER_BY_ID from '../querys/mutation/deleteUserById';
 import UPDATE_PLAYLIST_NAME_BY_ID from '../querys/mutation/updatePlaylistNameById';
-import { EventEmitter } from 'events';
-
-const ee = new EventEmitter();
 
 export const spoofyMutationRouter = router({
   addSong: publicProcedure
@@ -54,7 +51,6 @@ export const spoofyMutationRouter = router({
           songId: data.favorite.songId,
         },
       });
-      //   return newFavorite.data?.createFavorite.favorite;
     }),
   addPlaylist: publicProcedure
     .input(z.object({ data: z.custom<CreatePlaylistInput>() }))
