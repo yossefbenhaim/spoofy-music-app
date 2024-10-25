@@ -13,7 +13,7 @@ interface Props {
 
 const PopupCard: React.FC<Props> = (props) => {
 	const { userSelected, setSelctedUser } = props
-	const { firstName, lastName, coordinates } = userSelected as User
+	const { userName, coordinates } = userSelected as User
 	const { classes } = useStyles()
 	const [location, setLocation] = useState<string>()
 
@@ -32,7 +32,7 @@ const PopupCard: React.FC<Props> = (props) => {
 			<CardContent>
 				<div className={classes.headerCard}>
 					<Typography  >
-						{`${firstName}  ${lastName}  😀`}
+						{`${userName}  😀`}
 					</Typography>
 					<IconButton onClick={handleExitCard}>
 						<CancelIcon />
