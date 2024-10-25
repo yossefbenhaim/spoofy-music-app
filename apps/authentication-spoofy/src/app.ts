@@ -2,8 +2,7 @@ import express, { Application } from 'express';
 import cors from 'cors';
 import * as dotenv from 'dotenv';
 import * as trpcExpress from '@trpc/server/adapters/express';
-import { appRouter } from './routers/appRouter';
-import { loginMiddleware } from './tRPC/loggingMiddleware';
+import { appRouter } from './appRouter';
 import { createContext } from './tRPC/context';
 dotenv.config();
 import cookieParser from 'cookie-parser';
@@ -18,7 +17,7 @@ app.use(
   trpcExpress.createExpressMiddleware({
     router: appRouter,
     createContext,
-    onError({ error }) {
+    onError({ error }: { error: Error }) {
       console.error('tRPC Error:', error);
     },
   })

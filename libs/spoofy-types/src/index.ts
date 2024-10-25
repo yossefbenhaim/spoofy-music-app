@@ -1,3 +1,4 @@
 export * from './types/spoofyTypes';
+export * from './types/authenticationTypes';
 
-export * from './types/models/interfaces/addPlaylistSong';
+export * from './types/addPlaylistSong';

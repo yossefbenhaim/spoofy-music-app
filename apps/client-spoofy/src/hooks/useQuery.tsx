@@ -23,7 +23,7 @@ const UseQuery = () => {
 		if (favoritesData.isSuccess) {
 			const data = favoritesData.data;
 			const favorites: Favorite[] = data?.map((favorite) => ({
-				songId: favorite.songId,
+				songId: favorite?.songId,
 			}));
 
 			dispatch(setFavorites(favorites as Favorite[]));
@@ -38,7 +38,7 @@ const UseQuery = () => {
 				id: playlist.id,
 				name: playlist.name,
 				creatorId: playlist.creatorId,
-				songs: playlist.playlistsongsByPlaylistId.nodes.map(
+				songs: playlist.playlistSongsByPlaylistId.nodes.map(
 					(song) => song.songId
 				),
 			}));

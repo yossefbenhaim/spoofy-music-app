@@ -8,7 +8,7 @@ const UseSubscription = () => {
 	const dispatch = useDispatch();
 	const currentSongId = useAppSelector((state) => state.currentPlaylist.songId);
 
-	trpc.spoofySubscrptionRouter.onAddPlaylistSubscription.useSubscription(undefined, {
+	trpc.spoofySubscriptionRouter.onAddPlaylistSubscription.useSubscription(undefined, {
 		onData: (data) => {
 			if (data) {
 				dispatch(
@@ -25,7 +25,7 @@ const UseSubscription = () => {
 		},
 	});
 
-	trpc.spoofySubscrptionRouter.onAddPlaylistSongsSubscription.useSubscription(undefined, {
+	trpc.spoofySubscriptionRouter.onAddPlaylistSongsSubscription.useSubscription(undefined, {
 		onData: (data) => {
 			if (data) {
 				const playlistId = data.playlistId;
@@ -44,7 +44,7 @@ const UseSubscription = () => {
 	});
 
 
-	trpc.spoofySubscrptionRouter.onDeletePlaylistSongsSubscription.useSubscription(undefined, {
+	trpc.spoofySubscriptionRouter.onDeletePlaylistSongsSubscription.useSubscription(undefined, {
 		onData: (data: string) => {
 			if (data) {
 				const decodedText = window.atob(
@@ -70,7 +70,7 @@ const UseSubscription = () => {
 		},
 	});
 
-	trpc.spoofySubscrptionRouter.onUpdatePlaylistNameSubscription.useSubscription(undefined, {
+	trpc.spoofySubscriptionRouter.onUpdatePlaylistNameSubscription.useSubscription(undefined, {
 		onData: (data: { id?: string; name?: string; }) => {
 			if (data) {
 				const playlistId = data.id;

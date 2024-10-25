@@ -1,27 +1,30 @@
 {
-  "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "module": "commonjs",
-	"baseUrl": "./src",
-    "allowJs": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-	"esModuleInterop":true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-	"paths": {
-		"@spoofy/spoofy-types":[
-			"../../../libs/spoofy-types/src/index.ts"
-		],
-		},  
-  },
-  "files": [],
-  "include": [],
-  "references": [
-    {
-      "path": "./tsconfig.lib.json"
-    }
-  ]
+	"extends": "../../tsconfig.base.json",
+	"compilerOptions": {
+		"module": "commonjs",
+		"baseUrl": "./src",
+		"allowJs": true,
+		"forceConsistentCasingInFileNames": true,
+		"strict": true,
+		"esModuleInterop": true,
+		"noImplicitOverride": true,
+		"noPropertyAccessFromIndexSignature": true,
+		"noImplicitReturns": true,
+		"noFallthroughCasesInSwitch": true,
+		"paths": {
+			"@spoofy/spoofy-types": [
+				"../../../libs/spoofy-types/src/index.ts"
+			],
+			"@spoofy/spoofy-authentication": [
+				"../../../apps/authentication-spoofy/src/index.ts"
+			],
+		},
+	},
+	"files": [],
+	"include": [],
+	"references": [
+		{
+			"path": "./tsconfig.lib.json"
+		}
+	]
 }
