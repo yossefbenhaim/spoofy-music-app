@@ -31,7 +31,7 @@ const generateTokens = (userId: string) => {
 };
 
 export const registerUserController = async (input: UserInput) => {
-  const { userName, email, password, coordinates } = input;
+  const { id, userName, email, password, coordinates } = input;
   try {
     const cachedUser = await redis.get(`user:${email}`);
     if (cachedUser) {
@@ -63,7 +63,7 @@ export const registerUserController = async (input: UserInput) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     await redis.set(
       `user:${email}`,
-      JSON.stringify({ userName, email, password: hashedPassword })
+      JSON.stringify({ id, userName, email, password: hashedPassword })
     );
 
     const response = await mainClient.mutate<

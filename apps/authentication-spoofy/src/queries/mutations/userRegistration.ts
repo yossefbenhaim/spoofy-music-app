@@ -19,6 +19,7 @@ export const USER_REGISTRATION = gql`
     ) {
       clientMutationId
       user {
+        id
         userName
         password
         email

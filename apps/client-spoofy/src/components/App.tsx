@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { LicenseInfo } from '@mui/x-license-pro';
 import { PathName } from 'models/enums/pathName';
 
-import Login from './login/login';
+import Registration from './registration/registration';
 import Library from './library/library';
 
 import SongsTable from './songsTable/songsTable';
@@ -27,7 +27,7 @@ const App: React.FC = () => {
 			<UseQuery />
 			<BrowserRouter>
 				<Routes>
-					<Route index element={<Login />} />
+					<Route index element={<Registration />} />
 					<Route path={PathName.library} element={<Library />}>
 						<Route path={PathName.songs} element={<SongsTable />} />
 						<Route path={PathName.playlist} element={<Playlists />} />
