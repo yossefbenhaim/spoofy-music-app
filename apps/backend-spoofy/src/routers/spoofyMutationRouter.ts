@@ -1,4 +1,4 @@
-import { router, publicProcedure } from '../trpc';
+import { router, publicProcedure } from '../tRPC/trpc';
 import {
   CreateFavoriteInput,
   CreatePlaylistInput,
@@ -10,7 +10,7 @@ import {
   Mutation,
   UpdatePlaylistByIdInput,
 } from '@spoofy/spoofy-types';
-import { mainClient } from '../../apolloConfig/apolloConnection';
+import { mainClient } from '../apolloConfig/apolloConnection';
 import { z } from 'zod';
 
 import ADD_SONG from '../querys/mutation/addSong';

@@ -2,7 +2,7 @@ import express, { Application } from 'express';
 import cors from 'cors';
 import * as dotenv from 'dotenv';
 import * as trpcExpress from '@trpc/server/adapters/express';
-import { appRouter } from './appRouter';
+import { appRouter } from './routers/appRouter';
 import { createContext } from './tRPC/context';
 dotenv.config();
 import cookieParser from 'cookie-parser';

@@ -1,6 +1,4 @@
-import { router, publicProcedure } from '../trpc';
 import { FavoriteInput, Query } from '@spoofy/spoofy-types';
-import { mainClient } from '../../apolloConfig/apolloConnection';
 import GET_USERS from '../querys/query/users';
 import { z } from 'zod';
 import GET_ARTIST from '../querys/query/artists';
@@ -8,6 +6,8 @@ import GET_SONGS from '../querys/query/songs';
 import GET_PLAYLIST from '../querys/query/playlists';
 import FAVORITES_BY_USER from '../querys/query/favoritesByUser';
 import GET_USER_BY_ID from '../querys/query/getUserById';
+import { publicProcedure, router } from '../tRPC/trpc';
+import { mainClient } from '../../../authentication-spoofy/src/apolloConfig/apolloConnection';
 
 export const spoofyQueryRouter = router({
   getUsers: publicProcedure.query(async () => {

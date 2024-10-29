@@ -21,7 +21,7 @@
 	"start":{
 		"executor": "nx:run-commands",
 		"options": {
-			"commands":[ "nodemon apps/backend-spoofy/src/main.ts"]
+			"commands":[ "nodemon apps/backend-spoofy/src/server.ts"]
 		},
 		"parallel":false
 	},

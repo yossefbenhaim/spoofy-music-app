@@ -49,6 +49,7 @@ const useGenericDialogPlaylist = (props: Props) => {
               playlist: {
                 name: name,
                 creatorId: currentUser,
+                createdPlaylist: undefined,
               },
             },
           },
@@ -57,7 +58,7 @@ const useGenericDialogPlaylist = (props: Props) => {
               songs.map(async (song) => {
                 mutationAddPlaylistSong1.mutate({
                   data: {
-                    playlistsong: {
+                    playlistSong: {
                       playlistId: data?.id,
                       songId: song,
                     },
@@ -88,7 +89,7 @@ const useGenericDialogPlaylist = (props: Props) => {
           newSongs.map(async (song) => {
             mutationAddPlaylistSong1.mutate({
               data: {
-                playlistsong: {
+                playlistSong: {
                   playlistId: currentPlaylist?.id,
                   songId: song,
                 },

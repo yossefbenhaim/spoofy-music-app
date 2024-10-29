@@ -12,6 +12,8 @@ import {
   RefreshAccessToken,
   UserInput,
 } from '@spoofy/spoofy-types';
+import { TRPCError } from '@trpc/server';
+import { verifyTokenMiddleware } from '../middlewares/verifyToken';
 
 export const authenticateRouter = router({
   register: publicProcedure
@@ -26,4 +28,24 @@ export const authenticateRouter = router({
   logoutUser: publicProcedure
     .input(z.custom<LogoutUser>())
     .mutation(async ({ input }) => logoutUserController(input)),
+  validateToken: publicProcedure
+    .input(
+      z.object({
+        token: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      // const token = ctx.req.headers.authorization?.split(' ')[1];
+      const { token } = input;
+
+      if (!token) {
+        throw new TRPCError({
+          code: 'UNAUTHORIZED',
+          message: 'No token provided',
+        });
+      }
+
+      const user = await verifyTokenMiddleware(token);
+      return { message: 'Token is valid', user };
+    }),
 });

@@ -1,3 +1,3 @@
 require('dotenv').config();
 
-export * from '../src/appRouter';
+export * from '../src/routers/appRouter';

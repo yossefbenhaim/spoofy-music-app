@@ -4,20 +4,21 @@ import { combineReducers } from '@reduxjs/toolkit';
 import { configureStore } from '@reduxjs/toolkit';
 import { SliceName } from 'models/enums/sliceName';
 
-import usersReduser from './slice/users';
+import usersReducer from './slice/users';
 import songsReducer from './slice/songs';
 import artistsReducer from './slice/artist';
 import currentSongReducer from './slice/currentPlaylist';
 import currentUserReducer from './slice/currentUser';
-import favoritesSongReduser from './slice/favorites';
-import PlaylistsReduser from './slice/playlists';
-import storage from 'redux-persist/lib/storage';
-import themeMode from './slice/themeMode';
+import favoritesSongReducer from './slice/favorites';
+import PlaylistsReducer from './slice/playlists';
+import storageReducer from 'redux-persist/lib/storage';
+import themeModeReducer from './slice/themeMode';
+import authReducer from './slice/auth';
 
 const persistConfig = {
   key: 'root',
-  type: storage,
-  storage,
+  type: storageReducer,
+  storage: storageReducer,
   whitelist: [
     SliceName.currentUser,
     SliceName.songs,
@@ -25,18 +26,20 @@ const persistConfig = {
     SliceName.playlists,
     SliceName.users,
     SliceName.themeMode,
+    SliceName.auth,
   ],
 };
 
 const rootReducer = combineReducers({
   [SliceName.currentUser]: currentUserReducer,
   [SliceName.currentPlaylist]: currentSongReducer,
-  [SliceName.favorites]: favoritesSongReduser,
+  [SliceName.favorites]: favoritesSongReducer,
   [SliceName.songs]: songsReducer,
   [SliceName.artist]: artistsReducer,
-  [SliceName.users]: usersReduser,
-  [SliceName.playlists]: PlaylistsReduser,
-  [SliceName.themeMode]: themeMode,
+  [SliceName.users]: usersReducer,
+  [SliceName.playlists]: PlaylistsReducer,
+  [SliceName.themeMode]: themeModeReducer,
+  [SliceName.auth]: authReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

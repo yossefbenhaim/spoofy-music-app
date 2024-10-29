@@ -1,12 +1,12 @@
 import { trpcClient } from '../tRPC/trpcAuthentication';
-import { UserInput } from '../../../../../libs/spoofy-types/src/types/spoofyTypes';
-import { router, publicProcedure } from '../trpc';
-import z from 'zod';
 import {
+  UserInput,
   LoginUser,
   LogoutUser,
   RefreshAccessToken,
-} from '../../../../../libs/spoofy-types/src/types/authenticationTypes';
+} from '@spoofy/spoofy-types';
+import { router, publicProcedure } from '../tRPC/trpc';
+import z from 'zod';
 
 export const spoofyAuthenticationRouter = router({
   register: publicProcedure

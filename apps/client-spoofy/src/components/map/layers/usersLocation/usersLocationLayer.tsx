@@ -30,7 +30,7 @@ const UsersLocationLayer = () => {
 			return zoomInLocation(event, 10)
 		} else {
 			const selectedUserId = event.target.get('features')[0]['values_']['id']
-			setSelctedUser(users.find((user) => user.id === selectedUserId));
+			setSelctedUser(users.find((user: User) => user.id === selectedUserId));
 			return zoomInLocation(event, 15)
 		}
 

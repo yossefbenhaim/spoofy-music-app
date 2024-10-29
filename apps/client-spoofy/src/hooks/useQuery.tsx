@@ -11,14 +11,17 @@ import { trpc } from 'trpc/trpcProvider';
 import { useEffect } from 'react';
 import { Artist } from '@models/interface/artist';
 import { setArtists } from 'redux/slice/artist';
+import { User } from '@models/interface/user';
+import { setUsers } from 'redux/slice/users';
 
 const UseQuery = () => {
 	const dispatch = useDispatch();
 	const currentUser = useAppSelector((state) => state.currentUser.user);
-
+	const usersData = trpc.spoofyQueryRouter.getUsers.useQuery();
 	const favoritesData = trpc.spoofyQueryRouter.getFavoritesByUser.useQuery({
 		data: { userId: currentUser?.id },
 	});
+
 	useEffect(() => {
 		if (favoritesData.isSuccess) {
 			const data = favoritesData.data;
@@ -61,6 +64,12 @@ const UseQuery = () => {
 			dispatch(setArtists(artists as Artist[]));
 		}
 	}, [allArtists]);
+	useEffect(() => {
+		if (usersData.isSuccess) {
+			const users: User[] = usersData.data.nodes as User[];
+			dispatch(setUsers(users));
+		}
+	}, [usersData]);
 	return (
 		<></>
 	)

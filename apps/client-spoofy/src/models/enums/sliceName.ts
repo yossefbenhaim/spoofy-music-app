@@ -7,4 +7,5 @@ export enum SliceName {
   playlists = 'playlists',
   users = 'users',
   themeMode = 'themeMode',
+  auth = 'auth',
 }

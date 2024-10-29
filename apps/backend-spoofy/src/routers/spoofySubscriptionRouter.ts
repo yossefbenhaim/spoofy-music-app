@@ -1,5 +1,5 @@
-import { router, publicProcedure } from '../trpc';
-import { mainClient } from '../../apolloConfig/apolloConnection';
+import { router, publicProcedure } from '../tRPC/trpc';
+import { mainClient } from '../apolloConfig/apolloConnection';
 import { observable } from '@trpc/server/observable';
 import { ADD_PLAYLIST_SUBSCRIPTION } from '../querys/subscription/addPlaylistSubscription';
 import { DELETE_PLAYLIST_SONG_SUBSCRIPTION } from '../querys/subscription/deletePlaylistSongSubscription';

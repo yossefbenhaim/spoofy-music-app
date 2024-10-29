@@ -21,7 +21,7 @@ const PlaylistTable: React.FC<Props> = (props) => {
 
 	const findCreatorName = (creator: string) => {
 		const creatorName = users.find((user: User) => user.id === creator)!
-		return (creatorName.firstName + " " + creatorName.lastName)
+		return (creatorName.userName)
 	}
 
 	return (

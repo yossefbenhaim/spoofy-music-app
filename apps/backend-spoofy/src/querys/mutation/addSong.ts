@@ -1,5 +1,4 @@
-import { gql } from '@apollo/client';
-import { spoofyGraphql } from '../../../../../../graphql';
+import { spoofyGraphql } from '../../../../../graphql';
 
 const ADD_SONG = spoofyGraphql(`
   mutation CreateSong($name: String!, $artistId: UUID!, $duration: Int!) {

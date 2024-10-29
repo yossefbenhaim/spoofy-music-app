@@ -1,5 +1,5 @@
-import { publicProcedure, router } from '../src/tRPC/trpc';
-import { authenticateRouter } from './routers/authenticationRouter';
+import { publicProcedure, router } from '../tRPC/trpc';
+import { authenticateRouter } from './authenticationRouter';
 
 export const appRouter = router({
   authentication: authenticateRouter,

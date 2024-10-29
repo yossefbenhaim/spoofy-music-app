@@ -31,7 +31,7 @@ const generateTokens = (userId: string) => {
 };
 
 export const registerUserController = async (input: UserInput) => {
-  const { id, userName, email, password, coordinates } = input;
+  const { userName, email, password, coordinates } = input;
   try {
     const cachedUser = await redis.get(`user:${email}`);
     if (cachedUser) {
@@ -46,13 +46,21 @@ export const registerUserController = async (input: UserInput) => {
       variables: { email: email },
     });
 
-    const userExists = existingUser.data?.allUsers?.nodes?.[0]?.email;
+    const isUserExists = existingUser.data?.allUsers?.nodes?.[0]?.email;
 
-    if (userExists) {
+    if (isUserExists) {
+      const { id, userName, email, coordinates, password } =
+        existingUser.data?.allUsers?.nodes?.[0];
       const hashedPassword = await bcrypt.hash(password, 10);
       await redis.set(
         `user:${email}`,
-        JSON.stringify({ userName, email, password: hashedPassword })
+        JSON.stringify({
+          id,
+          userName,
+          email,
+          coordinates,
+          password: hashedPassword,
+        })
       );
       throw new TRPCError({
         code: 'CONFLICT',
@@ -61,10 +69,6 @@ export const registerUserController = async (input: UserInput) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    await redis.set(
-      `user:${email}`,
-      JSON.stringify({ id, userName, email, password: hashedPassword })
-    );
 
     const response = await mainClient.mutate<
       Required<Pick<Mutation, 'createUser'>>
@@ -86,7 +90,17 @@ export const registerUserController = async (input: UserInput) => {
       });
     }
     const { accessToken, refreshToken } = generateTokens(email);
-
+    const { id } = createUser;
+    await redis.set(
+      `user:${email}`,
+      JSON.stringify({
+        id,
+        userName,
+        email,
+        coordinates,
+        password: hashedPassword,
+      })
+    );
     await redis.set(
       `refresh:${email}`,
       refreshToken,
@@ -128,7 +142,7 @@ export const loginUserController = async (input: LoginUser) => {
         'EX',
         REFRESH_TOKEN_EXPIRY
       );
-      return { accessToken, refreshToken };
+      return { user, accessToken, refreshToken };
     } else {
       const existingUser = await mainClient.query({
         query: GET_USER_BY_EMAIL,
@@ -143,10 +157,10 @@ export const loginUserController = async (input: LoginUser) => {
           message: 'User not found',
         });
       } else {
-        const { userName, email, password } = user;
+        const { userName, email, password, coordinates, id } = user;
         await redis.set(
           `user:${email}`,
-          JSON.stringify({ userName, email, password })
+          JSON.stringify({ userName, email, password, coordinates, id })
         );
       }
       const validPassword = await bcrypt.compare(password, user.password);
@@ -166,7 +180,7 @@ export const loginUserController = async (input: LoginUser) => {
         'EX',
         REFRESH_TOKEN_EXPIRY
       );
-      return { accessToken, refreshToken };
+      return { user, accessToken, refreshToken };
     }
   } catch (error) {
     console.error('Error logging in user:', error);
