@@ -94,14 +94,14 @@ const useStyles = makeStyles<{ isLogin?: boolean }>()((theme, { isLogin }) => ({
     alignItems: 'center',
   },
   toggleButton: {
-    width: '40%',
+    width: '30%',
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  divForCenterIcon: { width: '40%', height: '100%' },
+  divForCenterIcon: { width: '30%', height: '100%' },
   btn: {
     transition: '0.6s',
     borderRadius: '20px',
@@ -119,7 +119,6 @@ const useStyles = makeStyles<{ isLogin?: boolean }>()((theme, { isLogin }) => ({
     backgroundSize: '200%',
     width: '100px',
     height: '32px',
-    marginRight: '10px',
     color: 'black',
     backgroundImage: theme.palette.background.buttonColors.submit,
     '&:hover': {

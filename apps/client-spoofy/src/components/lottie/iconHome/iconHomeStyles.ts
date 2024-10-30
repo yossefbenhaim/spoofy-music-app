@@ -5,7 +5,7 @@ const useStyles = makeStyles()({
     padding: '0px',
   },
   logo: {
-    width: '100%',
+    width: '40%',
     height: '100%',
   },
   icon2: {
