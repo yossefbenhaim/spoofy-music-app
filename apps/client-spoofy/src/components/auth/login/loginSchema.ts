@@ -11,22 +11,12 @@ export const defaultValues: UserLoginType = {
 const UserLogin = z.object({
   [UserLoginFormKey.PASSWORD]: z
     .string()
-    .min(8, { message: 'Password must be at least 8 characters long' })
-    .regex(/[A-Z]/, {
-      message: 'Password must contain at least one uppercase letter',
-    })
-    .regex(/[a-z]/, {
-      message: 'Password must contain at least one lowercase letter',
-    })
-    .regex(/[0-9]/, { message: 'Password must contain at least one digit' })
+    .min(8, { message: 'חייב להיות מינימום 8 תווים ' })
+    .regex(/[0-9]/, { message: 'חייב מספר בסיסמה ' })
     .regex(/[@$!%*?&#]/, {
-      message:
-        'Password must contain at least one special character (@, $, !, %, *, ?, &, #)',
+      message: 'חייב אות מיוחדת (@$!%*?&#)',
     }),
-
-  [UserLoginFormKey.EMAIL]: z
-    .string()
-    .email({ message: 'Invalid email address format' }),
+  [UserLoginFormKey.EMAIL]: z.string().email({ message: 'איימל לא תקין  ' }),
 });
 
 export type UserLoginType = z.infer<typeof UserLogin>;

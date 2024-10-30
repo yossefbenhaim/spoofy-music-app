@@ -15,29 +15,22 @@ export const defaultValues: UserRegistrationType = {
 const UserRegistration = z.object({
   [UserRegistrationFormKey.USER_NAME]: z
     .string()
-    .min(2, { message: 'Username must be at ' })
-    .max(25, { message: 'User' }),
+    .min(2, { message: 'חייב מינימום 2 תווים' })
+    .max(25, { message: 'שם משתמש עד 25 תווים' }),
   [UserRegistrationFormKey.PASSWORD]: z
     .string()
-    .min(8, { message: 'Password ' })
-    .regex(/[A-Z]/, {
-      message: 'Password must ',
-    })
-    .regex(/[a-z]/, {
-      message: 'Password must ',
-    })
-    .regex(/[0-9]/, { message: 'Password ' })
+    .min(8, { message: 'חייב להיות מינימום 8 תווים ' })
+    .regex(/[0-9]/, { message: 'חייב מספר בסיסמה ' })
     .regex(/[@$!%*?&#]/, {
-      message: 'Password',
+      message: 'חייב אות מיוחדת (@$!%*?&#)',
     }),
-
   [UserRegistrationFormKey.EMAIL]: z
     .string()
-    .email({ message: 'Invalid email ' }),
+    .email({ message: 'איימל לא תקין  ' }),
   [UserRegistrationFormKey.ADDRESS]: z
     .string()
-    .min(4, { message: 'Address must be at ' })
-    .max(100, { message: 'Address' }),
+    .min(4, { message: 'חייב מינימום 4  תווים' })
+    .max(50, { message: 'יותר מדי תווים' }),
 });
 
 export type UserRegistrationType = z.infer<typeof UserRegistration>;

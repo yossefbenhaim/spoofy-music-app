@@ -6,7 +6,6 @@ export const findAddressByCoordinates = (
   return fetch(URL)
     .then((r) => r.json())
     .then((data) => {
-      console.log({ data });
       const town = data.address.town ? data.address.town : '';
       const roadTown = data.address.road ? data.address.road : '';
 

@@ -11,7 +11,7 @@ import { setCoordinates } from "redux/slice/currentCoordinatesSelectAddress";
 
 const coords: Record<string, Coordinate> = {
 	origin: [2.364, 48.82],
-	Montmartre: [35.0818155, 31.4117257],
+	Montmartre: [35.047, 32.463],
 };
 
 const SelectAddressLayer = () => {
