@@ -14,6 +14,7 @@ import PlaylistsReducer from './slice/playlists';
 import storageReducer from 'redux-persist/lib/storage';
 import themeModeReducer from './slice/themeMode';
 import authReducer from './slice/auth';
+import currentCoordinatesAddressReducer from './slice/currentCoordinatesSelectAddress';
 
 const persistConfig = {
   key: 'root',
@@ -31,14 +32,15 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-  [SliceName.currentUser]: currentUserReducer,
+  [SliceName.currentCoordinatesAddress]: currentCoordinatesAddressReducer,
   [SliceName.currentPlaylist]: currentSongReducer,
+  [SliceName.currentUser]: currentUserReducer,
   [SliceName.favorites]: favoritesSongReducer,
-  [SliceName.songs]: songsReducer,
-  [SliceName.artist]: artistsReducer,
-  [SliceName.users]: usersReducer,
   [SliceName.playlists]: PlaylistsReducer,
   [SliceName.themeMode]: themeModeReducer,
+  [SliceName.artist]: artistsReducer,
+  [SliceName.songs]: songsReducer,
+  [SliceName.users]: usersReducer,
   [SliceName.auth]: authReducer,
 });
 

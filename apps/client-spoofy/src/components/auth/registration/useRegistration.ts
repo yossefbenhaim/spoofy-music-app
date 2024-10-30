@@ -1,4 +1,5 @@
 import UserRegistration, {
+  UserRegistrationFormKey,
   UserRegistrationType,
   defaultValues,
 } from './registrationSchema';
@@ -12,11 +13,15 @@ import { useCookies } from 'react-cookie';
 import { PathName } from 'models/enums/pathName';
 import { setUser } from 'redux/slice/currentUser';
 import { trpc } from '../../../trpc/trpcProvider';
+import { useAppSelector } from 'redux/store';
 
 const useRegistration = () => {
   const { enqueueSnackbar } = useSnackbar();
   const navigation = useNavigate();
   const dispatch = useDispatch();
+  const currentCoordinatesAddress = useAppSelector(
+    (state) => state.currentCoordinatesAddress.coordinates
+  );
 
   const [_, setCookie] = useCookies(['refreshToken']);
   const registerMutation = trpc.spoofyAuthenticationRouter.register.useMutation(
@@ -50,7 +55,12 @@ const useRegistration = () => {
 
   const onSubmit = async (data: UserRegistrationType) => {
     try {
-      const response = await registerMutation.mutateAsync(data);
+      const response = await registerMutation.mutateAsync({
+        userName: data[UserRegistrationFormKey.USER_NAME],
+        email: data[UserRegistrationFormKey.EMAIL],
+        password: data[UserRegistrationFormKey.PASSWORD],
+        coordinates: currentCoordinatesAddress,
+      });
       if (response?.user.id) {
         dispatch(setUser(response.user));
         dispatch(

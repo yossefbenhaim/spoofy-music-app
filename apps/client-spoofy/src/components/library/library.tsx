@@ -51,34 +51,34 @@ const Library: React.FC = () => {
 	};
 
 	useEffect(() => {
-		console.log({ expiresAt, accessToken });
-		if (!accessToken || !expiresAt) {
-			navigation(PathName.login);
-		};
+		// console.log({ expiresAt, accessToken });
+		// if (!accessToken || !expiresAt) {
+		// 	navigation(PathName.login);
+		// };
 
-		const currentTime = Date.now();
-		const timeUntilExpiry = expiresAt! - currentTime;
+		// const currentTime = Date.now();
+		// const timeUntilExpiry = expiresAt! - currentTime;
 
-		if (timeUntilExpiry <= 0) {
-			dispatch(clearAccessToken());
-			navigation(PathName.login);
-			return;
-		}
+		// if (timeUntilExpiry <= 0) {
+		// 	dispatch(clearAccessToken());
+		// 	navigation(PathName.login);
+		// 	return;
+		// }
 
 
-		const refreshTimeout = setTimeout(() => {
-			refreshAccessToken();
-		}, timeUntilExpiry - 6000);
+		// const refreshTimeout = setTimeout(() => {
+		// 	refreshAccessToken();
+		// }, timeUntilExpiry - 6000);
 
-		const expiryTimeout = setTimeout(() => {
-			dispatch(clearAccessToken());
-			navigation(PathName.login);
-		}, timeUntilExpiry);
+		// const expiryTimeout = setTimeout(() => {
+		// 	dispatch(clearAccessToken());
+		// 	navigation(PathName.login);
+		// }, timeUntilExpiry);
 
-		return () => {
-			clearTimeout(refreshTimeout);
-			clearTimeout(expiryTimeout);
-		};
+		// return () => {
+		// 	clearTimeout(refreshTimeout);
+		// 	clearTimeout(expiryTimeout);
+		// };
 	}, [accessToken, expiresAt]);
 
 

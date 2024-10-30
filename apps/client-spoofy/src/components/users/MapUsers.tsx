@@ -14,9 +14,15 @@ const MapUsers: React.FC = () => {
 			<div className={classesCommon.headerContainer}>
 				<Typography className={classesCommon.header}>משתמשים</Typography>
 			</div>
-			<>
-				<Map />
-			</>
+			<div style={{
+				width: "100%",
+				height: "85%"
+			}}>
+				<Map
+					width={"100%"}
+					height={"85%"}
+				/>
+			</div>
 		</div>
 	);
 };

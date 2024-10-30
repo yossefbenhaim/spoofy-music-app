@@ -50,7 +50,7 @@ const UsersLocationLayer = () => {
 					<RStyle.RIcon scale={0.8} src={locationIcon} />
 					<RStyle.RStroke color={'#0000ff'} width={2} />
 				</RStyle.RStyle>
-				{users.map((user) => (
+				{users.map((user: User) => (
 					<RFeature
 						key={user.id}
 						geometry={new Point(fromLonLat(user.coordinates as number[]))}

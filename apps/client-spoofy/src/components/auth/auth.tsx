@@ -8,12 +8,13 @@ import IconHome from 'components/lottie/iconHome/iconHome';
 import useStyles from './authStyles';
 import Registration from './registration/registration';
 import Login from './login/login';
+import { Map } from 'components/map';
 
 const Auth: React.FC = () => {
-	const { classes } = useStyles();
+	const [isLogin, setIsLogin] = useState(false);
+	const { classes } = useStyles({ isLogin }); // Pass isLogin to useStyles
 	const navigation = useNavigate();
 
-	const [isLogin, setIsLogin] = useState(false);
 	const accessToken = useAppSelector((state) => state.auth.accessToken);
 	const expiresAt = useAppSelector((state) => state.auth.expiresAt);
 	const currentUser = useAppSelector((state) => state.currentUser.user)
@@ -27,20 +28,33 @@ const Auth: React.FC = () => {
 
 	return (
 		<div className={classes.fieldsContainer}>
-			<div className={classes.titleContainer}>
-				<div className={classes.iconHomeContainer}>
-					<IconHome />
+			<div className={classes.roundTemplate}>
+				<div className={classes.selectLocation}>
+					{isLogin ?
+						"" :
+						<Map
+							width={"100%"}
+							height={"85%"}
+						/>
+					}
 				</div>
-				<div className={classes.titleNameContainer}>
-					<Typography className={classes.title}>Musify</Typography>
+				<div className={classes.registryStyleForm}>
+					<div className={classes.titleContainer}>
+						<div className={classes.iconHomeContainer}>
+							<div className={classes.divForCenterIcon}></div>
+							<IconHome />
+							<div className={classes.toggleButton}>
+								<Button className={classes.btnToggle} onClick={toggleAuth} >
+									{isLogin ? ' צור חשבון' : ' התחבר'}
+								</Button>
+							</div>
+						</div>
+					</div>
+
+					{isLogin ? <Login /> : <Registration />}
+
 				</div>
 			</div>
-
-			{isLogin ? <Login /> : <Registration />}
-
-			<Button onClick={toggleAuth} >
-				{isLogin ? ' Register' : ' Login'}
-			</Button>
 		</div>
 	);
 };

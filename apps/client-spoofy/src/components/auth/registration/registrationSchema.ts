@@ -4,41 +4,40 @@ export enum UserRegistrationFormKey {
   USER_NAME = 'userName',
   PASSWORD = 'password',
   EMAIL = 'email',
-  COORDINATES = 'coordinates',
+  ADDRESS = 'address',
 }
 export const defaultValues: UserRegistrationType = {
   userName: '',
   password: '',
   email: '',
-  coordinates: [0, 0],
+  address: '',
 };
 const UserRegistration = z.object({
   [UserRegistrationFormKey.USER_NAME]: z
     .string()
-    .min(2, { message: 'Username must be at least 2 characters long' })
-    .max(25, { message: 'Username must not exceed 25 characters' }),
+    .min(2, { message: 'Username must be at ' })
+    .max(25, { message: 'User' }),
   [UserRegistrationFormKey.PASSWORD]: z
     .string()
-    .min(8, { message: 'Password must be at least 8 characters long' })
+    .min(8, { message: 'Password ' })
     .regex(/[A-Z]/, {
-      message: 'Password must contain at least one uppercase letter',
+      message: 'Password must ',
     })
     .regex(/[a-z]/, {
-      message: 'Password must contain at least one lowercase letter',
+      message: 'Password must ',
     })
-    .regex(/[0-9]/, { message: 'Password must contain at least one digit' })
+    .regex(/[0-9]/, { message: 'Password ' })
     .regex(/[@$!%*?&#]/, {
-      message:
-        'Password must contain at least one special character (@, $, !, %, *, ?, &, #)',
+      message: 'Password',
     }),
 
   [UserRegistrationFormKey.EMAIL]: z
     .string()
-    .email({ message: 'Invalid email address format' }),
-  [UserRegistrationFormKey.COORDINATES]: z.tuple([
-    z.number().min(-90).max(90),
-    z.number().min(-180).max(180),
-  ]),
+    .email({ message: 'Invalid email ' }),
+  [UserRegistrationFormKey.ADDRESS]: z
+    .string()
+    .min(4, { message: 'Address must be at ' })
+    .max(100, { message: 'Address' }),
 });
 
 export type UserRegistrationType = z.infer<typeof UserRegistration>;
