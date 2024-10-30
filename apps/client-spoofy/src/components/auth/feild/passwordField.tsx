@@ -20,7 +20,7 @@ const PasswordField = ({ fieldName }: Props) => {
 				<TextField
 					{...field}
 					className={classes.input}
-					// type='password'
+					type='password'
 					label="Password"
 					variant="outlined"
 					error={!!errors[fieldName]}
