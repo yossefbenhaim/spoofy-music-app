@@ -1,4 +1,5 @@
 import {
+  forgetPasswordController,
   loginUserController,
   logoutUserController,
   refreshAccessTokenController,
@@ -7,6 +8,7 @@ import {
 import { router, publicProcedure } from '../tRPC/trpc';
 import { z } from 'zod';
 import {
+  ForgetPassword,
   LoginUser,
   LogoutUser,
   RefreshAccessToken,
@@ -28,6 +30,9 @@ export const authenticateRouter = router({
   logoutUser: publicProcedure
     .input(z.custom<LogoutUser>())
     .mutation(async ({ input }) => logoutUserController(input)),
+  forgetPassword: publicProcedure
+    .input(z.custom<ForgetPassword>())
+    .mutation(async ({ input }) => forgetPasswordController(input)),
   validateToken: publicProcedure
     .input(
       z.object({

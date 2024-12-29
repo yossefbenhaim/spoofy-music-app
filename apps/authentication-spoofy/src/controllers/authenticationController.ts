@@ -247,3 +247,28 @@ export const logoutUserController = async (input: LogoutUser) => {
     });
   }
 };
+
+export const forgetPasswordController = async (input: LogoutUser) => {
+  const { email } = input;
+  try {
+    const result = await redis.del(`refresh:${email}`);
+
+    if (result === 0) {
+      throw new TRPCError({
+        code: 'NOT_FOUND',
+        message: 'Refresh token not found',
+      });
+    }
+
+    return { message: 'Logout successful' };
+  } catch (error) {
+    console.error('Error logging out user:', error);
+
+    if (error instanceof TRPCError) throw error;
+
+    throw new TRPCError({
+      code: 'INTERNAL_SERVER_ERROR',
+      message: 'Failed to logout, please try again',
+    });
+  }
+};

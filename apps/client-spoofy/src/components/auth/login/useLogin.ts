@@ -24,6 +24,10 @@ const useLogin = () => {
   });
   const { handleSubmit } = methods;
 
+  const handleForgotPassword = () => {
+    navigation(PathName.library + PathName.forgotPassword);
+  };
+
   const handleQueryMessage = (message: string, variant: VariantType) =>
     enqueueSnackbar(message, { variant });
 
@@ -53,13 +57,11 @@ const useLogin = () => {
         handleSetCookie(response.refreshToken);
       }
     } catch (error) {
-      console.log('test');
-
       console.error('Error during registration:', error);
     }
   };
 
-  return { handleSubmit, onSubmit, methods };
+  return { handleSubmit, onSubmit, handleForgotPassword, methods };
 };
 
 export default useLogin;

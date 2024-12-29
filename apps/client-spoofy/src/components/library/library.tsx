@@ -1,27 +1,24 @@
-import React, { useEffect } from 'react';
-
+import { clearAccessToken, setAccessToken } from 'redux/slice/auth';
 import { useNavigate, Outlet } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import { useAppSelector } from 'redux/store';
+import { useDispatch } from 'react-redux';
+import { useCookies } from 'react-cookie';
 import { Typography } from '@mui/material';
+import { PathName } from '@models/enums/pathName';
+import { trpc } from 'trpc/trpcProvider';
 
 import useStyles from './libraryStyles';
 import UserOptionMenu from 'components/userOptionMenu/userOptionMenu';
 import MusicPlayer from 'components/musicPlayer/musicPlayer';
 import IconMusify from 'components/lottie/iconMusify/iconMusify';
 import Navbar from 'components/navbar/navbar';
-import { useCookies } from 'react-cookie';
-import { useDispatch } from 'react-redux';
-import { trpc } from 'trpc/trpcProvider';
-import { clearAccessToken, setAccessToken } from 'redux/slice/auth';
-import { PathName } from '@models/enums/pathName';
 
 const Library: React.FC = () => {
 	const { classes } = useStyles();
 	const navigation = useNavigate();
-	const handleSetCookie = (refreshToken: string) => {
-		setCookie('refreshToken', refreshToken, { path: '/', maxAge: 604800 });
-	};
-	const [cookies, setCookie, removeCookie] = useCookies(['refreshToken']);
+
+	const [cookies, _, __] = useCookies(['refreshToken']);
 	const dispatch = useDispatch();
 
 	const accessToken = useAppSelector((state) => state.auth.accessToken);
@@ -51,34 +48,33 @@ const Library: React.FC = () => {
 	};
 
 	useEffect(() => {
-		// console.log({ expiresAt, accessToken });
-		// if (!accessToken || !expiresAt) {
-		// 	navigation(PathName.login);
-		// };
+		if (!accessToken || !expiresAt) {
+			navigation(PathName.login);
+		};
 
-		// const currentTime = Date.now();
-		// const timeUntilExpiry = expiresAt! - currentTime;
+		const currentTime = Date.now();
+		const timeUntilExpiry = expiresAt! - currentTime;
 
-		// if (timeUntilExpiry <= 0) {
-		// 	dispatch(clearAccessToken());
-		// 	navigation(PathName.login);
-		// 	return;
-		// }
+		if (timeUntilExpiry <= 0) {
+			dispatch(clearAccessToken());
+			navigation(PathName.login);
+			return;
+		}
 
 
-		// const refreshTimeout = setTimeout(() => {
-		// 	refreshAccessToken();
-		// }, timeUntilExpiry - 6000);
+		const refreshTimeout = setTimeout(() => {
+			refreshAccessToken();
+		}, timeUntilExpiry - 6000);
 
-		// const expiryTimeout = setTimeout(() => {
-		// 	dispatch(clearAccessToken());
-		// 	navigation(PathName.login);
-		// }, timeUntilExpiry);
+		const expiryTimeout = setTimeout(() => {
+			dispatch(clearAccessToken());
+			navigation(PathName.login);
+		}, timeUntilExpiry);
 
-		// return () => {
-		// 	clearTimeout(refreshTimeout);
-		// 	clearTimeout(expiryTimeout);
-		// };
+		return () => {
+			clearTimeout(refreshTimeout);
+			clearTimeout(expiryTimeout);
+		};
 	}, [accessToken, expiresAt]);
 
 

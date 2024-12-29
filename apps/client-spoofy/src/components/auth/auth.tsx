@@ -43,7 +43,7 @@ const Auth: React.FC = () => {
 						<div className={classes.iconHomeContainer}>
 							<div className={classes.divForCenterIcon}></div>
 							<IconHome />
-							<div className={classes.toggleButton}>
+							<div className={classes.btnToggleContainer}>
 								<Button className={classes.btnToggle} onClick={toggleAuth} >
 									{isLogin ? ' צור חשבון' : ' התחבר'}
 								</Button>

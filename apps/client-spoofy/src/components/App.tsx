@@ -35,6 +35,7 @@ const App: React.FC = () => {
 						<Route path={PathName.users} element={<MapUsers />} />
 						<Route path={PathName.settings} element={<Settings />} />
 					</Route>
+					<Route path={PathName.forgotPassword} element={<Settings />} />
 				</Routes>
 			</BrowserRouter>
 		</div>

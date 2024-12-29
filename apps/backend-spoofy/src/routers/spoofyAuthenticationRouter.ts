@@ -39,6 +39,18 @@ export const spoofyAuthenticationRouter = router({
         throw error;
       }
     }),
+  forgetPassword: publicProcedure
+    .input(z.custom<LogoutUser>())
+    .mutation(async ({ input }) => {
+      try {
+        const result = await trpcClient.authentication.forgetPassword.mutate(
+          input
+        );
+        return result;
+      } catch (error) {
+        throw error;
+      }
+    }),
   refreshAccessToken: publicProcedure
     .input(z.custom<RefreshAccessToken>())
     .mutation(async ({ input }) => {

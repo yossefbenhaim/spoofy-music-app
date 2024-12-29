@@ -1,18 +1,17 @@
-import { UserLoginFormKey } from './loginSchema';
+import { ForgotPasswordKey } from './forgotPasswordSchema';
 import { FormProvider, } from 'react-hook-form';
 import { Button, Typography } from '@mui/material';
 
 import React from 'react';
 import useStyles from '../authStyles';
 import EmailField from '../feild/emailField';
-import PasswordField from '../feild/passwordField';
-import useLogin from './useLogin';
+import useLogin from './useForgotPassword';
 
-const LOGIN = 'Login'
+const SEND_CODE = 'שלח קוד'
 
-const Login: React.FC = () => {
+const ForgotPassword: React.FC = () => {
 	const { classes } = useStyles({});
-	const { handleSubmit, onSubmit, handleForgotPassword, methods } = useLogin()
+	const { handleSubmit, onSubmit, methods } = useLogin()
 
 	return (
 		<  div className={classes.loginContainer}>
@@ -21,14 +20,10 @@ const Login: React.FC = () => {
 			</div>
 			<form className={classes.containerField} onSubmit={handleSubmit(onSubmit)}>
 				<FormProvider {...methods}>
-					<PasswordField fieldName={UserLoginFormKey.PASSWORD} />
-					<EmailField fieldName={UserLoginFormKey.EMAIL} />
-					<a href="#" onClick={(e) => { e.preventDefault(); handleForgotPassword(); }}>
-						? שכחת את הסיסמה
-					</a>
+					<EmailField fieldName={ForgotPasswordKey.EMAIL} />
 					<div className={classes.containerSubmit}>
 						<Button type="submit" className={classes.btn} variant="contained">
-							{LOGIN}
+							{SEND_CODE}
 						</Button>
 					</div>
 				</FormProvider>
@@ -38,4 +33,4 @@ const Login: React.FC = () => {
 	);
 };
 
-export default Login;
+export default ForgotPassword;
